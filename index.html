@@ -30,12 +30,14 @@
     height: 100vh;
     overflow: hidden;
     background: #040b14;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   #gameCanvas {
-    width: 100%;
-    height: 100%;
     display: block;
     cursor: crosshair;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
   }
 
   /* SAĞ SABİT KONTROL PANELİ */
@@ -185,7 +187,7 @@
   }
   .menu-btn.alchemy:hover { border-color: #e879f9; box-shadow: 0 0 12px rgba(192,132,252,0.4); }
 
-  /* 9'LU HIZLI ENVANTER BARI (ALT ORTA) */
+  /* 9'LU HIZLI EKİPMAN BARI */
   #quickBarWrap {
     position: absolute;
     bottom: 12px;
@@ -266,7 +268,7 @@
   .q-icon { font-size: 22px; line-height: 1; }
   .q-sub { font-size: 8px; color: #cbd5e1; margin-top: 2px; max-width: 48px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-  /* AURA PARLAMA EFEKTLERİ (+5, +7, +9, +10 EFSANEVİ AURA) */
+  /* AURA PARLAMA EFEKTLERİ */
   .glow-5 { box-shadow: 0 0 10px #38bdf8, inset 0 0 6px #38bdf8 !important; border-color: #38bdf8 !important; }
   .glow-7 { box-shadow: 0 0 14px #fbbf24, inset 0 0 8px #fbbf24 !important; border-color: #fbbf24 !important; }
   .glow-9 { box-shadow: 0 0 16px #c084fc, inset 0 0 10px #e879f9 !important; border-color: #e879f9 !important; }
@@ -280,7 +282,7 @@
     100% { box-shadow: 0 0 20px #22c55e, inset 0 0 12px #fde047; }
   }
 
-  /* BİLDİRİM TOAST (SOL ÜST) */
+  /* BİLDİRİM TOAST */
   #toastArea {
     position: absolute;
     top: 12px;
@@ -357,7 +359,6 @@
     flex: 1;
   }
 
-  /* KART LİSTELERİ */
   .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -387,7 +388,6 @@
   }
   .buy-btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
 
-  /* SİMYA & GÜÇLENDİRME ÖZEL TASARIM */
   .alchemy-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -450,21 +450,18 @@
 <body>
 
 <div id="appLayout">
-  <!-- SOL TARAFTA %100 AÇIK OYUN ALANI -->
+  <!-- OYUN ALANI -->
   <div id="viewportArea">
     <canvas id="gameCanvas"></canvas>
-
-    <!-- SOL ÜST ŞEFFAF BİLDİRİMLER -->
     <div id="toastArea"></div>
 
-    <!-- ALT ORTA: 9'LU HIZLI EKİPMAN & GANİMET BARI -->
     <div id="quickBarWrap">
-      <div id="quickTooltip">[1-4] Sahte Yem Seç  |  [5-7] Ganimet Sandığı/İnci Aç  |  [8-9] Yemleme & Onarım</div>
+      <div id="quickTooltip">[1-4] Sahte Yem  |  [5-7] Sandık/İnci  |  [8-9] Yemleme & Onarım</div>
       <div id="quickBar"></div>
     </div>
   </div>
 
-  <!-- SAĞ SABİT KONTROL PANELİ -->
+  <!-- SAĞ KONTROL PANELİ -->
   <aside id="rightDock">
     <div class="dock-card">
       <div class="dock-title">
@@ -487,7 +484,7 @@
       </div>
     </div>
 
-    <!-- SONAR VE TELEMETRİ -->
+    <!-- SONAR -->
     <div class="dock-card">
       <div class="dock-title">
         <span>📡 DERİNLİK & SONAR</span>
@@ -501,18 +498,18 @@
         <span>Katman: <b id="uiZone">Yüzey (0-12m)</b></span>
         <span>Aksiyon: <b id="uiAction" style="color:#fbbf24;">Beklemede</b></span>
       </div>
-      <div style="font-size:10px; color:#94a3b8; margin-top:4px;">Yem Cazibesi (WTD / Twitch / Jerk)</div>
+      <div style="font-size:10px; color:#94a3b8; margin-top:4px;">Yem Cazibesi</div>
       <div class="bar-wrap"><div id="lureAppealBar" class="bar-fill" style="background:linear-gradient(90deg,#38bdf8,#fbbf24);"></div></div>
 
       <div style="font-size:10px; color:#94a3b8; margin-top:4px;">Misina Gerginliği & Kalama</div>
       <div class="bar-wrap"><div id="tensionBar" class="bar-fill" style="background:linear-gradient(90deg,#22c55e,#eab308,#ef4444);"></div></div>
       <div style="display:flex; align-items:center; justify-content:space-between; font-size:11px; margin-top:5px;">
-        <span>⚙️ Kalama (Drag): <b id="uiDragVal">65%</b></span>
+        <span>⚙️ Kalama: <b id="uiDragVal">65%</b></span>
         <input type="range" id="dragSlider" min="25" max="95" value="65" style="width:120px;">
       </div>
     </div>
 
-    <!-- ATIŞ / SARIM / AKSİYON KONTROLLERİ (DOKUNMATİK & KLAVYE UYUMLU) -->
+    <!-- KONTROLLER -->
     <div class="dock-card">
       <div class="dock-title"><span>⚡ OLTA KONTROLÜ</span><span style="font-size:10px; color:#94a3b8;">[DOKUN / SPACE]</span></div>
       <button id="mainActionBtn" class="action-btn">🎯 ATIŞ GÜCÜ DOLDUR</button>
@@ -522,11 +519,11 @@
       </div>
       <div class="btn-row">
         <button id="jerkBtn" class="sub-btn">🌊 DİP JERK</button>
-        <button id="timeBtn" class="sub-btn">🌅 Vakit: Sabah Suyu</button>
+        <button id="timeBtn" class="sub-btn">🌅 Vakit: Sabah</button>
       </div>
     </div>
 
-    <!-- SİMYA TAŞLARI ÖZETİ -->
+    <!-- SİMYA ÖZETİ -->
     <div class="dock-card" style="border-color:rgba(192,132,252,0.35);">
       <div class="dock-title" style="color:#e879f9;">
         <span>🧪 SİMYA MATERYALLERİ</span>
@@ -542,26 +539,26 @@
       </div>
     </div>
 
-    <!-- MENÜLER -->
+    <!-- İSTASYONLAR & MENÜLER -->
     <div class="dock-card" style="margin-top:auto;">
-      <div class="dock-title"><span>🏛️ İSTASYONLAR & MENÜLER</span></div>
+      <div class="dock-title"><span>🏛️ İSTASYONLAR & AYARLAR</span></div>
       <div class="menu-grid">
-        <button class="menu-btn alchemy" onclick="openModal('alchemyModal')">⚗️ Simya & +Basma</button>
+        <button class="menu-btn alchemy" onclick="openModal('alchemyModal')">⚗️ Simya Atölyesi</button>
         <button class="menu-btn" onclick="openModal('marketModal')">🛒 Balıkçı Marketi</button>
-        <button class="menu-btn" onclick="openModal('bazaarModal')">⚖️ Livar & Balık Hali</button>
-        <button class="menu-btn" onclick="openModal('mapModal')">🗺️ Meralar (120m)</button>
-        <button class="menu-btn" onclick="openModal('dexModal')">📖 24 Tür Ansiklopedi</button>
-        <button class="menu-btn" onclick="openModal('saveModal')">💾 Kayıt & Rehber</button>
+        <button class="menu-btn" onclick="openModal('bazaarModal')">⚖️ Balık Hali</button>
+        <button class="menu-btn" onclick="openModal('mapModal')">🗺️ Meralar</button>
+        <button class="menu-btn" onclick="openModal('dexModal')">📖 Ansiklopedi</button>
+        <button class="menu-btn" onclick="openModal('settingsModal')">⚙️ Çözünürlük & Kayıt</button>
       </div>
     </div>
   </aside>
 </div>
 
-<!-- 1. SİMYA & EKİPMAN GÜÇLENDİRME ATÖLYESİ MODAL -->
+<!-- MODALLAR -->
 <div id="alchemyModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>⚗️ Simya & Ekipman Güçlendirme Atölyesi (+12 Aura & Mavi İznitelik)</h2>
+      <h2>⚗️ Simya & Ekipman Güçlendirme Atölyesi (+12 Aura)</h2>
       <button class="close-btn" onclick="closeModals()">Kapat ✕</button>
     </div>
     <div class="modal-body">
@@ -576,23 +573,22 @@
 
           <div style="width:100%; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; text-align:left; font-size:11px;">
             <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:4px;">
-              <input type="checkbox" id="useLuckyPowder" checked> ✨ Şans Tozu Kullan (+%20 Başarı)
+              <input type="checkbox" id="useLuckyPowder" checked> ✨ Şans Tozu (+%20 Başarı)
             </label>
             <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:4px; color:#38bdf8;">
-              <input type="checkbox" id="useImmortal"> 💎 Koruma Taşı (+5 üstü yanmada 0'lanmayı önler)
+              <input type="checkbox" id="useImmortal"> 💎 Koruma Taşı (Sıfırlanmayı Önler)
             </label>
             <label style="display:flex; align-items:center; gap:6px; cursor:pointer; color:#fbbf24;">
-              <input type="checkbox" id="useAstral"> 🌟 Yıldız Taşı (+4 altına düşmesini engeller)
+              <input type="checkbox" id="useAstral"> 🌟 Yıldız Taşı (+4 Altına Düşmeyi Önler)
             </label>
           </div>
 
           <button class="action-btn" style="background:linear-gradient(135deg,#9333ea,#c026d3); border-color:#f0abfc;" onclick="attemptAlchemyPlus()">🔥 SEVİYE YÜKSELT (+BAS)</button>
-          <button class="sub-btn" style="width:100%; border-color:#3b82f6; color:#93c5fd;" onclick="attemptBlueStat()">🔵 MAVİ ÖZELLİK EKLE (GÜÇ / CAZİBE / ŞANS)</button>
+          <button class="sub-btn" style="width:100%; border-color:#3b82f6; color:#93c5fd;" onclick="attemptBlueStat()">🔵 MAVİ ÖZELLİK EKLE</button>
           <div id="alchemyLog" style="font-size:12px; font-weight:800; min-height:20px; color:#fde047;"></div>
         </div>
-
         <div>
-          <div style="font-size:12px; font-weight:800; color:#94a3b8; margin-bottom:8px;">YÜKSELTİLEBİLİR EKİPMANLARINIZ (Kamış, Makine ve 1-4 Slot Sahte Yemler)</div>
+          <div style="font-size:12px; font-weight:800; color:#94a3b8; margin-bottom:8px;">YÜKSELTİLEBİLİR EKİPMANLAR</div>
           <div id="alchemyItemList" class="card-grid"></div>
         </div>
       </div>
@@ -600,7 +596,6 @@
   </div>
 </div>
 
-<!-- 2. MARKET & SİMYA MALZEMELERİ MODAL -->
 <div id="marketModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
@@ -611,15 +606,14 @@
       <div class="tab-bar">
         <button class="tab-btn active" onclick="renderMarket('rods', this)">🎣 Kamışlar</button>
         <button class="tab-btn" onclick="renderMarket('reels', this)">⚙️ Makineler</button>
-        <button class="tab-btn" onclick="renderMarket('lures', this)">🐟 Sahte Yemler (120m)</button>
-        <button class="tab-btn" onclick="renderMarket('alchemy', this)">🧪 Simya & Tüketilebilir</button>
+        <button class="tab-btn" onclick="renderMarket('lures', this)">🐟 Sahte Yemler</button>
+        <button class="tab-btn" onclick="renderMarket('alchemy', this)">🧪 Simya Materyalleri</button>
       </div>
       <div id="marketGrid" class="card-grid"></div>
     </div>
   </div>
 </div>
 
-<!-- 3. LİVAR & BALIK HALİ BORSASI MODAL -->
 <div id="bazaarModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
@@ -629,8 +623,8 @@
     <div class="modal-body">
       <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(2,132,199,0.18); padding:12px; border-radius:10px; margin-bottom:12px;">
         <div>
-          <div style="font-size:13px; font-weight:800; color:#fbbf24;" id="dailyBonusText">🔥 Günün Fırsat Balığı: Avcı Levrek (+%50 Borsa Bonusu)</div>
-          <div style="font-size:11px; color:#cbd5e1;">Livardaki tüm balıkları güncel borsa fiyatından toplu veya tek tek satabilirsiniz.</div>
+          <div style="font-size:13px; font-weight:800; color:#fbbf24;" id="dailyBonusText">🔥 Günün Fırsat Balığı: Avcı Levrek (+%50 Bonusu)</div>
+          <div style="font-size:11px; color:#cbd5e1;">Livardaki balıkları güncel borsa fiyatından satabilirsiniz.</div>
         </div>
         <button class="action-btn" style="width:auto; padding:10px 18px;" onclick="sellAllFish()">💰 TÜMÜNÜ SAT</button>
       </div>
@@ -639,7 +633,6 @@
   </div>
 </div>
 
-<!-- 4. MERALAR MODAL -->
 <div id="mapModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
@@ -652,7 +645,6 @@
   </div>
 </div>
 
-<!-- 5. ANSİKLOPEDİ MODAL -->
 <div id="dexModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
@@ -665,44 +657,46 @@
   </div>
 </div>
 
-<!-- 6. KAYIT AKTARIM & REHBER MODAL -->
-<div id="saveModal" class="modal-backdrop">
+<!-- YENİ: ÇÖZÜNÜRLÜK & KAYIT AYARLARI MODALI -->
+<div id="settingsModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>💾 Cihazlar Arası Kayıt Aktarımı & Görsel Rehberi</h2>
+      <h2>⚙️ Ekran Çözünürlüğü, Tam Ekran & Bulut Kayıt</h2>
       <button class="close-btn" onclick="closeModals()">Kapat ✕</button>
     </div>
     <div class="modal-body" style="line-height:1.6; font-size:13px; color:#e2e8f0;">
       <div style="background:rgba(15,31,54,0.9); padding:12px; border-radius:10px; margin-bottom:14px; border:1px solid rgba(56,189,248,0.3);">
-        <h4 style="color:#fbbf24; margin-bottom:6px;">📲 Cihazlar Arası İlerleme Kodu (iPad / PC Transfer)</h4>
-        <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">Oyun her işlemden sonra otomatik kaydedilir. Farklı bir iPad veya bilgisayara geçerken aşağıdaki kodu kopyalayıp diğer cihazda yapıştırabilirsiniz:</p>
+        <h4 style="color:#fbbf24; margin-bottom:6px;">🖥️ Çözünürlük ve Görüntü Modu</h4>
+        <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">Cihazınızın performansına göre ekran çözünürlüğünü ölçeklendirebilir veya tam ekrana geçebilirsiniz:</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+          <button class="buy-btn" onclick="setResolutionScale(0.5)">Düşük Kalite (Hızlı / Mobil)</button>
+          <button class="buy-btn" onclick="setResolutionScale(1.0)" style="background:#22c55e;">Normal Kalite (1:1)</button>
+          <button class="buy-btn" onclick="setResolutionScale(1.5)" style="background:#7e22ce;">Ultra Keskin (Retina)</button>
+        </div>
+        <button class="action-btn" style="background:#0284c7;" onclick="toggleFullscreen()">📺 Tam Ekran Moduna Geç (Fullscreen)</button>
+      </div>
+
+      <div style="background:rgba(15,31,54,0.9); padding:12px; border-radius:10px; border:1px solid rgba(56,189,248,0.3);">
+        <h4 style="color:#fbbf24; margin-bottom:6px;">💾 Cihazlar Arası İlerleme Kodu (iPad / PC Transfer)</h4>
+        <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">Farklı bir cihaza geçerken bu kodu kopyalayıp diğer cihazda yükleyebilirsiniz:</p>
         <textarea id="saveCodeBox" style="width:100%; height:58px; background:#040b14; color:#38bdf8; border:1px solid #334155; border-radius:6px; padding:6px; font-size:11px;"></textarea>
         <div style="display:flex; gap:8px; margin-top:8px;">
-          <button class="buy-btn" onclick="exportSaveCode()">📋 Kayıt Kodunu Üret & Kopyala</button>
+          <button class="buy-btn" onclick="exportSaveCode()">📋 Kopyala</button>
           <button class="buy-btn" style="background:#22c55e;" onclick="importSaveCode()">📥 Kodu Yükle</button>
         </div>
       </div>
-
-      <p><b>1. Özel PNG Görsel Desteği (`assets/fishes/`):</b> GitHub klasörünüzde `assets/fishes/levrek.png`, `assets/fishes/cipura.png` gibi şeffaf PNG dosyaları varsa oyun bunları otomatik algılar ve su altında gerçek balık görselini yüzdürür. Görsel henüz yüklenmemişse dahili vektör çizimini kullanır.</p>
-      <p><b>2. 9'lu Hızlı Ekipman Barı:</b> <b>[1-4]</b> slotlarıyla sahte yem seçebilir, balıklardan düşen <b>[5] Gizemli Sandık, [6] Antik Amfora, [7] İstridye İncisi</b> kutularına dokunarak içinden güçlendirme materyalleri ve altın çıkarabilirsiniz.</p>
-      <p><b>3. Simya & Ekipman Güçlendirme (+12 Aura):</b> Kamış, makine ve sahtelerinize +12'ye kadar seviye basabilirsiniz. <b>+5 Mavi</b>, <b>+7 Altın</b>, <b>+9 Mor</b> ve <b>+10 üstü Efsanevi Gökkuşağı Aurası</b> verir.</p>
     </div>
   </div>
 </div>
 
 <script>
-// ==================== VERİTABANI: 24 GERÇEKÇİ BALIK TÜRÜ (0m - 120m) ====================
-// Not: GitHub'da assets/fishes/{id}.png varsa otomatik o resmi çizer!
 const FISH_SPECIES = [
-  // YÜZEY (0 - 12m)
   { id:'zargana', name:'Zargana', minDepth:0, maxDepth:8, minKg:0.25, maxKg:1.1, priceKg:180, xp:22, speed:2.5, power:0.8, body:'needle', col1:'#1e40af', col2:'#93c5fd', pref:['topwater','minnow'] },
   { id:'istavrit', name:'Sarıkuyruk İstavrit', minDepth:2, maxDepth:14, minKg:0.15, maxKg:0.65, priceKg:160, xp:18, speed:2.1, power:0.6, body:'fusiform', col1:'#3b82f6', col2:'#e2e8f0', pref:['silicone','minnow','jig'] },
   { id:'uskumru', name:'Uskumru', minDepth:3, maxDepth:18, minKg:0.3, maxKg:1.2, priceKg:210, xp:25, speed:2.3, power:0.9, body:'fusiform', col1:'#0f766e', col2:'#cbd5e1', stripes:true, pref:['minnow','jig'] },
   { id:'lufer', name:'Lüfer', minDepth:1, maxDepth:16, minKg:0.45, maxKg:2.2, priceKg:480, xp:55, speed:2.6, power:1.5, body:'fusiform', col1:'#1e3a8a', col2:'#cbd5e1', pref:['topwater','minnow','jig'] },
   { id:'kofana', name:'Sırtıkara Kofana', minDepth:1, maxDepth:18, minKg:2.5, maxKg:7.5, priceKg:560, xp:120, speed:2.9, power:2.4, body:'fusiform', col1:'#172554', col2:'#94a3b8', pref:['topwater','minnow'] },
   { id:'kilic', name:'Kılıç Balığı', minDepth:4, maxDepth:25, minKg:8.0, maxKg:38.0, priceKg:620, xp:320, speed:3.5, power:4.2, body:'sword', col1:'#0f172a', col2:'#64748b', pref:['topwater','jig'] },
-
-  // ORTA SU & ERİŞTE (10 - 38m)
   { id:'ispari', name:'İspari', minDepth:8, maxDepth:24, minKg:0.15, maxKg:0.6, priceKg:150, xp:16, speed:1.6, power:0.6, body:'oval', col1:'#64748b', col2:'#e2e8f0', spot:true, pref:['silicone'] },
   { id:'sarpa', name:'Sarpa', minDepth:8, maxDepth:26, minKg:0.3, maxKg:1.3, priceKg:170, xp:24, speed:1.9, power:0.95, body:'oval', col1:'#0369a1', col2:'#fef08a', stripes:true, pref:['silicone','minnow'] },
   { id:'melanur', name:'Melanur', minDepth:6, maxDepth:22, minKg:0.25, maxKg:0.95, priceKg:230, xp:28, speed:2.1, power:0.9, body:'oval', col1:'#1e293b', col2:'#cbd5e1', spot:true, pref:['topwater','minnow','silicone'] },
@@ -710,8 +704,6 @@ const FISH_SPECIES = [
   { id:'barakuda', name:'Sarıağız Baraküda', minDepth:5, maxDepth:30, minKg:0.9, maxKg:4.8, priceKg:340, xp:75, speed:3.1, power:1.8, body:'needle', col1:'#3f3f46', col2:'#d4d4d8', stripes:true, pref:['minnow','topwater'] },
   { id:'palamut', name:'Palamut', minDepth:10, maxDepth:35, minKg:0.8, maxKg:2.6, priceKg:290, xp:50, speed:2.8, power:1.5, body:'fusiform', col1:'#0c4a6e', col2:'#e0f2fe', stripes:true, pref:['minnow','jig'] },
   { id:'torik', name:'Torik', minDepth:14, maxDepth:42, minKg:3.0, maxKg:8.5, priceKg:380, xp:135, speed:3.2, power:2.7, body:'fusiform', col1:'#082f49', col2:'#bae6fd', stripes:true, pref:['jig','minnow'] },
-
-  // KAYALIK & TAŞLIK DİP (35 - 75m)
   { id:'karagoz', name:'Bantlı Karagöz', minDepth:25, maxDepth:55, minKg:0.35, maxKg:1.8, priceKg:320, xp:42, speed:1.8, power:1.2, body:'oval', col1:'#334155', col2:'#e2e8f0', stripes:true, pref:['silicone','jig'] },
   { id:'mirmir', name:'Çizgili Mırmır', minDepth:22, maxDepth:50, minKg:0.3, maxKg:1.5, priceKg:340, xp:40, speed:1.8, power:1.1, body:'fusiform', col1:'#475569', col2:'#f8fafc', stripes:true, pref:['silicone'] },
   { id:'cipura', name:'Alyanak Çipura', minDepth:25, maxDepth:62, minKg:0.5, maxKg:4.2, priceKg:460, xp:70, speed:2.0, power:1.7, body:'oval', col1:'#475569', col2:'#f1f5f9', goldBrow:true, pref:['silicone','jig'] },
@@ -720,14 +712,11 @@ const FISH_SPECIES = [
   { id:'eskina', name:'Kaya Eşkina', minDepth:32, maxDepth:68, minKg:0.6, maxKg:3.8, priceKg:410, xp:72, speed:1.7, power:1.6, body:'oval', col1:'#451a03', col2:'#d97706', pref:['silicone'] },
   { id:'sinarit', name:'Taş Sinariti (Trofe)', minDepth:38, maxDepth:82, minKg:2.2, maxKg:11.5, priceKg:680, xp:180, speed:2.5, power:3.1, body:'oval', col1:'#1e40af', col2:'#f472b6', pref:['jig','minnow','silicone'] },
   { id:'lagos', name:'Beyaz Lagos', minDepth:45, maxDepth:88, minKg:3.5, maxKg:16.0, priceKg:720, xp:220, speed:2.1, power:3.5, body:'heavy', col1:'#3f2e21', col2:'#a8a29e', pref:['jig','silicone'] },
-
-  // DERİN UÇURUM / ABYSS (70 - 120m)
   { id:'tranca', name:'Derin Deniz Trançası', minDepth:68, maxDepth:115, minKg:4.5, maxKg:19.0, priceKg:750, xp:260, speed:2.4, power:3.8, body:'oval', col1:'#be123c', col2:'#fecdd3', pref:['jig'] },
   { id:'akya', name:'Dev Akya', minDepth:60, maxDepth:118, minKg:6.0, maxKg:28.0, priceKg:640, xp:310, speed:3.3, power:4.4, body:'fusiform', col1:'#0369a1', col2:'#fde047', pref:['jig','topwater'] },
   { id:'fener', name:'Abyss Fener Balığı', minDepth:85, maxDepth:120, minKg:2.5, maxKg:9.5, priceKg:890, xp:350, speed:1.6, power:2.9, body:'angler', col1:'#31102f', col2:'#a21caf', pref:['jig','silicone'] }
 ];
 
-// Harici PNG Sprite Yükleyici (assets/fishes/{id}.png varsa otomatik yükler)
 const fishSprites = {};
 FISH_SPECIES.forEach(sp => {
   const img = new Image();
@@ -735,7 +724,6 @@ FISH_SPECIES.forEach(sp => {
   fishSprites[sp.id] = img;
 });
 
-// ==================== MERALAR (MAX 120m) ====================
 const SPOTS = [
   { id:0, name:'Sahilevleri Kayalıkları', maxDepth:28, reqXp:0, desc:'Sığ ve orta su avı. İstavrit, İspari, Zargana ve Levrek merası.' },
   { id:1, name:'Güzelbahçe Mendirek Kanalı', maxDepth:48, reqXp:250, desc:'Derinleşen kanal. Lüfer, Çipura, Mırmır ve Baraküda geçiş noktası.' },
@@ -744,7 +732,6 @@ const SPOTS = [
   { id:4, name:'Karaburun 120m Uçurum (Abyss)', maxDepth:120, reqXp:3600, desc:'120 metre derinlikteki kanyon. Dev Akya, Kılıç ve Fener Balığı!' }
 ];
 
-// ==================== TELİFSİZ ÖZGÜN EKİPMAN VERİTABANI ====================
 const SHOP_ITEMS = {
   rods: [
     { id:'rod1', name:'EgeCast XT 270cm 10-30g', price:0, power:1.0, cast:55, owned:true },
@@ -769,54 +756,55 @@ const SHOP_ITEMS = {
   alchemy: [
     { id:'buy_elixir', name:'🧪 Güçlendirme İksiri (Elixir)', price:450, type:'mat', key:'elixir', qty:1, desc:'Ekipmanlara +1 ile +12 arası seviye basmak için kullanılır.' },
     { id:'buy_powder', name:'✨ Şans Tozu (Lucky Powder)', price:250, type:'mat', key:'powder', qty:1, desc:'Simya başarı şansını +%20 artırır.' },
-    { id:'buy_immortal', name:'💎 Koruma Taşı (Immortal)', price:1800, type:'mat', key:'immortal', qty:1, desc:'+5 üstü başarısız denemede eşyanın +0\'a sıfırlanmasını önler!' },
+    { id:'buy_immortal', name:'💎 Koruma Taşı (Immortal)', price:1800, type:'mat', key:'immortal', qty:1, desc:'+5 üstü başarısız denemede eşyanın sıfırlanmasını önler!' },
     { id:'buy_astral', name:'🌟 Yıldız Taşı (Astral)', price:1200, type:'mat', key:'astral', qty:1, desc:'Başarısızlıkta eşyanın +4 altına düşmesini engeller.' },
-    { id:'buy_blue', name:'🔵 Mavi İznitelik Taşı', price:950, type:'mat', key:'blue', qty:1, desc:'Eşyaya Güç (STR), Cazibe (INT) ve Şans (LUCK) ekler.' },
-    { id:'buy_chum', name:'🪣 Derin Deniz Yemleme (Slot 8)', price:300, type:'cons', key:'chum', qty:2, desc:'30 saniye boyunca balık vuruş ve nadir ganimet şansını +%50 artırır.' },
-    { id:'buy_repair', name:'🧪 Nano Misina Kiti (Slot 9)', price:220, type:'cons', key:'repair', qty:2, desc:'Balıkla mücadele sırasında misina gerginliğini anında düşürür.' }
+    { id:'buy_blue', name:'🔵 Mavi İznitelik Taşı', price:950, type:'mat', key:'blue', qty:1, desc:'Eşyaya Güç, Cazibe ve Şans ekler.' },
+    { id:'buy_chum', name:'🪣 Derin Deniz Yemleme (Slot 8)', price:300, type:'cons', key:'chum', qty:2, desc:'30 sn boyunca balık vuruş şansını +%50 artırır.' },
+    { id:'buy_repair', name:'🧪 Nano Misina Kiti (Slot 9)', price:220, type:'cons', key:'repair', qty:2, desc:'Gerginliği anında düşürür.' }
   ]
 };
 
-// ==================== OYUN DURUMU (STATE) ====================
 const state = {
-  money: 450,
-  xp: 0,
-  level: 1,
-  spotIdx: 0,
-  timeOfDay: 0,
-  drag: 65,
-  activeSlot: 0,
+  money: 450, xp: 0, level: 1, spotIdx: 0, timeOfDay: 0, drag: 65, activeSlot: 0,
   rod: { ...SHOP_ITEMS.rods[0], plus: 0, blue: { str:0, int:0, luck:0 } },
   reel: { ...SHOP_ITEMS.reels[0], plus: 0, blue: { str:0, int:0, luck:0 } },
   lures: JSON.parse(JSON.stringify(SHOP_ITEMS.lures)),
   mats: { elixir: 3, powder: 3, immortal: 1, astral: 1, blue: 2 },
   hotbarItems: { chest: 1, amphora: 0, pearl: 0, chum: 2, repair: 2 },
-  chumTimer: 0,
-  cooler: [],
-  coolerMax: 15,
-  dex: {},
-  dailyBonusId: 'levrek',
-  selectedAlchemyTarget: 'rod',
-
-  phase: 'idle',
-  castPower: 0,
-  castDir: 1,
+  chumTimer: 0, cooler: [], coolerMax: 15, dex: {}, dailyBonusId: 'levrek',
+  selectedAlchemyTarget: 'rod', resolutionScale: 1.0,
+  phase: 'idle', castPower: 0, castDir: 1,
   lure: { x: 120, y: 120, vx: 0, vy: 0, dist: 0, depth: 0, appeal: 0, actionText: 'Beklemede', actionTimer: 0 },
-  tension: 0,
-  hookedFish: null,
-  biteTimer: 0,
-  cameraY: 0,
-  keys: { w:false, a:false, s:false, d:false, space:false },
-  fishes: []
+  tension: 0, hookedFish: null, biteTimer: 0, cameraY: 0,
+  keys: { w:false, a:false, s:false, d:false, space:false }, fishes: []
 };
 
-// ==================== OTOMATİK KAYIT & BULUT KODU SİSTEMİ ====================
+// ÇÖZÜNÜRLÜK ÖLÇEKLEME VE FULLSCREEN FONKSİYONLARI
+function setResolutionScale(scale) {
+  state.resolutionScale = scale;
+  resizeCanvas();
+  showToast(`🖥️ Çözünürlük ölçeği ayarlandı: x${scale}`, '#38bdf8');
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => {
+      showToast('⚠️ Tam ekran modu tarayıcı tarafından engellendi.', '#ef4444');
+    });
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+}
+
 function saveProgress() {
   try {
     const saveData = {
       money: state.money, xp: state.xp, level: state.level, spotIdx: state.spotIdx,
-      rod: state.rod, reel: state.reel, lures: state.lures,
-      mats: state.mats, hotbarItems: state.hotbarItems, cooler: state.cooler, dex: state.dex,
+      rod: state.rod, reel: state.reel, lures: state.lures, mats: state.mats,
+      hotbarItems: state.hotbarItems, cooler: state.cooler, dex: state.dex,
+      resolutionScale: state.resolutionScale,
       ownedRods: SHOP_ITEMS.rods.map(r => r.owned),
       ownedReels: SHOP_ITEMS.reels.map(r => r.owned)
     };
@@ -828,25 +816,22 @@ function loadProgress() {
   try {
     const raw = localStorage.getItem('aegeanSpinProSave_v1');
     if (!raw) return;
-    applySaveObject(JSON.parse(raw));
+    const data = JSON.parse(raw);
+    state.money = data.money ?? state.money;
+    state.xp = data.xp ?? state.xp;
+    state.level = data.level ?? state.level;
+    state.spotIdx = data.spotIdx ?? 0;
+    if (data.rod) state.rod = data.rod;
+    if (data.reel) state.reel = data.reel;
+    if (data.lures) state.lures = data.lures;
+    if (data.mats) state.mats = data.mats;
+    if (data.hotbarItems) state.hotbarItems = data.hotbarItems;
+    if (data.cooler) state.cooler = data.cooler;
+    if (data.dex) state.dex = data.dex;
+    if (data.resolutionScale) state.resolutionScale = data.resolutionScale;
+    if (data.ownedRods) data.ownedRods.forEach((v, i) => { if (SHOP_ITEMS.rods[i]) SHOP_ITEMS.rods[i].owned = v; });
+    if (data.ownedReels) data.ownedReels.forEach((v, i) => { if (SHOP_ITEMS.reels[i]) SHOP_ITEMS.reels[i].owned = v; });
   } catch(e){}
-}
-
-function applySaveObject(data) {
-  if (!data) return;
-  state.money = data.money ?? state.money;
-  state.xp = data.xp ?? state.xp;
-  state.level = data.level ?? state.level;
-  state.spotIdx = data.spotIdx ?? 0;
-  if (data.rod) state.rod = data.rod;
-  if (data.reel) state.reel = data.reel;
-  if (data.lures) state.lures = data.lures;
-  if (data.mats) state.mats = data.mats;
-  if (data.hotbarItems) state.hotbarItems = data.hotbarItems;
-  if (data.cooler) state.cooler = data.cooler;
-  if (data.dex) state.dex = data.dex;
-  if (data.ownedRods) data.ownedRods.forEach((v, i) => { if (SHOP_ITEMS.rods[i]) SHOP_ITEMS.rods[i].owned = v; });
-  if (data.ownedReels) data.ownedReels.forEach((v, i) => { if (SHOP_ITEMS.reels[i]) SHOP_ITEMS.reels[i].owned = v; });
 }
 
 function exportSaveCode() {
@@ -857,7 +842,7 @@ function exportSaveCode() {
   box.value = code;
   box.select();
   navigator.clipboard?.writeText(code);
-  showToast('📋 Kayıt kodu üretildi ve panoya kopyalandı!', '#22c55e');
+  showToast('📋 Kayıt kodu panoya kopyalandı!', '#22c55e');
 }
 
 function importSaveCode() {
@@ -866,18 +851,17 @@ function importSaveCode() {
     if (!code) return;
     const json = decodeURIComponent(atob(code));
     const data = JSON.parse(json);
-    applySaveObject(data);
-    saveProgress();
+    localStorage.setItem('aegeanSpinProSave_v1', JSON.stringify(data));
+    loadProgress();
     spawnFishes();
     renderHotbar();
     updateUI();
-    showToast('✅ Kayıt kodu başarıyla yüklendi!', '#22c55e');
+    showToast('✅ Kayıt başarıyla yüklendi!', '#22c55e');
   } catch(e) {
     showToast('❌ Geçersiz kayıt kodu!', '#ef4444');
   }
 }
 
-// ==================== SES EFEKTLERİ ====================
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 function playTone(freq, dur, type='sine', vol=0.08) {
   try {
@@ -905,7 +889,6 @@ function showToast(msg, color='#38bdf8') {
   setTimeout(() => el.remove(), 3400);
 }
 
-// ==================== GÜÇLENDİRME STAT VE AURA HESAPLAMA ====================
 function getGlowClass(plus) {
   if (plus >= 10) return 'glow-10';
   if (plus >= 9) return 'glow-9';
@@ -944,11 +927,9 @@ function getTotalLuckBonus() {
   return 1 + luckLevels * 0.08 + (state.chumTimer > 0 ? 0.35 : 0);
 }
 
-// ==================== 9'LU HIZLI ENVANTER BARI ====================
 function renderHotbar() {
   const bar = document.getElementById('quickBar');
   bar.innerHTML = '';
-
   for (let i = 0; i < 4; i++) {
     const l = state.lures[i];
     const glow = getGlowClass(l.plus);
@@ -989,20 +970,20 @@ function renderHotbar() {
 
 function selectHotbarSlot(idx) {
   if (state.phase !== 'idle') {
-    showToast('⚠️ Yem değiştirmek için önce oltayı kıyıya sarın!', '#fbbf24');
+    showToast('⚠️ Önce oltayı kıyıya sarın!', '#fbbf24');
     return;
   }
   state.activeSlot = idx;
   const l = state.lures[idx];
   playTone(520, 0.08, 'triangle');
-  showToast(`🎣 Seçili Yem: ${l.name} (+${l.plus}) — Maks Derinlik: ${l.maxSink}m`, '#38bdf8');
+  showToast(`🎣 Seçili Yem: ${l.name} (+${l.plus})`, '#38bdf8');
   renderHotbar();
   updateUI();
 }
 
 function useHotbarExtra(key) {
   if (state.hotbarItems[key] <= 0) {
-    showToast('❌ Bu slotta kullanılabilir öğe yok! Balık yakalayarak düşürebilirsiniz.', '#ef4444');
+    showToast('❌ Bu slotta öğe yok!', '#ef4444');
     return;
   }
   state.hotbarItems[key]--;
@@ -1010,36 +991,28 @@ function useHotbarExtra(key) {
 
   if (key === 'chest') {
     const gold = Math.floor(150 + Math.random() * 350);
-    state.money += gold;
-    state.mats.elixir += 2;
-    state.mats.powder += 1;
-    if (Math.random() < 0.45) state.mats.immortal += 1;
-    showToast(`📦 Gizemli Deniz Sandığı Açıldı: +${gold} ₺, +2 İksir, +1 Şans Tozu!`, '#fbbf24');
+    state.money += gold; state.mats.elixir += 2; state.mats.powder += 1;
+    showToast(`📦 Sandık Açıldı: +${gold} ₺, +2 İksir, +1 Şans Tozu!`, '#fbbf24');
   } else if (key === 'amphora') {
     const gold = Math.floor(280 + Math.random() * 500);
-    state.money += gold;
-    state.mats.astral += 1;
-    state.mats.blue += 2;
-    showToast(`🏺 Antik Amfora Açıldı: +${gold} ₺, +1 Yıldız Taşı, +2 Mavi Öz!`, '#c084fc');
+    state.money += gold; state.mats.astral += 1; state.mats.blue += 2;
+    showToast(`🏺 Amfora Açıldı: +${gold} ₺, +1 Yıldız Taşı, +2 Mavi Öz!`, '#c084fc');
   } else if (key === 'pearl') {
     const gold = Math.floor(400 + Math.random() * 600);
-    state.money += gold;
-    state.mats.immortal += 1;
-    state.mats.elixir += 2;
-    showToast(`🦪 Nadir İstridye İncisi Bulundu: +${gold} ₺, +1 Koruma Taşı, +2 İksir!`, '#38bdf8');
+    state.money += gold; state.mats.immortal += 1; state.mats.elixir += 2;
+    showToast(`🦪 İstridye İncisi: +${gold} ₺, +1 Koruma Taşı!`, '#38bdf8');
   } else if (key === 'chum') {
     state.chumTimer = 30;
-    showToast('🪣 Derin Deniz Yemlemesi Yapıldı! (30 sn +%50 Cazibe & Nadir Ganimet)', '#22c55e');
+    showToast('🪣 Yemleme Yapıldı! (30 sn +%50 Cazibe)', '#22c55e');
   } else if (key === 'repair') {
     state.tension = Math.max(0, state.tension - 65);
-    showToast('🧪 Nano Misina Kiti uygulandı! Gerginlik düşürüldü.', '#38bdf8');
+    showToast('🧪 Misina gerginliği düşürüldü.', '#38bdf8');
   }
   saveProgress();
   renderHotbar();
   updateUI();
 }
 
-// ==================== BALIK DOĞURMA VE HAREKET MOTORU ====================
 function spawnFishes() {
   state.fishes = [];
   const maxD = SPOTS[state.spotIdx].maxDepth;
@@ -1057,15 +1030,9 @@ function createSingleFish(available, maxD) {
   const kg = +(sp.minKg + Math.random() * (sp.maxKg - sp.minKg)).toFixed(2);
   const facing = Math.random() < 0.5 ? 1 : -1;
   return {
-    sp, kg,
-    x: 240 + Math.random() * 900,
-    depth,
-    vx: facing * (0.4 + sp.speed * 0.35),
-    vy: 0,
-    facing,
-    turnCooldown: 0,
-    state: 'patrol',
-    tailPhase: Math.random() * Math.PI * 2
+    sp, kg, x: 240 + Math.random() * 900, depth,
+    vx: facing * (0.4 + sp.speed * 0.35), vy: 0, facing,
+    turnCooldown: 0, state: 'patrol', tailPhase: Math.random() * Math.PI * 2
   };
 }
 
@@ -1076,7 +1043,6 @@ function releaseEscapedFish(fish, msg) {
     fish.state = 'fleeing';
     fish.facing = 1;
     fish.vx = 6.5;
-    fish.vy = 0;
   }
   state.hookedFish = null;
   resetCastToShore();
@@ -1094,7 +1060,6 @@ function resetCastToShore() {
   updateUI();
 }
 
-// ==================== OLTA KONTROLLERİ & AKSİYONLAR ====================
 function startOrTriggerCast() {
   if (state.phase === 'idle') {
     state.phase = 'charging';
@@ -1125,10 +1090,7 @@ function launchLure() {
 }
 
 function performLureAction(type) {
-  if (state.phase === 'bite') {
-    strikeFish();
-    return;
-  }
+  if (state.phase === 'bite') { strikeFish(); return; }
   if (state.phase !== 'water') return;
   const lure = state.lures[state.activeSlot];
   const mult = getTotalAppealMult();
@@ -1137,7 +1099,7 @@ function performLureAction(type) {
     state.lure.appeal = Math.min(100, state.lure.appeal + 22 * mult);
     state.lure.dist = Math.max(0, state.lure.dist - 1.4);
     state.lure.depth = Math.max(0.2, state.lure.depth - 0.8);
-    state.lure.actionText = lure.type === 'topwater' ? 'Walk-The-Dog (WTD)!' : 'Keskin Twitch!';
+    state.lure.actionText = lure.type === 'topwater' ? 'WTD Aksiyonu!' : 'Keskin Twitch!';
     state.lure.actionTimer = 0.6;
     playTone(580, 0.06, 'triangle');
   } else if (type === 'jerk') {
@@ -1157,7 +1119,7 @@ function strikeFish() {
   state.hookedFish.state = 'hooked';
   state.tension = 35;
   playTone(740, 0.2, 'square');
-  showToast(`🎣 TASMA OTURDU! ${state.hookedFish.sp.name} (${state.hookedFish.kg} kg) mücadelede!`, '#22c55e');
+  showToast(`🎣 TASMA OTURDU! ${state.hookedFish.sp.name} (${state.hookedFish.kg} kg)`, '#22c55e');
   document.getElementById('mainActionBtn').className = 'action-btn';
   document.getElementById('mainActionBtn').innerText = '🔄 BALIĞI ÇEK (SAR)';
 }
@@ -1186,7 +1148,6 @@ function reelFightStep(dt) {
   state.tension += (18 + f.sp.power * 6.5 * dragFactor) * dt;
 }
 
-// ==================== BALIK YAKALAMA & GANİMET SİSTEMİ ====================
 function landFish(fish) {
   playTone(880, 0.25, 'triangle');
   const xpGain = Math.round(fish.sp.xp * (0.8 + fish.kg / fish.sp.maxKg));
@@ -1204,26 +1165,20 @@ function landFish(fish) {
     state.cooler.push({ name: fish.sp.name, id: fish.sp.id, kg: fish.kg, val });
   } else {
     state.money += val;
-    showToast(`💰 Livar dolu olduğu için ${fish.sp.name} anında ${val} ₺'ye satıldı!`, '#fbbf24');
+    showToast(`💰 Livar dolu: ${fish.sp.name} anında ${val} ₺'ye satıldı!`, '#fbbf24');
   }
 
   const luck = getTotalLuckBonus();
   const drops = [];
-
   if (Math.random() < 0.45 * luck) { state.mats.elixir++; drops.push('🧪 +1 İksir'); }
   if (Math.random() < 0.40 * luck) { state.mats.powder++; drops.push('✨ +1 Şans Tozu'); }
   if (Math.random() < 0.22 * luck) { state.mats.blue++; drops.push('🔵 +1 Mavi Öz'); }
-  if (Math.random() < 0.12 * luck) { state.mats.astral++; drops.push('🌟 +1 Yıldız Taşı'); }
-  if (Math.random() < 0.09 * luck) { state.mats.immortal++; drops.push('💎 +1 Koruma Taşı'); }
+  if (Math.random() < 0.12 * luck) { state.mats.astral++; drops.push('🌟 +1 Yıldız'); }
+  if (Math.random() < 0.09 * luck) { state.mats.immortal++; drops.push('💎 +1 Koruma'); }
+  if (Math.random() < 0.25 * luck) { state.hotbarItems.chest++; drops.push('📦 Sandık'); }
 
-  if (Math.random() < 0.25 * luck) { state.hotbarItems.chest++; drops.push('📦 Gizemli Sandık (Slot 5)'); }
-  if (fish.depth > 30 && Math.random() < 0.20 * luck) { state.hotbarItems.amphora++; drops.push('🏺 Antik Amfora (Slot 6)'); }
-  if (fish.kg >= fish.sp.maxKg * 0.6 && Math.random() < 0.22 * luck) { state.hotbarItems.pearl++; drops.push('🦪 İstridye İncisi (Slot 7)'); }
-
-  showToast(`🐟 YAKALANDI: ${fish.sp.name} (${fish.kg} kg) | Değeri: ${val} ₺ | +${xpGain} XP`, '#22c55e');
-  if (drops.length > 0) {
-    showToast(`🎁 GANİMET DÜŞTÜ: ${drops.join(', ')}`, '#e879f9');
-  }
+  showToast(`🐟 YAKALANDI: ${fish.sp.name} (${fish.kg} kg) | +${val} ₺`, '#22c55e');
+  if (drops.length > 0) showToast(`🎁 GANİMET: ${drops.join(', ')}`, '#e879f9');
 
   const idx = state.fishes.indexOf(fish);
   if (idx !== -1) {
@@ -1239,7 +1194,6 @@ function landFish(fish) {
   updateUI();
 }
 
-// ==================== SİMYA ATÖLYESİ FONKSİYONLARI ====================
 function getAlchemyTargetObj() {
   if (state.selectedAlchemyTarget === 'rod') return { obj: state.rod, type: 'Kamış', icon: '🎣' };
   if (state.selectedAlchemyTarget === 'reel') return { obj: state.reel, type: 'Makine', icon: '⚙️' };
@@ -1249,11 +1203,11 @@ function getAlchemyTargetObj() {
 
 function renderAlchemyModal() {
   document.getElementById('alchemyMatHeader').innerHTML = `
-    <div class="mat-badge">🧪 Güçlendirme İksiri: <b>${state.mats.elixir}</b></div>
-    <div class="mat-badge">✨ Şans Tozu: <b>${state.mats.powder}</b></div>
-    <div class="mat-badge">💎 Koruma Taşı: <b>${state.mats.immortal}</b></div>
-    <div class="mat-badge">🌟 Yıldız Taşı: <b>${state.mats.astral}</b></div>
-    <div class="mat-badge">🔵 Mavi İznitelik Taşı: <b>${state.mats.blue}</b></div>
+    <div class="mat-badge">🧪 İksir: <b>${state.mats.elixir}</b></div>
+    <div class="mat-badge">✨ Şans: <b>${state.mats.powder}</b></div>
+    <div class="mat-badge">💎 Koruma: <b>${state.mats.immortal}</b></div>
+    <div class="mat-badge">🌟 Yıldız: <b>${state.mats.astral}</b></div>
+    <div class="mat-badge">🔵 Mavi Öz: <b>${state.mats.blue}</b></div>
   `;
 
   const t = getAlchemyTargetObj();
@@ -1262,9 +1216,8 @@ function renderAlchemyModal() {
   box.innerHTML = `${t.icon}<span style="position:absolute;bottom:4px;right:6px;font-size:13px;font-weight:900;color:#fbbf24;">+${t.obj.plus}</span>`;
 
   document.getElementById('alchemyTargetName').innerText = `${t.obj.name} (+${t.obj.plus})`;
-  const bonusPct = t.obj.plus * 12;
-  document.getElementById('alchemyTargetStats').innerText = `Simya Güç Bonusu: +%${bonusPct} | Sonraki Hedef: +${Math.min(12, t.obj.plus + 1)}`;
-  document.getElementById('alchemyBlueStats').innerText = `Mavi Özellikler: GÜÇ +${t.obj.blue.str} | CAZİBE +${t.obj.blue.int} | ŞANS +${t.obj.blue.luck}`;
+  document.getElementById('alchemyTargetStats').innerText = `Güç Bonusu: +%${t.obj.plus * 12} | Hedef: +${Math.min(12, t.obj.plus + 1)}`;
+  document.getElementById('alchemyBlueStats').innerText = `Özellikler: GÜÇ +${t.obj.blue.str} | CAZİBE +${t.obj.blue.int} | ŞANS +${t.obj.blue.luck}`;
 
   const list = document.getElementById('alchemyItemList');
   const candidates = [
@@ -1279,8 +1232,8 @@ function renderAlchemyModal() {
         <h4>${c.icon} ${c.name}</h4>
         <b style="color:#fbbf24; font-size:14px;">+${c.plus}</b>
       </div>
-      <p style="color:#60a5fa; font-weight:700;">GÜÇ:${c.blue.str} | CAZİBE:${c.blue.int} | ŞANS:${c.blue.luck}</p>
-      <button class="buy-btn" style="background:#7e22ce;">Simya Masasına Seç</button>
+      <p style="color:#60a5fa; font-weight:700;">GÜÇ:${c.blue.str} | CAZİBE:${c.blue.int}</p>
+      <button class="buy-btn" style="background:#7e22ce;">Seç</button>
     </div>
   `).join('');
 }
@@ -1288,15 +1241,8 @@ function renderAlchemyModal() {
 function attemptAlchemyPlus() {
   const t = getAlchemyTargetObj().obj;
   const log = document.getElementById('alchemyLog');
-  if (t.plus >= 12) {
-    log.innerText = '⚡ Bu ekipman zaten maksimum +12 Efsanevi Aura seviyesinde!';
-    return;
-  }
-  if (state.mats.elixir <= 0) {
-    log.style.color = '#ef4444';
-    log.innerText = '❌ Yetersiz İksir! Balık tutarak veya Marketten temin edin.';
-    return;
-  }
+  if (t.plus >= 12) { log.innerText = '⚡ Zaten maksimum +12 seviye!'; return; }
+  if (state.mats.elixir <= 0) { log.style.color = '#ef4444'; log.innerText = '❌ Yetersiz İksir!'; return; }
   state.mats.elixir--;
 
   const useLucky = document.getElementById('useLuckyPowder').checked;
@@ -1304,32 +1250,28 @@ function attemptAlchemyPlus() {
   const useAst = document.getElementById('useAstral').checked;
 
   let chance = [0.95, 0.88, 0.78, 0.68, 0.55, 0.45, 0.36, 0.28, 0.22, 0.16, 0.12, 0.09][t.plus] || 0.1;
-  if (useLucky && state.mats.powder > 0) {
-    state.mats.powder--;
-    chance += 0.20;
-  }
+  if (useLucky && state.mats.powder > 0) { state.mats.powder--; chance += 0.20; }
 
   if (Math.random() <= chance) {
     t.plus++;
     playTone(920, 0.25, 'triangle');
     log.style.color = '#22c55e';
-    log.innerText = `✨ GÜÇLENDİRME BAŞARILI! ${t.name} +${t.plus} seviyesine yükseldi!`;
-    showToast(`⚗️ BAŞARILI: ${t.name} artık +${t.plus}!`, '#22c55e');
+    log.innerText = `✨ BAŞARILI! +${t.plus} oldu!`;
+    showToast(`⚗️ ${t.name} artı basıldı: +${t.plus}`, '#22c55e');
   } else {
     playTone(180, 0.3, 'sawtooth');
     if (t.plus >= 5 && useImm && state.mats.immortal > 0) {
       state.mats.immortal--;
       log.style.color = '#38bdf8';
-      log.innerText = `💎 Başarısız oldu ancak Koruma Taşı eşyayı +${t.plus} seviyesinde korudu!`;
+      log.innerText = `💎 Koruma Taşı eşyayı korudu!`;
     } else if (t.plus >= 4 && useAst && state.mats.astral > 0) {
-      state.mats.astral--;
-      t.plus = 4;
+      state.mats.astral--; t.plus = 4;
       log.style.color = '#fbbf24';
-      log.innerText = `🌟 Başarısız oldu! Yıldız Taşı eşyayı +4 seviyesinde tuttu.`;
+      log.innerText = `🌟 Yıldız Taşı eşyayı +4'te tuttu.`;
     } else {
       t.plus = Math.max(0, t.plus - 1);
       log.style.color = '#ef4444';
-      log.innerText = `💥 İşlem Başarısız! Ekipman +${t.plus} seviyesine geriledi.`;
+      log.innerText = `💥 Başarısız! +${t.plus} seviyesine düştü.`;
     }
   }
   saveProgress();
@@ -1341,25 +1283,19 @@ function attemptAlchemyPlus() {
 function attemptBlueStat() {
   const t = getAlchemyTargetObj().obj;
   const log = document.getElementById('alchemyLog');
-  if (state.mats.blue <= 0) {
-    log.style.color = '#ef4444';
-    log.innerText = '❌ Yetersiz Mavi İznitelik Taşı!';
-    return;
-  }
+  if (state.mats.blue <= 0) { log.style.color = '#ef4444'; log.innerText = '❌ Yetersiz Mavi Öz!'; return; }
   state.mats.blue--;
   const keys = ['str', 'int', 'luck'];
-  const labels = { str:'GÜÇ', int:'CAZİBE', luck:'ŞANS' };
   const picked = keys[Math.floor(Math.random() * keys.length)];
   t.blue[picked] = Math.min(10, t.blue[picked] + 1);
   playTone(760, 0.18, 'sine');
   log.style.color = '#60a5fa';
-  log.innerText = `🔵 Mavi İznitelik Eklendi: ${labels[picked]} +${t.blue[picked]} oldu!`;
+  log.innerText = `🔵 Mavi Öz Eklendi (${picked.toUpperCase()} +${t.blue[picked]})`;
   saveProgress();
   renderAlchemyModal();
   updateUI();
 }
 
-// ==================== MARKET, BAZAAR, HARİTA VE ANSİKLOPEDİ ====================
 function openModal(id) {
   closeModals();
   document.getElementById(id).classList.add('open');
@@ -1379,49 +1315,32 @@ function renderMarket(tab, btnEl) {
     btnEl.classList.add('active');
   }
   const grid = document.getElementById('marketGrid');
-
   if (tab === 'rods') {
     grid.innerHTML = SHOP_ITEMS.rods.map(r => `
       <div class="item-card">
-        <div>
-          <h4>🎣 ${r.name}</h4>
-          <p>Çekiş Gücü: ${r.power}x | Maks Atış: ${r.cast}m</p>
-        </div>
-        <button class="buy-btn" onclick="buyGear('rod','${r.id}')" ${state.rod.id===r.id?'disabled':''}>
-          ${state.rod.id===r.id ? 'Kuşanıldı' : (r.owned ? 'Kuşan' : `${r.price} ₺ Satın Al`)}
-        </button>
+        <div><h4>🎣 ${r.name}</h4><p>Güç: ${r.power}x | Atış: ${r.cast}m</p></div>
+        <button class="buy-btn" onclick="buyGear('rod','${r.id}')" ${state.rod.id===r.id?'disabled':''}>${state.rod.id===r.id ? 'Kuşanıldı' : (r.owned ? 'Kuşan' : `${r.price} ₺`)}</button>
       </div>
     `).join('');
   } else if (tab === 'reels') {
     grid.innerHTML = SHOP_ITEMS.reels.map(r => `
       <div class="item-card">
-        <div>
-          <h4>⚙️ ${r.name}</h4>
-          <p>Kalama Gücü: ${r.drag}x | Sarım Hızı: ${r.speed}x</p>
-        </div>
-        <button class="buy-btn" onclick="buyGear('reel','${r.id}')" ${state.reel.id===r.id?'disabled':''}>
-          ${state.reel.id===r.id ? 'Kuşanıldı' : (r.owned ? 'Kuşan' : `${r.price} ₺ Satın Al`)}
-        </button>
+        <div><h4>⚙️ ${r.name}</h4><p>Kalama: ${r.drag}x</p></div>
+        <button class="buy-btn" onclick="buyGear('reel','${r.id}')" ${state.reel.id===r.id?'disabled':''}>${state.reel.id===r.id ? 'Kuşanıldı' : (r.owned ? 'Kuşan' : `${r.price} ₺`)}</button>
       </div>
     `).join('');
   } else if (tab === 'lures') {
     grid.innerHTML = state.lures.map((l, idx) => `
       <div class="item-card ${getGlowClass(l.plus)}">
-        <div>
-          <h4>${l.icon} ${l.name} (+${l.plus})</h4>
-          <p>Dalış Limiti: ${l.maxSink}m | Cazibe Çarpanı: ${l.appealBonus.toFixed(2)}x</p>
-        </div>
-        <button class="buy-btn" onclick="upgradeLureTier(${idx})">Yem Kalitesini Artır (600 ₺)</button>
+        <div><h4>${l.icon} ${l.name}</h4><p>Dalış: ${l.maxSink}m</p></div>
+        <button class="buy-btn" onclick="upgradeLureTier(${idx})">Geliştir (600 ₺)</button>
       </div>
     `).join('');
   } else if (tab === 'alchemy') {
     grid.innerHTML = SHOP_ITEMS.alchemy.map(a => `
       <div class="item-card">
-        <div>
-          <h4>${a.name}</h4>
-          <p>${a.desc}</p>
-        </div>
-        <button class="buy-btn" onclick="buyAlchemyItem('${a.id}')">${a.price} ₺ Satın Al</button>
+        <div><h4>${a.name}</h4><p>${a.desc}</p></div>
+        <button class="buy-btn" onclick="buyAlchemyItem('${a.id}')">${a.price} ₺</button>
       </div>
     `).join('');
   }
@@ -1433,16 +1352,12 @@ function buyGear(kind, id) {
   if (!item) return;
   if (!item.owned) {
     if (state.money < item.price) { showToast('❌ Yetersiz bakiye!', '#ef4444'); return; }
-    state.money -= item.price;
-    item.owned = true;
+    state.money -= item.price; item.owned = true;
   }
-  if (kind === 'rod') {
-    state.rod = { ...item, plus: state.rod.plus, blue: state.rod.blue };
-  } else {
-    state.reel = { ...item, plus: state.reel.plus, blue: state.reel.blue };
-  }
+  if (kind === 'rod') state.rod = { ...item, plus: state.rod.plus, blue: state.rod.blue };
+  else state.reel = { ...item, plus: state.reel.plus, blue: state.reel.blue };
   saveProgress();
-  showToast(`✅ ${item.name} kuşanıldı! (+ ve Mavi özellikler korundu)`, '#22c55e');
+  showToast(`✅ ${item.name} kuşanıldı!`, '#22c55e');
   renderMarket(kind === 'rod' ? 'rods' : 'reels');
   updateUI();
 }
@@ -1452,7 +1367,7 @@ function upgradeLureTier(idx) {
   state.money -= 600;
   state.lures[idx].appealBonus += 0.2;
   saveProgress();
-  showToast(`🐟 ${state.lures[idx].name} cazibesi artırıldı!`, '#22c55e');
+  showToast('🐟 Yem cazibesi artırıldı!', '#22c55e');
   renderMarket('lures');
   updateUI();
 }
@@ -1464,26 +1379,21 @@ function buyAlchemyItem(id) {
   if (item.type === 'mat') state.mats[item.key] += item.qty;
   if (item.type === 'cons') state.hotbarItems[item.key] += item.qty;
   saveProgress();
-  showToast(`✅ ${item.name} satın alındı!`, '#22c55e');
+  showToast(`✅ ${item.name} alındı!`, '#22c55e');
   renderHotbar();
   updateUI();
 }
 
 function renderBazaar() {
-  const bonusFish = FISH_SPECIES.find(f => f.id === state.dailyBonusId);
-  document.getElementById('dailyBonusText').innerText = `🔥 Günün Fırsat Balığı: ${bonusFish ? bonusFish.name : 'Avcı Levrek'} (+%50 Borsa Bonusu)`;
   const list = document.getElementById('coolerList');
   if (state.cooler.length === 0) {
-    list.innerHTML = `<p style="color:#94a3b8;">Livarınız şu an boş. Denizden balık yakaladıkça buraya eklenir.</p>`;
+    list.innerHTML = `<p style="color:#94a3b8;">Livar boş.</p>`;
     return;
   }
   list.innerHTML = state.cooler.map((c, i) => `
     <div class="item-card">
-      <div>
-        <h4>🐟 ${c.name}</h4>
-        <p>Ağırlık: <b>${c.kg} kg</b> | Satış Değeri: <b style="color:#fbbf24;">${c.val} ₺</b></p>
-      </div>
-      <button class="buy-btn" onclick="sellSingleFish(${i})">Sat (+${c.val} ₺)</button>
+      <div><h4>🐟 ${c.name}</h4><p>${c.kg} kg | <b style="color:#fbbf24;">${c.val} ₺</b></p></div>
+      <button class="buy-btn" onclick="sellSingleFish(${i})">Sat</button>
     </div>
   `).join('');
 }
@@ -1493,7 +1403,6 @@ function sellSingleFish(idx) {
   if (!f) return;
   state.money += f.val;
   state.cooler.splice(idx, 1);
-  playTone(660, 0.1, 'sine');
   saveProgress();
   renderBazaar();
   updateUI();
@@ -1504,9 +1413,8 @@ function sellAllFish() {
   const total = state.cooler.reduce((sum, f) => sum + f.val, 0);
   state.money += total;
   state.cooler = [];
-  playTone(820, 0.2, 'triangle');
   saveProgress();
-  showToast(`💰 Livardaki tüm balıklar ${total} ₺ karşılığında satıldı!`, '#fbbf24');
+  showToast(`💰 Tüm balıklar satıldı: +${total} ₺`, '#fbbf24');
   renderBazaar();
   updateUI();
 }
@@ -1516,14 +1424,8 @@ function renderMap() {
     const unlocked = state.xp >= s.reqXp;
     return `
       <div class="item-card" style="border-color:${state.spotIdx===s.id?'#fbbf24':'rgba(148,163,184,0.2)'}">
-        <div>
-          <h4>📍 ${s.name}</h4>
-          <p>Maksimum Derinlik: <b style="color:#38bdf8;">${s.maxDepth}m</b> | Gereken: ${s.reqXp} XP</p>
-          <p style="margin-top:4px;">${s.desc}</p>
-        </div>
-        <button class="buy-btn" onclick="selectSpot(${s.id})" ${!unlocked || state.spotIdx===s.id ? 'disabled' : ''}>
-          ${state.spotIdx===s.id ? 'Aktif Mera' : (unlocked ? 'Bu Meraya Git' : `🔒 ${s.reqXp} XP Gerekli`)}
-        </button>
+        <div><h4>📍 ${s.name}</h4><p>Maks: ${s.maxDepth}m | Gereken: ${s.reqXp} XP</p><p>${s.desc}</p></div>
+        <button class="buy-btn" onclick="selectSpot(${s.id})" ${!unlocked || state.spotIdx===s.id ? 'disabled' : ''}>${state.spotIdx===s.id ? 'Aktif' : (unlocked ? 'Git' : 'Kilitli')}</button>
       </div>
     `;
   }).join('');
@@ -1535,7 +1437,7 @@ function selectSpot(id) {
   spawnFishes();
   saveProgress();
   closeModals();
-  showToast(`🗺️ Yeni Meraya Geçildi: ${SPOTS[id].name} (Maks ${SPOTS[id].maxDepth}m)`, '#38bdf8');
+  showToast(`🗺️ Mera: ${SPOTS[id].name}`, '#38bdf8');
   updateUI();
 }
 
@@ -1544,19 +1446,12 @@ function renderDex() {
     const rec = state.dex[s.id];
     return `
       <div class="item-card" style="opacity:${rec ? 1 : 0.55}">
-        <div>
-          <h4>${rec ? '🏆' : '🔒'} ${s.name}</h4>
-          <p>Derinlik: ${s.minDepth}m - ${s.maxDepth}m | Borsa: ${s.priceKg} ₺/kg</p>
-          <p style="color:#fbbf24; margin-top:4px;">
-            ${rec ? `Yakalanan: ${rec.count} adet | Rekor: ${rec.maxKg} kg` : 'Henüz yakalanmadı'}
-          </p>
-        </div>
+        <div><h4>${rec ? '🏆' : '🔒'} ${s.name}</h4><p>${s.minDepth}-${s.maxDepth}m</p><p style="color:#fbbf24;">${rec ? `Adet: ${rec.count} | Rekor: ${rec.maxKg}kg` : 'Henüz yok'}</p></div>
       </div>
     `;
   }).join('');
 }
 
-// ==================== ARAYÜZ GÜNCELLEME ====================
 function updateUI() {
   document.getElementById('uiMoney').innerText = `${state.money} ₺`;
   document.getElementById('uiXp').innerText = `Sv.${state.level} (${state.xp} XP)`;
@@ -1576,24 +1471,27 @@ function updateUI() {
 
   const d = state.lure.depth;
   let zone = 'Yüzey (0-12m)';
-  if (d > 70) zone = 'Abyss Uçurum (70-120m)';
-  else if (d > 35) zone = 'Kayalık Dip (35-70m)';
+  if (d > 70) zone = 'Abyss (70-120m)';
+  else if (d > 35) zone = 'Dip (35-70m)';
   else if (d > 12) zone = 'Orta Su (12-35m)';
   document.getElementById('uiZone').innerText = zone;
-
   document.getElementById('uiAction').innerText = state.lure.actionText;
+
   document.getElementById('lureAppealBar').style.width = `${Math.min(100, state.lure.appeal)}%`;
   document.getElementById('tensionBar').style.width = `${Math.min(100, state.tension)}%`;
 }
 
-// ==================== FİZİK VE OYUN DÖNGÜSÜ ====================
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
   const area = document.getElementById('viewportArea');
-  canvas.width = area.clientWidth;
-  canvas.height = area.clientHeight;
+  const w = area.clientWidth;
+  const h = area.clientHeight;
+  canvas.width = Math.round(w * state.resolutionScale);
+  canvas.height = Math.round(h * state.resolutionScale);
+  canvas.style.width = `${w}px`;
+  canvas.style.height = `${h}px`;
 }
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
@@ -1633,7 +1531,6 @@ function updateGame(dt) {
       }
       state.lure.appeal = Math.max(0, state.lure.appeal - 8 * dt);
     }
-
     if (state.lure.actionTimer > 0) {
       state.lure.actionTimer -= dt;
       if (state.lure.actionTimer <= 0) state.lure.actionText = state.keys.w ? 'Düz Sarım' : 'Süzülüyor';
@@ -1642,42 +1539,33 @@ function updateGame(dt) {
 
   if (state.phase === 'bite') {
     state.biteTimer -= dt;
-    if (state.keys.space) {
-      strikeFish();
-    } else if (state.biteTimer <= 0) {
-      releaseEscapedFish(state.hookedFish, '⚠️ Geç kaldınız! Balık yemi bıraktı.');
-    }
+    if (state.keys.space) { strikeFish(); }
+    else if (state.biteTimer <= 0) { releaseEscapedFish(state.hookedFish, '⚠️ Geç kaldınız!'); }
   }
 
   if (state.phase === 'fighting' && state.hookedFish) {
     const f = state.hookedFish;
-    if (state.keys.w || state.keys.space) {
-      reelFightStep(dt);
-    } else {
+    if (state.keys.w || state.keys.space) { reelFightStep(dt); }
+    else {
       state.tension = Math.max(8, state.tension - 26 * dt);
-      if (Math.random() < 0.35) {
-        state.lure.dist = Math.min(115, state.lure.dist + f.sp.speed * 1.4 * dt);
-      }
+      if (Math.random() < 0.35) state.lure.dist = Math.min(115, state.lure.dist + f.sp.speed * 1.4 * dt);
     }
-
-    if (state.tension > state.drag && Math.random() < 0.25) {
-      playTone(1150, 0.03, 'sawtooth', 0.04);
-    }
+    if (state.tension > state.drag && Math.random() < 0.25) playTone(1150, 0.03, 'sawtooth', 0.04);
 
     const maxSafeTension = 100 + state.rod.blue.str * 3;
     if (state.tension >= maxSafeTension) {
-      releaseEscapedFish(f, `💥 MİSİNA KOPTU! ${f.sp.name} (${f.kg} kg) kalamayı patlattı!`);
+      releaseEscapedFish(f, `💥 MİSİNA KOPTU!`);
     } else if (state.lure.dist <= 1.5) {
       landFish(f);
     }
   }
 
   const targetCamDepth = (state.phase === 'water' || state.phase === 'bite' || state.phase === 'fighting')
-    ? Math.max(0, state.lure.depth - 12)
-    : 0;
+    ? Math.max(0, state.lure.depth - 12) : 0;
   state.cameraY += (targetCamDepth - state.cameraY) * Math.min(1, dt * 4);
 
-  const lureScreenX = 180 + (state.lure.dist / 120) * (canvas.width - 240);
+  const logicalWidth = canvas.width / state.resolutionScale;
+  const lureScreenX = 180 + (state.lure.dist / 120) * (logicalWidth - 240);
 
   for (let i = state.fishes.length - 1; i >= 0; i--) {
     const f = state.fishes[i];
@@ -1686,17 +1574,14 @@ function updateGame(dt) {
 
     if (f.state === 'fleeing') {
       f.x += f.vx * 60 * dt;
-      if (f.x > canvas.width + 200 || f.x < -200) {
+      if (f.x > logicalWidth + 200 || f.x < -200) {
         const avail = FISH_SPECIES.filter(s => s.minDepth <= maxSpotDepth);
         state.fishes[i] = createSingleFish(avail, maxSpotDepth);
       }
       continue;
     }
-
     if (f.state === 'hooked') {
-      f.x = lureScreenX;
-      f.depth = state.lure.depth;
-      f.facing = -1;
+      f.x = lureScreenX; f.depth = state.lure.depth; f.facing = -1;
       continue;
     }
 
@@ -1717,7 +1602,7 @@ function updateGame(dt) {
         state.biteTimer = 1.45;
         state.hookedFish = f;
         playTone(620, 0.18, 'square');
-        showToast(`⚡ BALIK VURDU! Hemen Tasma Butonuna Bas!`, '#fbbf24');
+        showToast('⚡ BALIK VURDU! TASMA AT!', '#fbbf24');
         const btn = document.getElementById('mainActionBtn');
         btn.className = 'action-btn strike';
         btn.innerText = '⚡ BALIK VURDU! TASMA AT!';
@@ -1725,25 +1610,19 @@ function updateGame(dt) {
     } else {
       f.state = 'patrol';
       f.x += f.vx * 35 * dt;
-      if (f.x < 210 && f.turnCooldown <= 0) {
-        f.vx = Math.abs(f.vx);
-        f.facing = 1;
-        f.turnCooldown = 0.8;
-      } else if (f.x > canvas.width - 60 && f.turnCooldown <= 0) {
-        f.vx = -Math.abs(f.vx);
-        f.facing = -1;
-        f.turnCooldown = 0.8;
-      }
+      if (f.x < 210 && f.turnCooldown <= 0) { f.vx = Math.abs(f.vx); f.facing = 1; f.turnCooldown = 0.8; }
+      else if (f.x > logicalWidth - 60 && f.turnCooldown <= 0) { f.vx = -Math.abs(f.vx); f.facing = -1; f.turnCooldown = 0.8; }
     }
   }
-
   updateUI();
 }
 
-// ==================== GÖRSEL RENDER MOTORU ====================
 function drawScene(time) {
-  const w = canvas.width;
-  const h = canvas.height;
+  ctx.save();
+  ctx.scale(state.resolutionScale, state.resolutionScale);
+
+  const w = canvas.width / state.resolutionScale;
+  const h = canvas.height / state.resolutionScale;
   ctx.clearRect(0, 0, w, h);
 
   const pxPerMeter = 16;
@@ -1837,10 +1716,7 @@ function drawScene(time) {
 
     const rodGlow = getGlowColor(state.rod.plus, time);
     ctx.save();
-    if (rodGlow) {
-      ctx.shadowColor = rodGlow;
-      ctx.shadowBlur = 16;
-    }
+    if (rodGlow) { ctx.shadowColor = rodGlow; ctx.shadowBlur = 16; }
     ctx.strokeStyle = rodGlow || '#e2e8f0';
     ctx.lineWidth = 3.2;
     const bend = state.phase === 'fighting' ? Math.min(28, state.tension * 0.28) : 0;
@@ -1875,10 +1751,7 @@ function drawScene(time) {
       const activeLure = state.lures[state.activeSlot];
       const lureGlow = getGlowColor(activeLure.plus, time);
       ctx.save();
-      if (lureGlow) {
-        ctx.shadowColor = lureGlow;
-        ctx.shadowBlur = 15;
-      }
+      if (lureGlow) { ctx.shadowColor = lureGlow; ctx.shadowBlur = 15; }
       ctx.fillStyle = lureGlow || '#38bdf8';
       ctx.beginPath();
       ctx.ellipse(lureX, lureY, 9, 4, 0, 0, Math.PI * 2);
@@ -1899,11 +1772,9 @@ function drawScene(time) {
     ctx.stroke();
   }
 
-  // BALIKLARIN ÇİZİMİ (PNG Varsa PNG, Yoksa Vektörel)
   state.fishes.forEach(f => {
     const fy = waterSurfaceY + f.depth * pxPerMeter;
     if (fy < -40 || fy > h + 40) return;
-
     const size = Math.max(14, Math.min(44, 13 + Math.sqrt(f.kg) * 6.5));
     ctx.save();
     ctx.translate(f.x, fy);
@@ -1933,43 +1804,23 @@ function drawScene(time) {
       ctx.fill();
 
       if (f.sp.body === 'sword') {
-        ctx.strokeStyle = '#94a3b8';
-        ctx.lineWidth = 2.2;
-        ctx.beginPath();
-        ctx.moveTo(size, 0);
-        ctx.lineTo(size * 1.65, 0);
-        ctx.stroke();
+        ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2.2;
+        ctx.beginPath(); ctx.moveTo(size, 0); ctx.lineTo(size * 1.65, 0); ctx.stroke();
       } else if (f.sp.body === 'angler') {
-        ctx.fillStyle = '#fde047';
-        ctx.shadowColor = '#fde047';
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.arc(size * 1.1, -size * 0.45, 4, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#fde047'; ctx.shadowColor = '#fde047'; ctx.shadowBlur = 10;
+        ctx.beginPath(); ctx.arc(size * 1.1, -size * 0.45, 4, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
       }
 
       if (f.sp.stripes) {
-        ctx.strokeStyle = 'rgba(15,23,42,0.35)';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(15,23,42,0.35)'; ctx.lineWidth = 2;
         for (let s = -size * 0.4; s <= size * 0.4; s += size * 0.25) {
-          ctx.beginPath();
-          ctx.moveTo(s, -ry * 0.8);
-          ctx.lineTo(s, ry * 0.8);
-          ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(s, -ry * 0.8); ctx.lineTo(s, ry * 0.8); ctx.stroke();
         }
       }
 
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.arc(size * 0.58, -ry * 0.22, Math.max(2.2, size * 0.1), 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = '#000';
-      ctx.beginPath();
-      ctx.arc(size * 0.61, -ry * 0.22, Math.max(1.2, size * 0.05), 0, Math.PI * 2);
-      ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(size * 0.58, -ry * 0.22, Math.max(2.2, size * 0.1), 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(size * 0.61, -ry * 0.22, Math.max(1.2, size * 0.05), 0, Math.PI * 2); ctx.fill();
     }
-
     ctx.restore();
 
     if (f.state === 'chase' || f.state === 'hooked') {
@@ -1978,6 +1829,7 @@ function drawScene(time) {
       ctx.fillText(`${f.sp.name} (${f.kg}kg)`, f.x - 32, fy - size * 0.6 - 6);
     }
   });
+  ctx.restore();
 }
 
 function loop(now) {
@@ -1988,7 +1840,6 @@ function loop(now) {
   requestAnimationFrame(loop);
 }
 
-// ==================== KLAVYE & DOKUNMATİK (iPad/MOBİL) BAĞLANTILARI ====================
 window.addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
   if (k === ' ') { e.preventDefault(); state.keys.space = true; startOrTriggerCast(); }
@@ -2010,7 +1861,6 @@ window.addEventListener('keyup', e => {
 });
 
 document.getElementById('mainActionBtn').onclick = startOrTriggerCast;
-
 const reelBtn = document.getElementById('reelBtn');
 reelBtn.addEventListener('mousedown', () => state.keys.w = true);
 reelBtn.addEventListener('mouseup', () => state.keys.w = false);
@@ -2026,11 +1876,10 @@ document.getElementById('dragSlider').oninput = e => {
 };
 document.getElementById('timeBtn').onclick = () => {
   state.timeOfDay = (state.timeOfDay + 1) % 3;
-  const labels = ['🌅 Vakit: Sabah Suyu', '🌇 Vakit: Gün Batımı', '🌙 Vakit: Gece Avı'];
+  const labels = ['🌅 Vakit: Sabah', '🌇 Vakit: Gün Batımı', '🌙 Vakit: Gece'];
   document.getElementById('timeBtn').innerText = labels[state.timeOfDay];
 };
 
-// BAŞLATMA
 loadProgress();
 spawnFishes();
 renderHotbar();
