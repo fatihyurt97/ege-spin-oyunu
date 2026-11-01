@@ -26,7 +26,7 @@
   #viewportArea { position: relative; flex: 1; height: 100vh; overflow: hidden; background: #030811; display: flex; align-items: center; justify-content: center; }
   #gameCanvas { display: block; cursor: crosshair; }
 
-  /* SAÄ KONTROL PANELÄ° */
+  /* SA? KONTROL PANEL? */
   #rightDock {
     width: 345px; height: 100vh; background: var(--panel-bg); border-left: 2px solid var(--border-col);
     display: flex; flex-direction: column; padding: 9px; gap: 7px; z-index: 20; box-shadow: -10px 0 30px rgba(0,0,0,0.75); overflow-y: auto;
@@ -91,7 +91,7 @@
   .glow-10 { animation: mythicGlow 1.2s infinite alternate; border-color: #f43f5e !important; }
   @keyframes mythicGlow { 0% { box-shadow: 0 0 16px #f43f5e, inset 0 0 10px #fbbf24; } 50% { box-shadow: 0 0 22px #38bdf8, inset 0 0 12px #c084fc; } 100% { box-shadow: 0 0 20px #22c55e, inset 0 0 12px #fde047; } }
 
-  /* ÃœST BÄ°LDÄ°RÄ°M VE TURNUVA BARI */
+  /* ?ST B?LD?R?M VE TURNUVA BARI */
   #toastArea { position: absolute; top: 12px; right: 12px; z-index: 15; display: flex; flex-direction: column; gap: 5px; pointer-events: none; align-items: flex-end; }
   .toast-msg { background: rgba(9, 18, 34, 0.92); border-right: 4px solid var(--accent); padding: 7px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; color: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.6); animation: fadeInOut 3.6s forwards; }
   @keyframes fadeInOut { 0% { opacity: 0; transform: translateX(15px); } 10% { opacity: 1; transform: translateX(0); } 85% { opacity: 1; } 100% { opacity: 0; transform: translateY(-8px); } }
@@ -132,7 +132,7 @@
   .rank-table th, .rank-table td { padding: 8px 10px; border-bottom: 1px solid rgba(148,163,184,0.15); text-align: left; }
   .rank-table th { color: #38bdf8; font-size: 11px; text-transform: uppercase; }
 
-  /* ============ MOBÄ°L / DOKUNMATÄ°K UYUMLULUK ============ */
+  /* ============ MOB?L / DOKUNMAT?K UYUMLULUK ============ */
   html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
   body { -webkit-touch-callout: none; overscroll-behavior: none; }
   textarea, input[type="text"] { user-select: text; -webkit-user-select: text; }
@@ -144,7 +144,7 @@
   html.mobile .mobile-only { display: block; }
   html.mobile #quickTooltip { display: none; }
 
-  /* SaÄŸ panel -> kayan Ã§ekmece */
+  /* Sa? panel -> kayan ?ekmece */
   html.mobile #rightDock {
     position: fixed; top: 0; right: 0; bottom: 0; height: var(--app-h, 100dvh);
     width: min(88vw, 370px); z-index: 40; transform: translateX(105%);
@@ -159,7 +159,7 @@
   html.mobile .menu-btn, html.mobile .sub-btn, html.mobile .action-btn { min-height: 42px; }
   html.mobile #dragSlider { width: 140px !important; }
 
-  /* Ãœst HUD */
+  /* ?st HUD */
   #mHud {
     position: absolute; z-index: 16; top: calc(6px + env(safe-area-inset-top));
     left: calc(8px + env(safe-area-inset-left)); right: calc(104px + env(safe-area-inset-right));
@@ -173,7 +173,7 @@
   #mHud .mh-bar { flex: 1 1 auto; height: 7px; background: #071120; border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); min-width: 40px; }
   #mHud .mh-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg,#22c55e,#eab308,#ef4444); }
 
-  /* Ãœst saÄŸ butonlar */
+  /* ?st sa? butonlar */
   .m-topbtn {
     position: absolute; z-index: 17; top: calc(6px + env(safe-area-inset-top)); width: 42px; height: 42px;
     border-radius: 12px; border: 1px solid var(--border-col); background: rgba(8,17,31,0.88); color: #fff;
@@ -185,7 +185,7 @@
   html.mobile .toast-msg { font-size: 11px; padding: 5px 9px; }
   html.mobile #tourneyBanner { top: calc(52px + env(safe-area-inset-top)); font-size: 10px; padding: 4px 12px; }
 
-  /* HÄ±zlÄ± bar (hotbar) */
+  /* H?zl? bar (hotbar) */
   html.mobile #quickBarWrap { bottom: calc(6px + env(safe-area-inset-bottom)); }
   html.mobile #quickBar { gap: 3px; padding: 3px; border-width: 1px; border-radius: 8px; }
   html.mobile .q-slot { width: var(--slot, 38px); height: var(--slot, 38px); border-width: 1px; }
@@ -195,7 +195,7 @@
   html.mobile .q-count { font-size: 10px; right: 2px; bottom: 0; }
   html.mobile .q-plus { font-size: 9px; right: 2px; }
 
-  /* Dokunmatik kontrol kÃ¼meleri */
+  /* Dokunmatik kontrol k?meleri */
   #touchControls { display: none; }
   html.mobile #touchControls { display: block; }
   .tc-cluster { position: absolute; z-index: 16; bottom: calc(8px + env(safe-area-inset-bottom)); display: flex; touch-action: none; }
@@ -230,7 +230,7 @@
   html.mobile .rank-table { display: block; overflow-x: auto; white-space: nowrap; }
   @media (max-width: 700px) { .alchemy-layout { grid-template-columns: 1fr; } }
 
-  /* ============ PREMIUM MARKET, BÃœYÃœK EKRAN Ã–LÃ‡EÄÄ°, FARE MODU ============ */
+  /* ============ PREMIUM MARKET, B?Y?K EKRAN ?L?E??, FARE MODU ============ */
   html:not(.mobile) #rightDock { zoom: var(--ui, 1); height: calc(var(--app-h, 100vh) / var(--ui, 1)); }
   html:not(.mobile) #quickBarWrap, html:not(.mobile) #toastArea, html:not(.mobile) #tourneyBanner,
   html:not(.mobile) #castMeter, html:not(.mobile) #boostChips { zoom: var(--ui, 1); }
@@ -269,157 +269,157 @@
 <div id="appLayout">
   <div id="viewportArea">
     <canvas id="gameCanvas"></canvas>
-    <div id="tourneyBanner">ğŸ† TURNUVA AKTÄ°F: Kalan SÃ¼re <span id="tourneyTimeUi">03:00</span> | En Ä°yi AvÄ±n: <span id="tourneyBestUi">0.00 kg</span></div>
+    <div id="tourneyBanner">&#x1F3C6; TURNUVA AKT&#x130;F: Kalan S&#xFC;re <span id="tourneyTimeUi">03:00</span> | En &#x130;yi Av&#x131;n: <span id="tourneyBestUi">0.00 kg</span></div>
     <div id="toastArea"></div>
     <div id="boostChips"></div>
-    <div id="castMeter"><div class="cm-label"><span>ğŸ¯ ATIÅ GÃœCÃœ</span><b id="cmVal">0%</b></div><div class="cm-bar"><i id="cmFill"></i></div></div>
+    <div id="castMeter"><div class="cm-label"><span>&#x1F3AF; ATI&#x15E; G&#xDC;C&#xDC;</span><b id="cmVal">0%</b></div><div class="cm-bar"><i id="cmFill"></i></div></div>
 
-    <!-- MOBÄ°L HUD & KONTROLLER -->
+    <!-- MOB&#x130;L HUD & KONTROLLER -->
     <div id="mHud" class="mobile-only">
-      <div class="mh-row"><span>ğŸ’° <b id="mhMoney">0 â‚º</b></span><span id="mhXp"></span><span id="mhState" class="mh-state"></span></div>
+      <div class="mh-row"><span>&#x1F4B0; <b id="mhMoney">0 &#x20BA;</b></span><span id="mhXp"></span><span id="mhState" class="mh-state"></span></div>
       <div class="mh-row"><span id="mhDist"></span><span id="mhDepth"></span><div class="mh-bar" title="Misina Gerilimi"><i id="mhTension"></i></div></div>
       <div class="mh-row" id="mhBoostRow" style="display:none;"><span id="mhBoost" style="color:#fde047;font-weight:800;"></span></div>
     </div>
-    <button id="mMenuBtn" class="m-topbtn" aria-label="MenÃ¼">â˜°</button>
-    <button id="mFsBtn" class="m-topbtn" aria-label="Tam ekran">â›¶</button>
+    <button id="mMenuBtn" class="m-topbtn" aria-label="Men&#xFC;">&#x2630;</button>
+    <button id="mFsBtn" class="m-topbtn" aria-label="Tam ekran">&#x26F6;</button>
 
     <div id="touchControls">
       <div id="tcLeft" class="tc-cluster">
-        <div class="tc-drag">âš™ï¸ Kalama: <b id="tcDragVal">60%</b>
+        <div class="tc-drag">&#x2699;&#xFE0F; Kalama: <b id="tcDragVal">60%</b>
           <input type="range" id="tcDrag" min="20" max="95" value="60">
         </div>
         <div class="tc-row">
-          <button id="tcTwitch" class="tc-btn small">âš¡<small>TWITCH</small></button>
-          <button id="tcJerk" class="tc-btn small">ğŸŒŠ<small>JERK</small></button>
+          <button id="tcTwitch" class="tc-btn small">&#x26A1;<small>TWITCH</small></button>
+          <button id="tcJerk" class="tc-btn small">&#x1F30A;<small>JERK</small></button>
         </div>
       </div>
       <div id="tcRight" class="tc-cluster">
-        <button id="tcReel" class="tc-btn mid">ğŸ”„<small>SAR</small></button>
-        <button id="tcAct" class="tc-btn big">ğŸ¯<small>ATIÅ</small></button>
+        <button id="tcReel" class="tc-btn mid">&#x1F504;<small>SAR</small></button>
+        <button id="tcAct" class="tc-btn big">&#x1F3AF;<small>ATI&#x15E;</small></button>
       </div>
     </div>
     <div id="quickBarWrap">
-      <div id="quickTooltip">[1-4] Sahte Yem  |  [5-7] Ganimet SandÄ±ÄŸÄ±/Ä°nci  |  [8-9] Yemleme & OnarÄ±m</div>
+      <div id="quickTooltip">[1-4] Sahte Yem  |  [5-7] Ganimet Sand&#x131;&#x11F;&#x131;/&#x130;nci  |  [8-9] Yemleme & Onar&#x131;m</div>
       <div id="quickBar"></div>
     </div>
   </div>
 
   <div id="dockScrim"></div>
   <aside id="rightDock">
-    <button id="dockClose" class="close-btn mobile-only">âœ• MenÃ¼yÃ¼ Kapat</button>
-    <!-- AVCI PROFÄ°LÄ° -->
+    <button id="dockClose" class="close-btn mobile-only">&#x2715; Men&#xFC;y&#xFC; Kapat</button>
+    <!-- AVCI PROF&#x130;L&#x130; -->
     <div class="dock-card">
       <div class="dock-title">
-        <span id="uiRankTitle">ğŸ£ Ã‡Ä±rak BalÄ±kÃ§Ä±</span>
+        <span id="uiRankTitle">&#x1F3A3; &#xC7;&#x131;rak Bal&#x131;k&#xE7;&#x131;</span>
         <span id="spotBadge" style="color:#fbbf24;">Sahilevleri</span>
       </div>
       <div class="stat-grid">
         <div class="stat-item">
           <div class="stat-label">Nakit Bakiye</div>
-          <div class="stat-val gold" id="uiMoney">120 â‚º</div>
+          <div class="stat-val gold" id="uiMoney">120 &#x20BA;</div>
         </div>
         <div class="stat-item">
-          <div class="stat-label">Seviye & TecrÃ¼be</div>
+          <div class="stat-label">Seviye & Tecr&#xFC;be</div>
           <div class="stat-val xp" id="uiXp">Sv.1 (0/180)</div>
         </div>
       </div>
       <div class="bar-wrap" style="height:6px; margin-top:5px;"><div id="xpBarFill" class="bar-fill" style="background:linear-gradient(90deg,#0284c7,#38bdf8);"></div></div>
       <div style="margin-top:4px; font-size:10.5px; color:#cbd5e1; display:flex; justify-content:space-between;">
-        <span id="uiRodName">KamÄ±ÅŸ: EgeCast +0</span>
+        <span id="uiRodName">Kam&#x131;&#x15F;: EgeCast +0</span>
         <span id="uiLineName" style="color:#38bdf8;">Misina: 3.5kg</span>
       </div>
     </div>
 
-    <!-- SONAR & TELEMETRÄ° -->
+    <!-- SONAR & TELEMETR&#x130; -->
     <div class="dock-card">
       <div class="dock-title">
-        <span>ğŸ“¡ SONAR & TELEMETRÄ°</span>
-        <span id="uiStateBadge" style="color:#22c55e;">KÄ±yÄ± (HazÄ±r)</span>
+        <span>&#x1F4E1; SONAR & TELEMETR&#x130;</span>
+        <span id="uiStateBadge" style="color:#22c55e;">K&#x131;y&#x131; (Haz&#x131;r)</span>
       </div>
       <div class="telemetry-row">
         <span>Mesafe: <b id="uiDist">0.0 m</b></span>
         <span>Derinlik: <b id="uiDepth" style="color:#38bdf8;">0.0 m</b> / <span id="uiMaxSpotD">22m</span></span>
       </div>
       <div class="telemetry-row">
-        <span>BÃ¶lge: <b id="uiZone">KÄ±yÄ± SularÄ±</b></span>
+        <span>B&#xF6;lge: <b id="uiZone">K&#x131;y&#x131; Sular&#x131;</b></span>
         <span>Aksiyon: <b id="uiAction" style="color:#fbbf24;">Beklemede</b></span>
       </div>
-      <div style="font-size:10px; color:#94a3b8; margin-top:2px;">Yem Aksiyon Cazibesi (Ritim & HÄ±z)</div>
+      <div style="font-size:10px; color:#94a3b8; margin-top:2px;">Yem Aksiyon Cazibesi (Ritim & H&#x131;z)</div>
       <div class="bar-wrap"><div id="lureAppealBar" class="bar-fill" style="background:linear-gradient(90deg,#38bdf8,#fbbf24);"></div></div>
 
       <div style="display:flex; justify-content:space-between; font-size:10px; color:#94a3b8; margin-top:3px;">
         <span>Misina Gerilimi</span>
-        <span id="uiLineLimitText">Ã‡eker: 3.5 kg</span>
+        <span id="uiLineLimitText">&#xC7;eker: 3.5 kg</span>
       </div>
       <div class="bar-wrap"><div id="tensionBar" class="bar-fill" style="background:linear-gradient(90deg,#22c55e,#eab308,#ef4444);"></div></div>
       <div style="display:flex; align-items:center; justify-content:space-between; font-size:11px; margin-top:4px;">
-        <span>âš™ï¸ Kalama (Drag): <b id="uiDragVal">60%</b></span>
+        <span>&#x2699;&#xFE0F; Kalama (Drag): <b id="uiDragVal">60%</b></span>
         <input type="range" id="dragSlider" min="20" max="95" value="60" style="width:125px;">
       </div>
     </div>
 
-    <!-- OLTA KONTROLÃœ -->
+    <!-- OLTA KONTROL&#xDC; -->
     <div class="dock-card">
-      <div class="dock-title"><span>âš¡ OLTA & AKSÄ°YON</span><span style="font-size:10px; color:#94a3b8;">[SPACE / W-A-S-D]</span></div>
-      <button id="mainActionBtn" class="action-btn">ğŸ¯ ATIÅ GÃœCÃœ DOLDUR</button>
+      <div class="dock-title"><span>&#x26A1; OLTA & AKS&#x130;YON</span><span style="font-size:10px; color:#94a3b8;">[SPACE / W-A-S-D]</span></div>
+      <button id="mainActionBtn" class="action-btn">&#x1F3AF; ATI&#x15E; G&#xDC;C&#xDC; DOLDUR</button>
       <div class="btn-row">
-        <button id="reelBtn" class="sub-btn">ğŸ”„ SARIM (BASILI TUT)</button>
-        <button id="twitchBtn" class="sub-btn">âš¡ TWITCH / WTD [A/D]</button>
+        <button id="reelBtn" class="sub-btn">&#x1F504; SARIM (BASILI TUT)</button>
+        <button id="twitchBtn" class="sub-btn">&#x26A1; TWITCH / WTD [A/D]</button>
       </div>
       <div class="btn-row">
-        <button id="jerkBtn" class="sub-btn">ğŸŒŠ DÄ°P JERK [S]</button>
-        <button id="timeBtn" class="sub-btn">ğŸŒ… Sabah Suyu</button>
+        <button id="jerkBtn" class="sub-btn">&#x1F30A; D&#x130;P JERK [S]</button>
+        <button id="timeBtn" class="sub-btn">&#x1F305; Sabah Suyu</button>
       </div>
     </div>
 
-    <!-- AKTÄ°F KONTRAT Ã–ZETÄ° -->
+    <!-- AKT&#x130;F KONTRAT &#xD6;ZET&#x130; -->
     <div class="dock-card" style="border-color:rgba(251,191,36,0.35);">
       <div class="dock-title" style="color:#fbbf24;">
-        <span>ğŸ“œ AKTÄ°F KONTRATLAR</span>
+        <span>&#x1F4DC; AKT&#x130;F KONTRATLAR</span>
         <span id="uiCoolerCount" style="color:#38bdf8;">Livar: 0/12</span>
       </div>
       <div id="miniContractBox" style="font-size:11px; color:#e2e8f0; line-height:1.35;"></div>
     </div>
 
-    <!-- Ä°STASYONLAR & MENÃœLER -->
+    <!-- &#x130;STASYONLAR & MEN&#xDC;LER -->
     <div class="dock-card" style="margin-top:auto;">
-      <div class="dock-title"><span>ğŸ›ï¸ Ä°STASYONLAR & REKABET</span></div>
+      <div class="dock-title"><span>&#x1F3DB;&#xFE0F; &#x130;STASYONLAR & REKABET</span></div>
       <div class="menu-grid">
-        <button class="menu-btn premium" onclick="openModal('premiumModal')">ğŸ’ PREMIUM MARKET (XP & Gelir Boost)</button>
-        <button class="menu-btn league" onclick="openModal('leagueModal')">ğŸ† Turnuva & Lig</button>
-        <button class="menu-btn" onclick="openModal('skillModal')">ğŸŒŸ Yetenek & GÃ¶rev <span id="spBadge" class="badge-dot" style="display:none;">0</span></button>
-        <button class="menu-btn alchemy" onclick="openModal('alchemyModal')">âš—ï¸ Simya (+12)</button>
-        <button class="menu-btn" onclick="openModal('marketModal')">ğŸ›’ Ekipman Market</button>
-        <button class="menu-btn" onclick="openModal('bazaarModal')">âš–ï¸ BalÄ±k Hali</button>
-        <button class="menu-btn" onclick="openModal('mapModal')">ğŸ—ºï¸ Meralar (5 BÃ¶lge)</button>
-        <button class="menu-btn" onclick="openModal('dexModal')">ğŸ“– 24 TÃ¼r Katalog</button>
-        <button class="menu-btn" onclick="openModal('settingsModal')">âš™ï¸ Ekran & KayÄ±t</button>
-        <button class="menu-btn span2" id="mouseModeBtn" onclick="toggleMouseMode()">ğŸ–±ï¸ Fare Modu: AÃ‡IK</button>
+        <button class="menu-btn premium" onclick="openModal('premiumModal')">&#x1F48E; PREMIUM MARKET (XP & Gelir Boost)</button>
+        <button class="menu-btn league" onclick="openModal('leagueModal')">&#x1F3C6; Turnuva & Lig</button>
+        <button class="menu-btn" onclick="openModal('skillModal')">&#x1F31F; Yetenek & G&#xF6;rev <span id="spBadge" class="badge-dot" style="display:none;">0</span></button>
+        <button class="menu-btn alchemy" onclick="openModal('alchemyModal')">&#x2697;&#xFE0F; Simya (+12)</button>
+        <button class="menu-btn" onclick="openModal('marketModal')">&#x1F6D2; Ekipman Market</button>
+        <button class="menu-btn" onclick="openModal('bazaarModal')">&#x2696;&#xFE0F; Bal&#x131;k Hali</button>
+        <button class="menu-btn" onclick="openModal('mapModal')">&#x1F5FA;&#xFE0F; Meralar (5 B&#xF6;lge)</button>
+        <button class="menu-btn" onclick="openModal('dexModal')">&#x1F4D6; 24 T&#xFC;r Katalog</button>
+        <button class="menu-btn" onclick="openModal('settingsModal')">&#x2699;&#xFE0F; Ekran & Kay&#x131;t</button>
+        <button class="menu-btn span2" id="mouseModeBtn" onclick="toggleMouseMode()">&#x1F5B1;&#xFE0F; Fare Modu: A&#xC7;IK</button>
       </div>
     </div>
   </aside>
 </div>
 
-<!-- 1. TURNUVA & REKABETÃ‡Ä° LÄ°G MODALI -->
+<!-- 1. TURNUVA & REKABET&#xC7;&#x130; L&#x130;G MODALI -->
 <div id="leagueModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>ğŸ† Ege Spin Ligi & CanlÄ± RekabetÃ§i Turnuva</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x1F3C6; Ege Spin Ligi & Canl&#x131; Rekabet&#xE7;i Turnuva</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body">
       <div style="display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg,rgba(146,64,14,0.35),rgba(15,23,42,0.9)); border:1px solid #fbbf24; padding:14px; border-radius:10px; margin-bottom:14px;">
         <div>
-          <h4 style="color:#fde047; font-size:14px;">âš¡ 3 DakikalÄ±k CanlÄ± Trofe TurnuvasÄ± (KatÄ±lÄ±m: 100 â‚º)</h4>
-          <p style="font-size:11.5px; color:#cbd5e1; margin-top:3px;">SÃ¼re iÃ§inde yakaladÄ±ÄŸÄ±n en aÄŸÄ±r balÄ±ÄŸÄ±n kg skoru, diÄŸer 9 profesyonel balÄ±kÃ§Ä±yla yarÄ±ÅŸÄ±r! 1. Ã–dÃ¼lÃ¼: <b>1.200 â‚º + 2 Ä°ksir + 150 Lig PuanÄ±</b></p>
+          <h4 style="color:#fde047; font-size:14px;">&#x26A1; 3 Dakikal&#x131;k Canl&#x131; Trofe Turnuvas&#x131; (Kat&#x131;l&#x131;m: 100 &#x20BA;)</h4>
+          <p style="font-size:11.5px; color:#cbd5e1; margin-top:3px;">S&#xFC;re i&#xE7;inde yakalad&#x131;&#x11F;&#x131;n en a&#x11F;&#x131;r bal&#x131;&#x11F;&#x131;n kg skoru, di&#x11F;er 9 profesyonel bal&#x131;k&#xE7;&#x131;yla yar&#x131;&#x15F;&#x131;r! 1. &#xD6;d&#xFC;l&#xFC;: <b>1.200 &#x20BA; + 2 &#x130;ksir + 150 Lig Puan&#x131;</b></p>
         </div>
-        <button class="action-btn" style="width:auto; padding:10px 18px; background:linear-gradient(135deg,#eab308,#ca8a04); color:#000;" onclick="startTournament()">ğŸ TURNUVAYI BAÅLAT</button>
+        <button class="action-btn" style="width:auto; padding:10px 18px; background:linear-gradient(135deg,#eab308,#ca8a04); color:#000;" onclick="startTournament()">&#x1F3C1; TURNUVAYI BA&#x15E;LAT</button>
       </div>
 
-      <h4 style="color:#38bdf8; font-size:13px; margin-bottom:6px;">ğŸ“Š Ege Spin Ligi Genel Klasman (CanlÄ± Borsa & Trofe PuanÄ±)</h4>
+      <h4 style="color:#38bdf8; font-size:13px; margin-bottom:6px;">&#x1F4CA; Ege Spin Ligi Genel Klasman (Canl&#x131; Borsa & Trofe Puan&#x131;)</h4>
       <table class="rank-table">
         <thead>
-          <tr><th>SÄ±ra</th><th>BalÄ±kÃ§Ä± AdÄ±</th><th>Ãœnvan / Mera</th><th>En Ä°ri Trofe</th><th>Lig PuanÄ±</th></tr>
+          <tr><th>S&#x131;ra</th><th>Bal&#x131;k&#xE7;&#x131; Ad&#x131;</th><th>&#xDC;nvan / Mera</th><th>En &#x130;ri Trofe</th><th>Lig Puan&#x131;</th></tr>
         </thead>
         <tbody id="leagueTableBody"></tbody>
       </table>
@@ -427,61 +427,61 @@
   </div>
 </div>
 
-<!-- 2. YETENEK AÄACI & KONTRATLAR MODALI -->
+<!-- 2. YETENEK A&#x11E;ACI & KONTRATLAR MODALI -->
 <div id="skillModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>ğŸŒŸ AvcÄ± Yetenek AÄŸacÄ± & GÃ¼nlÃ¼k Kontratlar</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x1F31F; Avc&#x131; Yetenek A&#x11F;ac&#x131; & G&#xFC;nl&#xFC;k Kontratlar</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body">
       <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(2,132,199,0.18); padding:10px 14px; border-radius:8px; margin-bottom:12px;">
-        <span style="font-size:13px; font-weight:800; color:#38bdf8;">Mevcut Yetenek PuanÄ±n (SP): <b id="uiSkillPoints" style="color:#fbbf24; font-size:16px;">0</b></span>
-        <span style="font-size:11px; color:#cbd5e1;">Her seviye atladÄ±ÄŸÄ±nda +1 Yetenek PuanÄ± kazanÄ±rsÄ±n.</span>
+        <span style="font-size:13px; font-weight:800; color:#38bdf8;">Mevcut Yetenek Puan&#x131;n (SP): <b id="uiSkillPoints" style="color:#fbbf24; font-size:16px;">0</b></span>
+        <span style="font-size:11px; color:#cbd5e1;">Her seviye atlad&#x131;&#x11F;&#x131;nda +1 Yetenek Puan&#x131; kazan&#x131;rs&#x131;n.</span>
       </div>
       <div id="skillGrid" class="card-grid" style="margin-bottom:18px;"></div>
 
-      <h4 style="color:#fbbf24; font-size:13px; margin-bottom:8px;">ğŸ“œ Aktif Av KontratlarÄ± (TamamladÄ±kÃ§a Yenisi Gelir)</h4>
+      <h4 style="color:#fbbf24; font-size:13px; margin-bottom:8px;">&#x1F4DC; Aktif Av Kontratlar&#x131; (Tamamlad&#x131;k&#xE7;a Yenisi Gelir)</h4>
       <div id="contractGrid" class="card-grid"></div>
     </div>
   </div>
 </div>
 
-<!-- 3. SÄ°MYA ATÃ–LYESÄ° -->
+<!-- 3. S&#x130;MYA AT&#xD6;LYES&#x130; -->
 <div id="alchemyModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>âš—ï¸ Simya & Ekipman GÃ¼Ã§lendirme AtÃ¶lyesi (+12 Aura)</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x2697;&#xFE0F; Simya & Ekipman G&#xFC;&#xE7;lendirme At&#xF6;lyesi (+12 Aura)</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body">
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;" id="alchemyMatHeader"></div>
       <div class="alchemy-layout">
         <div class="alchemy-chamber">
-          <div style="font-size:12px; color:#e879f9; font-weight:800;">SEÃ‡Ä°LÄ° EKÄ°PMAN</div>
-          <div id="alchemyTargetIcon" class="alchemy-target-box">ğŸ£</div>
+          <div style="font-size:12px; color:#e879f9; font-weight:800;">SE&#xC7;&#x130;L&#x130; EK&#x130;PMAN</div>
+          <div id="alchemyTargetIcon" class="alchemy-target-box">&#x1F3A3;</div>
           <div id="alchemyTargetName" style="font-weight:800; font-size:14px;">EgeCast XT +0</div>
           <div id="alchemyTargetStats" style="font-size:11px; color:#cbd5e1; line-height:1.4;"></div>
           <div id="alchemyBlueStats" style="font-size:11px; color:#60a5fa; font-weight:700;"></div>
 
           <div style="width:100%; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px; text-align:left; font-size:11px;">
             <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:4px;">
-              <input type="checkbox" id="useLuckyPowder" checked> âœ¨ Åans Tozu (+%18 BaÅŸarÄ±)
+              <input type="checkbox" id="useLuckyPowder" checked> &#x2728; &#x15E;ans Tozu (+%18 Ba&#x15F;ar&#x131;)
             </label>
             <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin-bottom:4px; color:#38bdf8;">
-              <input type="checkbox" id="useImmortal"> ğŸ’ Koruma TaÅŸÄ± (Seviye DÃ¼ÅŸÃ¼ÅŸÃ¼nÃ¼ Ã–nler)
+              <input type="checkbox" id="useImmortal"> &#x1F48E; Koruma Ta&#x15F;&#x131; (Seviye D&#xFC;&#x15F;&#xFC;&#x15F;&#xFC;n&#xFC; &#xD6;nler)
             </label>
             <label style="display:flex; align-items:center; gap:6px; cursor:pointer; color:#fbbf24;">
-              <input type="checkbox" id="useAstral"> ğŸŒŸ YÄ±ldÄ±z TaÅŸÄ± (+4 AltÄ±na DÃ¼ÅŸmeyi Ã–nler)
+              <input type="checkbox" id="useAstral"> &#x1F31F; Y&#x131;ld&#x131;z Ta&#x15F;&#x131; (+4 Alt&#x131;na D&#xFC;&#x15F;meyi &#xD6;nler)
             </label>
           </div>
 
-          <button class="action-btn" style="background:linear-gradient(135deg,#9333ea,#c026d3); border-color:#f0abfc;" onclick="attemptAlchemyPlus()">ğŸ”¥ SEVÄ°YE YÃœKSELT (+BAS)</button>
-          <button class="sub-btn" style="width:100%; border-color:#3b82f6; color:#93c5fd;" onclick="attemptBlueStat()">ğŸ”µ MAVÄ° Ã–ZELLÄ°K EKLE</button>
+          <button class="action-btn" style="background:linear-gradient(135deg,#9333ea,#c026d3); border-color:#f0abfc;" onclick="attemptAlchemyPlus()">&#x1F525; SEV&#x130;YE Y&#xDC;KSELT (+BAS)</button>
+          <button class="sub-btn" style="width:100%; border-color:#3b82f6; color:#93c5fd;" onclick="attemptBlueStat()">&#x1F535; MAV&#x130; &#xD6;ZELL&#x130;K EKLE</button>
           <div id="alchemyLog" style="font-size:12px; font-weight:800; min-height:20px; color:#fde047;"></div>
         </div>
         <div>
-          <div style="font-size:12px; font-weight:800; color:#94a3b8; margin-bottom:8px;">YÃœKSELTÄ°LEBÄ°LÄ°R EKÄ°PMANLAR</div>
+          <div style="font-size:12px; font-weight:800; color:#94a3b8; margin-bottom:8px;">Y&#xDC;KSELT&#x130;LEB&#x130;L&#x130;R EK&#x130;PMANLAR</div>
           <div id="alchemyItemList" class="card-grid"></div>
         </div>
       </div>
@@ -493,12 +493,12 @@
 <div id="premiumModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>ğŸ’ Premium Market â€” SÃ¼reli GÃ¼Ã§lendirmeler</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x1F48E; Premium Market &#x2014; S&#xFC;reli G&#xFC;&#xE7;lendirmeler</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body">
       <div id="premiumActive" class="prem-active"></div>
-      <p class="prem-note">Oyun parasÄ±yla alÄ±nÄ±r. SÃ¼re sadece oyun aÃ§Ä±kken akar. AynÄ± Ã¼rÃ¼nÃ¼ tekrar alÄ±rsan sÃ¼re uzar; daha gÃ¼Ã§lÃ¼ bir gÃ¼Ã§lendirme alÄ±rsan eskisinin yerini alÄ±r. Fiyatlar seviyene gÃ¶re artar.</p>
+      <p class="prem-note">Oyun paras&#x131;yla al&#x131;n&#x131;r. S&#xFC;re sadece oyun a&#xE7;&#x131;kken akar. Ayn&#x131; &#xFC;r&#xFC;n&#xFC; tekrar al&#x131;rsan s&#xFC;re uzar; daha g&#xFC;&#xE7;l&#xFC; bir g&#xFC;&#xE7;lendirme al&#x131;rsan eskisinin yerini al&#x131;r. Fiyatlar seviyene g&#xF6;re artar.</p>
       <div id="premiumGrid" class="card-grid"></div>
     </div>
   </div>
@@ -508,36 +508,36 @@
 <div id="marketModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>ğŸ›’ Profesyonel BalÄ±kÃ§Ä± & Simya Marketi</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x1F6D2; Profesyonel Bal&#x131;k&#xE7;&#x131; & Simya Marketi</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body">
       <div class="tab-bar">
-        <button class="tab-btn active" onclick="renderMarket('rods', this)">ğŸ£ KamÄ±ÅŸlar</button>
-        <button class="tab-btn" onclick="renderMarket('reels', this)">âš™ï¸ Makineler</button>
-        <button class="tab-btn" onclick="renderMarket('lines', this)">ğŸ§µ PE Ä°p & Misinalar</button>
-        <button class="tab-btn" onclick="renderMarket('lures', this)">ğŸŸ Sahte Yemler</button>
-        <button class="tab-btn" onclick="renderMarket('alchemy', this)">ğŸ§ª Simya & Yemleme</button>
+        <button class="tab-btn active" onclick="renderMarket('rods', this)">&#x1F3A3; Kam&#x131;&#x15F;lar</button>
+        <button class="tab-btn" onclick="renderMarket('reels', this)">&#x2699;&#xFE0F; Makineler</button>
+        <button class="tab-btn" onclick="renderMarket('lines', this)">&#x1F9F5; PE &#x130;p & Misinalar</button>
+        <button class="tab-btn" onclick="renderMarket('lures', this)">&#x1F41F; Sahte Yemler</button>
+        <button class="tab-btn" onclick="renderMarket('alchemy', this)">&#x1F9EA; Simya & Yemleme</button>
       </div>
       <div id="marketGrid" class="card-grid"></div>
     </div>
   </div>
 </div>
 
-<!-- 5. BALIK HALÄ° -->
+<!-- 5. BALIK HAL&#x130; -->
 <div id="bazaarModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>âš–ï¸ SoÄŸutucu Livar & BalÄ±k Hali BorsasÄ±</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x2696;&#xFE0F; So&#x11F;utucu Livar & Bal&#x131;k Hali Borsas&#x131;</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body">
       <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(2,132,199,0.18); padding:12px; border-radius:10px; margin-bottom:12px;">
         <div>
-          <div style="font-size:13px; font-weight:800; color:#fbbf24;" id="dailyBonusText">ğŸ”¥ GÃ¼nÃ¼n FÄ±rsat BalÄ±ÄŸÄ±: AvcÄ± Levrek (+%40 Borsa Bonusu)</div>
-          <div style="font-size:11px; color:#cbd5e1;">PazarlÄ±k yeteneÄŸiniz satÄ±ÅŸ gelirlerinizi doÄŸrudan artÄ±rÄ±r.</div>
+          <div style="font-size:13px; font-weight:800; color:#fbbf24;" id="dailyBonusText">&#x1F525; G&#xFC;n&#xFC;n F&#x131;rsat Bal&#x131;&#x11F;&#x131;: Avc&#x131; Levrek (+%40 Borsa Bonusu)</div>
+          <div style="font-size:11px; color:#cbd5e1;">Pazarl&#x131;k yetene&#x11F;iniz sat&#x131;&#x15F; gelirlerinizi do&#x11F;rudan art&#x131;r&#x131;r.</div>
         </div>
-        <button class="action-btn" style="width:auto; padding:10px 18px;" onclick="sellAllFish()">ğŸ’° TÃœMÃœNÃœ SAT</button>
+        <button class="action-btn" style="width:auto; padding:10px 18px;" onclick="sellAllFish()">&#x1F4B0; T&#xDC;M&#xDC;N&#xDC; SAT</button>
       </div>
       <div id="coolerList" class="card-grid"></div>
     </div>
@@ -548,8 +548,8 @@
 <div id="mapModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>ğŸ—ºï¸ KÄ±yÄ± ve Derin Deniz MeralarÄ± (Seviye Kilitli Ekosistem)</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x1F5FA;&#xFE0F; K&#x131;y&#x131; ve Derin Deniz Meralar&#x131; (Seviye Kilitli Ekosistem)</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body">
       <div id="mapGrid" class="card-grid"></div>
@@ -557,12 +557,12 @@
   </div>
 </div>
 
-<!-- 7. ANSÄ°KLOPEDÄ° -->
+<!-- 7. ANS&#x130;KLOPED&#x130; -->
 <div id="dexModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>ğŸ“– 24 TÃ¼r Deniz Ansiklopedisi & Habitat Rehberi</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x1F4D6; 24 T&#xFC;r Deniz Ansiklopedisi & Habitat Rehberi</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body">
       <div id="dexGrid" class="card-grid"></div>
@@ -574,22 +574,22 @@
 <div id="settingsModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
-      <h2>âš™ï¸ Ekran Ã‡Ã¶zÃ¼nÃ¼rlÃ¼ÄŸÃ¼, Tam Ekran & KayÄ±t YÃ¶netimi</h2>
-      <button class="close-btn" onclick="closeModals()">Kapat âœ•</button>
+      <h2>&#x2699;&#xFE0F; Ekran &#xC7;&#xF6;z&#xFC;n&#xFC;rl&#xFC;&#x11F;&#xFC;, Tam Ekran & Kay&#x131;t Y&#xF6;netimi</h2>
+      <button class="close-btn" onclick="closeModals()">Kapat &#x2715;</button>
     </div>
     <div class="modal-body" style="line-height:1.6; font-size:13px; color:#e2e8f0;">
       <div style="background:rgba(15,31,54,0.9); padding:12px; border-radius:10px; margin-bottom:14px; border:1px solid rgba(56,189,248,0.3);">
-        <h4 style="color:#fbbf24; margin-bottom:6px;">ğŸ–¥ï¸ Ã‡Ã¶zÃ¼nÃ¼rlÃ¼k ve Kamera AyarlarÄ±</h4>
+        <h4 style="color:#fbbf24; margin-bottom:6px;">&#x1F5A5;&#xFE0F; &#xC7;&#xF6;z&#xFC;n&#xFC;rl&#xFC;k ve Kamera Ayarlar&#x131;</h4>
         <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
           <button class="buy-btn" onclick="setResolutionScale(0.75)">Performans (0.75x)</button>
           <button class="buy-btn" onclick="setResolutionScale(1.0)" style="background:#22c55e;">Standart (1.0x)</button>
           <button class="buy-btn" onclick="setResolutionScale(1.35)" style="background:#7e22ce;">Retina Keskin (1.35x)</button>
         </div>
-        <button class="action-btn" style="background:#0284c7;" onclick="toggleFullscreen()">ğŸ“º Tam Ekran Moduna GeÃ§ (Fullscreen)</button>
-        <p style="font-size:11px; color:#94a3b8; margin-top:8px;">ğŸ“± iPhone/iPad: Tam ekran iÃ§in Safariâ€™de PaylaÅŸ âœ â€œAna Ekrana Ekleâ€ yapÄ±p oradan aÃ§. Telefonu yatay Ã§evirmek en rahat oyun deneyimini verir.</p>
+        <button class="action-btn" style="background:#0284c7;" onclick="toggleFullscreen()">&#x1F4FA; Tam Ekran Moduna Ge&#xE7; (Fullscreen)</button>
+        <p style="font-size:11px; color:#94a3b8; margin-top:8px;">&#x1F4F1; iPhone/iPad: Tam ekran i&#xE7;in Safari&#x2019;de Payla&#x15F; &#x279C; &#x201C;Ana Ekrana Ekle&#x201D; yap&#x131;p oradan a&#xE7;. Telefonu yatay &#xE7;evirmek en rahat oyun deneyimini verir.</p>
       </div>
       <div style="background:rgba(15,31,54,0.9); padding:12px; border-radius:10px; margin-bottom:14px; border:1px solid rgba(56,189,248,0.3);">
-        <h4 style="color:#fbbf24; margin-bottom:6px;">ğŸ” ArayÃ¼z Boyutu (BÃ¼yÃ¼k Ekranlar)</h4>
+        <h4 style="color:#fbbf24; margin-bottom:6px;">&#x1F50D; Aray&#xFC;z Boyutu (B&#xFC;y&#xFC;k Ekranlar)</h4>
         <div class="ui-scale-row" id="uiScaleRow">
           <button class="buy-btn" data-ui="auto" onclick="setUiScale('auto')">Otomatik</button>
           <button class="buy-btn" data-ui="1" onclick="setUiScale(1)">100%</button>
@@ -598,15 +598,15 @@
           <button class="buy-btn" data-ui="1.75" onclick="setUiScale(1.75)">175%</button>
           <button class="buy-btn" data-ui="2" onclick="setUiScale(2)">200%</button>
         </div>
-        <p style="font-size:11px; color:#94a3b8;">MenÃ¼ler, yazÄ±lar ve butonlar iÃ§in. Oyun sahnesi zaten ekrana gÃ¶re otomatik bÃ¼yÃ¼r. Otomatik mod ekran boyutuna gÃ¶re en uygun deÄŸeri seÃ§er.</p>
+        <p style="font-size:11px; color:#94a3b8;">Men&#xFC;ler, yaz&#x131;lar ve butonlar i&#xE7;in. Oyun sahnesi zaten ekrana g&#xF6;re otomatik b&#xFC;y&#xFC;r. Otomatik mod ekran boyutuna g&#xF6;re en uygun de&#x11F;eri se&#xE7;er.</p>
       </div>
       <div style="background:rgba(15,31,54,0.9); padding:12px; border-radius:10px; border:1px solid rgba(56,189,248,0.3);">
-        <h4 style="color:#fbbf24; margin-bottom:6px;">ğŸ’¾ Cihazlar ArasÄ± KayÄ±t Kodu & SÄ±fÄ±rlama</h4>
+        <h4 style="color:#fbbf24; margin-bottom:6px;">&#x1F4BE; Cihazlar Aras&#x131; Kay&#x131;t Kodu & S&#x131;f&#x131;rlama</h4>
         <textarea id="saveCodeBox" style="width:100%; height:58px; background:#040b14; color:#38bdf8; border:1px solid #334155; border-radius:6px; padding:6px; font-size:11px;"></textarea>
         <div style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;">
-          <button class="buy-btn" onclick="exportSaveCode()">ğŸ“‹ Kodu Ãœret & Kopyala</button>
-          <button class="buy-btn" style="background:#22c55e;" onclick="importSaveCode()">ğŸ“¥ Kodu YÃ¼kle</button>
-          <button class="buy-btn" style="background:#ef4444; margin-left:auto;" onclick="hardResetGame()">ğŸ—‘ï¸ KaydÄ± SÄ±fÄ±rla (Yeni Kariyer)</button>
+          <button class="buy-btn" onclick="exportSaveCode()">&#x1F4CB; Kodu &#xDC;ret & Kopyala</button>
+          <button class="buy-btn" style="background:#22c55e;" onclick="importSaveCode()">&#x1F4E5; Kodu Y&#xFC;kle</button>
+          <button class="buy-btn" style="background:#ef4444; margin-left:auto;" onclick="hardResetGame()">&#x1F5D1;&#xFE0F; Kayd&#x131; S&#x131;f&#x131;rla (Yeni Kariyer)</button>
         </div>
       </div>
     </div>
@@ -614,45 +614,45 @@
 </div>
 
 <script>
-// ==================== 24 GERÃ‡EKÃ‡Ä° BALIK TÃœRÃœ (HABÄ°TAT, MERA VE SEVÄ°YE KÄ°LÄ°TLÄ°) ====================
-// minLv: BalÄ±ÄŸÄ±n doÄŸmasÄ± iÃ§in gereken minimum oyuncu seviyesi
-// minSpot: Hangi meradan itibaren Ã§Ä±kabileceÄŸi (0:Sahilevleri, 1:GÃ¼zelbahÃ§e, 2:Urla, 3:Ã‡eÅŸme, 4:Karaburun)
-// zoneType: 'surface' (su Ã¼stÃ¼/pelajik), 'mid' (orta su), 'bottom' (dip/taÅŸlÄ±k)
+// ==================== 24 GER\u00c7EK\u00c7\u0130 BALIK T\u00dcR\u00dc (HAB\u0130TAT, MERA VE SEV\u0130YE K\u0130L\u0130TL\u0130) ====================
+// minLv: Bal\u0131\u011f\u0131n do\u011fmas\u0131 i\u00e7in gereken minimum oyuncu seviyesi
+// minSpot: Hangi meradan itibaren \u00e7\u0131kabilece\u011fi (0:Sahilevleri, 1:G\u00fczelbah\u00e7e, 2:Urla, 3:\u00c7e\u015fme, 4:Karaburun)
+// zoneType: 'surface' (su \u00fcst\u00fc/pelajik), 'mid' (orta su), 'bottom' (dip/ta\u015fl\u0131k)
 const FISH_SPECIES = [
-  // SIÄ & BAÅLANGIÃ‡ TÃœRLERÄ° (Mera 0+, Sv.1+)
-  { id:'istavrit', name:'SarÄ±kuyruk Ä°stavrit', minLv:1, minSpot:0, zoneType:'mid', minDepth:2, maxDepth:14, minKg:0.12, maxKg:0.55, priceKg:75, xp:14, speed:2.0, power:0.55, body:'fusiform', col1:'#3b82f6', col2:'#e2e8f0', pref:['silicone','minnow','jig'], school:4 },
-  { id:'ispari', name:'Ä°spari (KÄ±yÄ± KaragÃ¶zÃ¼)', minLv:1, minSpot:0, zoneType:'bottom', minDepth:4, maxDepth:18, minKg:0.15, maxKg:0.55, priceKg:80, xp:15, speed:1.5, power:0.65, body:'oval', col1:'#64748b', col2:'#e2e8f0', spot:true, pref:['silicone'], school:3 },
-  { id:'zargana', name:'GÃ¼mÃ¼ÅŸ Zargana', minLv:1, minSpot:0, zoneType:'surface', minDepth:0.3, maxDepth:5, minKg:0.20, maxKg:0.95, priceKg:95, xp:20, speed:2.7, power:0.8, body:'needle', col1:'#1e40af', col2:'#93c5fd', pref:['topwater','minnow'], school:3 },
-  { id:'sarpa', name:'AltÄ±n Ã‡izgili Sarpa', minLv:2, minSpot:0, zoneType:'mid', minDepth:3, maxDepth:16, minKg:0.25, maxKg:1.1, priceKg:85, xp:22, speed:1.9, power:0.9, body:'oval', col1:'#0369a1', col2:'#fef08a', stripes:true, pref:['silicone','minnow'], school:3 },
+  // SI\u011e & BA\u015eLANGI\u00c7 T\u00dcRLER\u0130 (Mera 0+, Sv.1+)
+  { id:'istavrit', name:'Sar\u0131kuyruk \u0130stavrit', minLv:1, minSpot:0, zoneType:'mid', minDepth:2, maxDepth:14, minKg:0.12, maxKg:0.55, priceKg:75, xp:14, speed:2.0, power:0.55, body:'fusiform', col1:'#3b82f6', col2:'#e2e8f0', pref:['silicone','minnow','jig'], school:4 },
+  { id:'ispari', name:'\u0130spari (K\u0131y\u0131 Karag\u00f6z\u00fc)', minLv:1, minSpot:0, zoneType:'bottom', minDepth:4, maxDepth:18, minKg:0.15, maxKg:0.55, priceKg:80, xp:15, speed:1.5, power:0.65, body:'oval', col1:'#64748b', col2:'#e2e8f0', spot:true, pref:['silicone'], school:3 },
+  { id:'zargana', name:'G\u00fcm\u00fc\u015f Zargana', minLv:1, minSpot:0, zoneType:'surface', minDepth:0.3, maxDepth:5, minKg:0.20, maxKg:0.95, priceKg:95, xp:20, speed:2.7, power:0.8, body:'needle', col1:'#1e40af', col2:'#93c5fd', pref:['topwater','minnow'], school:3 },
+  { id:'sarpa', name:'Alt\u0131n \u00c7izgili Sarpa', minLv:2, minSpot:0, zoneType:'mid', minDepth:3, maxDepth:16, minKg:0.25, maxKg:1.1, priceKg:85, xp:22, speed:1.9, power:0.9, body:'oval', col1:'#0369a1', col2:'#fef08a', stripes:true, pref:['silicone','minnow'], school:3 },
   { id:'melanur', name:'Melanur', minLv:2, minSpot:0, zoneType:'surface', minDepth:1.5, maxDepth:12, minKg:0.22, maxKg:0.85, priceKg:110, xp:26, speed:2.2, power:0.95, body:'oval', col1:'#1e293b', col2:'#cbd5e1', spot:true, pref:['topwater','minnow','silicone'], school:2 },
-  { id:'mirmir', name:'Ã‡izgili Kum MÄ±rmÄ±rÄ±', minLv:3, minSpot:0, zoneType:'bottom', minDepth:6, maxDepth:22, minKg:0.30, maxKg:1.3, priceKg:130, xp:32, speed:1.8, power:1.1, body:'fusiform', col1:'#475569', col2:'#f8fafc', stripes:true, pref:['silicone'], school:2 },
+  { id:'mirmir', name:'\u00c7izgili Kum M\u0131rm\u0131r\u0131', minLv:3, minSpot:0, zoneType:'bottom', minDepth:6, maxDepth:22, minKg:0.30, maxKg:1.3, priceKg:130, xp:32, speed:1.8, power:1.1, body:'fusiform', col1:'#475569', col2:'#f8fafc', stripes:true, pref:['silicone'], school:2 },
 
-  // ORTA SEVÄ°YE KIYI & KANAL AVCI TÃœRLERÄ° (Sv.4 - Sv.9)
+  // ORTA SEV\u0130YE KIYI & KANAL AVCI T\u00dcRLER\u0130 (Sv.4 - Sv.9)
   { id:'uskumru', name:'Ege Uskumrusu', minLv:4, minSpot:0, zoneType:'mid', minDepth:5, maxDepth:22, minKg:0.30, maxKg:1.1, priceKg:115, xp:35, speed:2.4, power:1.05, body:'fusiform', col1:'#0f766e', col2:'#cbd5e1', stripes:true, pref:['minnow','jig'], school:3 },
-  { id:'karagoz', name:'BantlÄ± TaÅŸ KaragÃ¶zÃ¼', minLv:4, minSpot:0, zoneType:'bottom', minDepth:10, maxDepth:35, minKg:0.35, maxKg:1.7, priceKg:145, xp:42, speed:1.8, power:1.25, body:'oval', col1:'#334155', col2:'#e2e8f0', stripes:true, pref:['silicone','jig'], school:2 },
-  { id:'levrek', name:'KÃ¶pÃ¼k AvcÄ±sÄ± Levrek', minLv:5, minSpot:0, zoneType:'surface', minDepth:1, maxDepth:18, minKg:0.75, maxKg:5.8, priceKg:210, xp:68, speed:2.5, power:1.85, body:'fusiform', col1:'#334155', col2:'#f1f5f9', pref:['topwater','minnow','silicone'], school:1 },
-  { id:'cipura', name:'Alyanak Ã‡ipura', minLv:6, minSpot:1, zoneType:'bottom', minDepth:14, maxDepth:45, minKg:0.55, maxKg:4.2, priceKg:195, xp:65, speed:2.0, power:1.75, body:'oval', col1:'#475569', col2:'#f1f5f9', goldBrow:true, pref:['silicone','jig'], school:2 },
-  { id:'lufer', name:'DiÅŸli LÃ¼fer', minLv:7, minSpot:1, zoneType:'mid', minDepth:2, maxDepth:24, minKg:0.45, maxKg:2.1, priceKg:230, xp:75, speed:2.8, power:1.7, body:'fusiform', col1:'#1e3a8a', col2:'#cbd5e1', pref:['topwater','minnow','jig'], school:2 },
-  { id:'barakuda', name:'SarÄ±aÄŸÄ±z BarakÃ¼da', minLv:8, minSpot:1, zoneType:'surface', minDepth:2, maxDepth:22, minKg:0.9, maxKg:4.6, priceKg:175, xp:78, speed:3.2, power:1.9, body:'needle', col1:'#3f3f46', col2:'#d4d4d8', stripes:true, pref:['minnow','topwater'], school:1 },
-  { id:'palamut', name:'Ã‡ingene Palamudu', minLv:8, minSpot:1, zoneType:'mid', minDepth:8, maxDepth:36, minKg:0.8, maxKg:2.5, priceKg:155, xp:70, speed:2.9, power:1.6, body:'fusiform', col1:'#0c4a6e', col2:'#e0f2fe', stripes:true, pref:['minnow','jig'], school:2 },
+  { id:'karagoz', name:'Bantl\u0131 Ta\u015f Karag\u00f6z\u00fc', minLv:4, minSpot:0, zoneType:'bottom', minDepth:10, maxDepth:35, minKg:0.35, maxKg:1.7, priceKg:145, xp:42, speed:1.8, power:1.25, body:'oval', col1:'#334155', col2:'#e2e8f0', stripes:true, pref:['silicone','jig'], school:2 },
+  { id:'levrek', name:'K\u00f6p\u00fck Avc\u0131s\u0131 Levrek', minLv:5, minSpot:0, zoneType:'surface', minDepth:1, maxDepth:18, minKg:0.75, maxKg:5.8, priceKg:210, xp:68, speed:2.5, power:1.85, body:'fusiform', col1:'#334155', col2:'#f1f5f9', pref:['topwater','minnow','silicone'], school:1 },
+  { id:'cipura', name:'Alyanak \u00c7ipura', minLv:6, minSpot:1, zoneType:'bottom', minDepth:14, maxDepth:45, minKg:0.55, maxKg:4.2, priceKg:195, xp:65, speed:2.0, power:1.75, body:'oval', col1:'#475569', col2:'#f1f5f9', goldBrow:true, pref:['silicone','jig'], school:2 },
+  { id:'lufer', name:'Di\u015fli L\u00fcfer', minLv:7, minSpot:1, zoneType:'mid', minDepth:2, maxDepth:24, minKg:0.45, maxKg:2.1, priceKg:230, xp:75, speed:2.8, power:1.7, body:'fusiform', col1:'#1e3a8a', col2:'#cbd5e1', pref:['topwater','minnow','jig'], school:2 },
+  { id:'barakuda', name:'Sar\u0131a\u011f\u0131z Barak\u00fcda', minLv:8, minSpot:1, zoneType:'surface', minDepth:2, maxDepth:22, minKg:0.9, maxKg:4.6, priceKg:175, xp:78, speed:3.2, power:1.9, body:'needle', col1:'#3f3f46', col2:'#d4d4d8', stripes:true, pref:['minnow','topwater'], school:1 },
+  { id:'palamut', name:'\u00c7ingene Palamudu', minLv:8, minSpot:1, zoneType:'mid', minDepth:8, maxDepth:36, minKg:0.8, maxKg:2.5, priceKg:155, xp:70, speed:2.9, power:1.6, body:'fusiform', col1:'#0c4a6e', col2:'#e0f2fe', stripes:true, pref:['minnow','jig'], school:2 },
 
-  // Ä°LERÄ° SEVÄ°YE KAYALIK & KIRMA TÃœRLERÄ° (Sv.10 - Sv.16)
-  { id:'iskorpit', name:'KÄ±zÄ±l Kaya Ä°skorpiti', minLv:9, minSpot:1, zoneType:'bottom', minDepth:18, maxDepth:55, minKg:0.35, maxKg:1.8, priceKg:160, xp:64, speed:1.4, power:1.4, body:'heavy', col1:'#991b1b', col2:'#f87171', pref:['silicone','jig'], school:1 },
-  { id:'mercan', name:'KÄ±rma KÄ±rmÄ±zÄ± Mercan', minLv:10, minSpot:2, zoneType:'bottom', minDepth:28, maxDepth:68, minKg:0.45, maxKg:2.8, priceKg:220, xp:88, speed:1.9, power:1.6, body:'oval', col1:'#e11d48', col2:'#fda4af', pref:['silicone','jig'], school:2 },
-  { id:'eskina', name:'Gece AvcÄ±sÄ± EÅŸkina', minLv:11, minSpot:2, zoneType:'bottom', minDepth:24, maxDepth:62, minKg:0.7, maxKg:3.9, priceKg:205, xp:92, speed:1.8, power:1.75, body:'oval', col1:'#451a03', col2:'#d97706', pref:['silicone'], school:1 },
-  { id:'kofana', name:'SÄ±rtÄ±kara Kofana', minLv:13, minSpot:2, zoneType:'surface', minDepth:2, maxDepth:26, minKg:2.4, maxKg:7.8, priceKg:260, xp:145, speed:3.0, power:2.55, body:'fusiform', col1:'#172554', col2:'#94a3b8', pref:['topwater','minnow'], school:1 },
-  { id:'torik', name:'AÃ§Ä±k Deniz Torik', minLv:14, minSpot:2, zoneType:'mid', minDepth:14, maxDepth:52, minKg:2.8, maxKg:8.2, priceKg:210, xp:150, speed:3.2, power:2.7, body:'fusiform', col1:'#082f49', col2:'#bae6fd', stripes:true, pref:['jig','minnow'], school:2 },
-  { id:'sinarit', name:'TaÅŸ Sinariti (Trofe)', minLv:15, minSpot:2, zoneType:'bottom', minDepth:32, maxDepth:72, minKg:2.2, maxKg:11.2, priceKg:310, xp:210, speed:2.6, power:3.1, body:'oval', col1:'#1e40af', col2:'#f472b6', pref:['jig','minnow','silicone'], school:1 },
+  // \u0130LER\u0130 SEV\u0130YE KAYALIK & KIRMA T\u00dcRLER\u0130 (Sv.10 - Sv.16)
+  { id:'iskorpit', name:'K\u0131z\u0131l Kaya \u0130skorpiti', minLv:9, minSpot:1, zoneType:'bottom', minDepth:18, maxDepth:55, minKg:0.35, maxKg:1.8, priceKg:160, xp:64, speed:1.4, power:1.4, body:'heavy', col1:'#991b1b', col2:'#f87171', pref:['silicone','jig'], school:1 },
+  { id:'mercan', name:'K\u0131rma K\u0131rm\u0131z\u0131 Mercan', minLv:10, minSpot:2, zoneType:'bottom', minDepth:28, maxDepth:68, minKg:0.45, maxKg:2.8, priceKg:220, xp:88, speed:1.9, power:1.6, body:'oval', col1:'#e11d48', col2:'#fda4af', pref:['silicone','jig'], school:2 },
+  { id:'eskina', name:'Gece Avc\u0131s\u0131 E\u015fkina', minLv:11, minSpot:2, zoneType:'bottom', minDepth:24, maxDepth:62, minKg:0.7, maxKg:3.9, priceKg:205, xp:92, speed:1.8, power:1.75, body:'oval', col1:'#451a03', col2:'#d97706', pref:['silicone'], school:1 },
+  { id:'kofana', name:'S\u0131rt\u0131kara Kofana', minLv:13, minSpot:2, zoneType:'surface', minDepth:2, maxDepth:26, minKg:2.4, maxKg:7.8, priceKg:260, xp:145, speed:3.0, power:2.55, body:'fusiform', col1:'#172554', col2:'#94a3b8', pref:['topwater','minnow'], school:1 },
+  { id:'torik', name:'A\u00e7\u0131k Deniz Torik', minLv:14, minSpot:2, zoneType:'mid', minDepth:14, maxDepth:52, minKg:2.8, maxKg:8.2, priceKg:210, xp:150, speed:3.2, power:2.7, body:'fusiform', col1:'#082f49', col2:'#bae6fd', stripes:true, pref:['jig','minnow'], school:2 },
+  { id:'sinarit', name:'Ta\u015f Sinariti (Trofe)', minLv:15, minSpot:2, zoneType:'bottom', minDepth:32, maxDepth:72, minKg:2.2, maxKg:11.2, priceKg:310, xp:210, speed:2.6, power:3.1, body:'oval', col1:'#1e40af', col2:'#f472b6', pref:['jig','minnow','silicone'], school:1 },
 
-  // USTA & EFSANEVÄ° DERÄ°N DENÄ°Z TROFELERÄ° (Sv.17+)
+  // USTA & EFSANEV\u0130 DER\u0130N DEN\u0130Z TROFELER\u0130 (Sv.17+)
   { id:'lagos', name:'Beyaz Kaya Lagosu', minLv:17, minSpot:3, zoneType:'bottom', minDepth:42, maxDepth:88, minKg:3.5, maxKg:16.5, priceKg:330, xp:260, speed:2.2, power:3.5, body:'heavy', col1:'#3f2e21', col2:'#a8a29e', pref:['jig','silicone'], school:1 },
-  { id:'tranca', name:'Derin Deniz TranÃ§asÄ±', minLv:19, minSpot:3, zoneType:'bottom', minDepth:55, maxDepth:95, minKg:4.2, maxKg:18.5, priceKg:350, xp:310, speed:2.5, power:3.8, body:'oval', col1:'#be123c', col2:'#fecdd3', pref:['jig'], school:1 },
-  { id:'akya', name:'Dev SarÄ±kuyruk Akya', minLv:21, minSpot:3, zoneType:'mid', minDepth:35, maxDepth:105, minKg:5.5, maxKg:26.0, priceKg:295, xp:380, speed:3.4, power:4.3, body:'fusiform', col1:'#0369a1', col2:'#fde047', pref:['jig','topwater'], school:1 },
-  { id:'kilic', name:'Ege KÄ±lÄ±Ã§ BalÄ±ÄŸÄ±', minLv:23, minSpot:4, zoneType:'mid', minDepth:25, maxDepth:95, minKg:8.0, maxKg:36.0, priceKg:320, xp:450, speed:3.7, power:4.6, body:'sword', col1:'#0f172a', col2:'#64748b', pref:['topwater','jig'], school:1 },
-  { id:'fener', name:'Abyss Fener BalÄ±ÄŸÄ±', minLv:25, minSpot:4, zoneType:'bottom', minDepth:80, maxDepth:120, minKg:2.8, maxKg:9.8, priceKg:440, xp:490, speed:1.7, power:3.2, body:'angler', col1:'#31102f', col2:'#a21caf', pref:['jig','silicone'], school:1 }
+  { id:'tranca', name:'Derin Deniz Tran\u00e7as\u0131', minLv:19, minSpot:3, zoneType:'bottom', minDepth:55, maxDepth:95, minKg:4.2, maxKg:18.5, priceKg:350, xp:310, speed:2.5, power:3.8, body:'oval', col1:'#be123c', col2:'#fecdd3', pref:['jig'], school:1 },
+  { id:'akya', name:'Dev Sar\u0131kuyruk Akya', minLv:21, minSpot:3, zoneType:'mid', minDepth:35, maxDepth:105, minKg:5.5, maxKg:26.0, priceKg:295, xp:380, speed:3.4, power:4.3, body:'fusiform', col1:'#0369a1', col2:'#fde047', pref:['jig','topwater'], school:1 },
+  { id:'kilic', name:'Ege K\u0131l\u0131\u00e7 Bal\u0131\u011f\u0131', minLv:23, minSpot:4, zoneType:'mid', minDepth:25, maxDepth:95, minKg:8.0, maxKg:36.0, priceKg:320, xp:450, speed:3.7, power:4.6, body:'sword', col1:'#0f172a', col2:'#64748b', pref:['topwater','jig'], school:1 },
+  { id:'fener', name:'Abyss Fener Bal\u0131\u011f\u0131', minLv:25, minSpot:4, zoneType:'bottom', minDepth:80, maxDepth:120, minKg:2.8, maxKg:9.8, priceKg:440, xp:490, speed:1.7, power:3.2, body:'angler', col1:'#31102f', col2:'#a21caf', pref:['jig','silicone'], school:1 }
 ];
 
-// PNG GÃ¶rsel YÃ¼kleyici + Beyaz Arka Plan Temizleyici (EÄŸer resimde dÃ¼z beyaz kÃ¶ÅŸe kalmÄ±ÅŸsa ÅŸeffaflaÅŸtÄ±rÄ±r)
+// PNG G\u00f6rsel Y\u00fckleyici + Beyaz Arka Plan Temizleyici (E\u011fer resimde d\u00fcz beyaz k\u00f6\u015fe kalm\u0131\u015fsa \u015feffafla\u015ft\u0131r\u0131r)
 const fishSprites = {};
 FISH_SPECIES.forEach(sp => {
   const img = new Image();
@@ -665,7 +665,7 @@ FISH_SPECIES.forEach(sp => {
       octx.drawImage(img, 0, 0);
       const imgData = octx.getImageData(0, 0, off.width, off.height);
       const d = imgData.data;
-      // Sol Ã¼st piksel dÃ¼z beyaza Ã§ok yakÄ±nsa (245+) kenar beyazlarÄ±nÄ± temizle
+      // Sol \u00fcst piksel d\u00fcz beyaza \u00e7ok yak\u0131nsa (245+) kenar beyazlar\u0131n\u0131 temizle
       if (d[3] > 240 && d[0] > 242 && d[1] > 242 && d[2] > 242) {
         for (let i = 0; i < d.length; i += 4) {
           if (d[i] > 240 && d[i+1] > 240 && d[i+2] > 240) d[i+3] = 0;
@@ -682,16 +682,16 @@ FISH_SPECIES.forEach(sp => {
   img.src = `assets/fishes/${sp.id}.png`;
 });
 
-// ==================== MERALAR (SEVÄ°YE VE XP KÄ°LÄ°TLÄ°) ====================
+// ==================== MERALAR (SEV\u0130YE VE XP K\u0130L\u0130TL\u0130) ====================
 const SPOTS = [
-  { id:0, name:'Sahilevleri KayalÄ±klarÄ±', maxDepth:22, reqLv:1, desc:'SÄ±ÄŸ taÅŸlÄ±k ve eriÅŸte yataklarÄ±. Ä°stavrit, Ä°spari, Zargana, Sarpa ve MÄ±rmÄ±r merasÄ±.' },
-  { id:1, name:'GÃ¼zelbahÃ§e Mendirek KanalÄ±', maxDepth:45, reqLv:5, desc:'AkÄ±ntÄ±lÄ± derin kanal. Levrek, Ã‡ipura, LÃ¼fer, Palamut ve BarakÃ¼da geÃ§iÅŸ noktasÄ±.' },
-  { id:2, name:'Urla Karantina AdasÄ± KÄ±rmalarÄ±', maxDepth:72, reqLv:10, desc:'Derin taÅŸlÄ±k kÄ±rmalar. KÄ±rmÄ±zÄ± Mercan, EÅŸkina, Kofana, Torik ve TaÅŸ Sinariti.' },
-  { id:3, name:'Ã‡eÅŸme IldÄ±r AÃ§Ä±k YamaÃ§larÄ±', maxDepth:96, reqLv:16, desc:'Sert akÄ±ntÄ±lÄ± dik yamaÃ§lar. Beyaz Lagos, Derin Deniz TranÃ§asÄ± ve SarÄ±kuyruk Akya.' },
-  { id:4, name:'Karaburun 120m UÃ§urum (Abyss)', maxDepth:120, reqLv:22, desc:'120 metre derinlikteki karanlÄ±k kanyon. Dev Akya, KÄ±lÄ±Ã§ BalÄ±ÄŸÄ± ve Fener BalÄ±ÄŸÄ±!' }
+  { id:0, name:'Sahilevleri Kayal\u0131klar\u0131', maxDepth:22, reqLv:1, desc:'S\u0131\u011f ta\u015fl\u0131k ve eri\u015fte yataklar\u0131. \u0130stavrit, \u0130spari, Zargana, Sarpa ve M\u0131rm\u0131r meras\u0131.' },
+  { id:1, name:'G\u00fczelbah\u00e7e Mendirek Kanal\u0131', maxDepth:45, reqLv:5, desc:'Ak\u0131nt\u0131l\u0131 derin kanal. Levrek, \u00c7ipura, L\u00fcfer, Palamut ve Barak\u00fcda ge\u00e7i\u015f noktas\u0131.' },
+  { id:2, name:'Urla Karantina Adas\u0131 K\u0131rmalar\u0131', maxDepth:72, reqLv:10, desc:'Derin ta\u015fl\u0131k k\u0131rmalar. K\u0131rm\u0131z\u0131 Mercan, E\u015fkina, Kofana, Torik ve Ta\u015f Sinariti.' },
+  { id:3, name:'\u00c7e\u015fme Ild\u0131r A\u00e7\u0131k Yama\u00e7lar\u0131', maxDepth:96, reqLv:16, desc:'Sert ak\u0131nt\u0131l\u0131 dik yama\u00e7lar. Beyaz Lagos, Derin Deniz Tran\u00e7as\u0131 ve Sar\u0131kuyruk Akya.' },
+  { id:4, name:'Karaburun 120m U\u00e7urum (Abyss)', maxDepth:120, reqLv:22, desc:'120 metre derinlikteki karanl\u0131k kanyon. Dev Akya, K\u0131l\u0131\u00e7 Bal\u0131\u011f\u0131 ve Fener Bal\u0131\u011f\u0131!' }
 ];
 
-// ==================== SEVÄ°YE KÄ°LÄ°TLÄ° EKÄ°PMAN MARKETÄ° ====================
+// ==================== SEV\u0130YE K\u0130L\u0130TL\u0130 EK\u0130PMAN MARKET\u0130 ====================
 const SHOP_ITEMS = {
   rods: [
     { id:'rod1', name:'EgeCast XT 270cm (10-30g)', reqLv:1, price:0, power:1.0, cast:52, owned:true },
@@ -708,48 +708,48 @@ const SHOP_ITEMS = {
     { id:'reel5', name:'TitanAbyss SW 8000PG', reqLv:20, price:44000, drag:3.40, speed:1.68, owned:false }
   ],
   lines: [
-    { id:'line1', name:'0.25mm Mono Misina (3.5 kg Ã‡eker)', reqLv:1, price:0, maxKg:3.5, visBonus:1.0, owned:true },
-    { id:'line2', name:'0.28mm Fluorocarbon (6.5 kg Ã‡eker)', reqLv:3, price:950, maxKg:6.5, visBonus:1.12, owned:false },
-    { id:'line3', name:'0.14mm 8X PE Ä°p Misina (12.0 kg Ã‡eker)', reqLv:7, price:3400, maxKg:12.0, visBonus:1.18, owned:false },
-    { id:'line4', name:'0.18mm 8X ShoreJig PE (22.0 kg Ã‡eker)', reqLv:13, price:9800, maxKg:22.0, visBonus:1.25, owned:false },
-    { id:'line5', name:'0.24mm 12X Abyss Braid (42.0 kg Ã‡eker)', reqLv:19, price:26000, maxKg:42.0, visBonus:1.35, owned:false }
+    { id:'line1', name:'0.25mm Mono Misina (3.5 kg \u00c7eker)', reqLv:1, price:0, maxKg:3.5, visBonus:1.0, owned:true },
+    { id:'line2', name:'0.28mm Fluorocarbon (6.5 kg \u00c7eker)', reqLv:3, price:950, maxKg:6.5, visBonus:1.12, owned:false },
+    { id:'line3', name:'0.14mm 8X PE \u0130p Misina (12.0 kg \u00c7eker)', reqLv:7, price:3400, maxKg:12.0, visBonus:1.18, owned:false },
+    { id:'line4', name:'0.18mm 8X ShoreJig PE (22.0 kg \u00c7eker)', reqLv:13, price:9800, maxKg:22.0, visBonus:1.25, owned:false },
+    { id:'line5', name:'0.24mm 12X Abyss Braid (42.0 kg \u00c7eker)', reqLv:19, price:26000, maxKg:42.0, visBonus:1.35, owned:false }
   ],
   lures: [
-    { slot:0, id:'lure_top', name:'HydroWalk 98 Su ÃœstÃ¼ WTD (14g)', type:'topwater', icon:'ğŸ¦', sinkRate:0, maxSink:2.0, appealBonus:1.05, plus:0, blue:{str:0,int:0,luck:0} },
-    { slot:1, id:'lure_min', name:'AeroMinnow DalarlÄ± Maket (18g)', type:'minnow', icon:'ğŸŸ', sinkRate:2.0, maxSink:28, appealBonus:1.15, plus:0, blue:{str:0,int:0,luck:0} },
-    { slot:2, id:'lure_sil', name:'UV Glow Karides Silikon (15g)', type:'silicone', icon:'ğŸª±', sinkRate:3.6, maxSink:75, appealBonus:1.20, plus:0, blue:{str:0,int:0,luck:0} },
-    { slot:3, id:'lure_jig', name:'AbyssZebra Heavy ShoreJig (40g)', type:'jig', icon:'âš¡', sinkRate:6.8, maxSink:120, appealBonus:1.30, plus:0, blue:{str:0,int:0,luck:0} }
+    { slot:0, id:'lure_top', name:'HydroWalk 98 Su \u00dcst\u00fc WTD (14g)', type:'topwater', icon:'\ud83e\udd90', sinkRate:0, maxSink:2.0, appealBonus:1.05, plus:0, blue:{str:0,int:0,luck:0} },
+    { slot:1, id:'lure_min', name:'AeroMinnow Dalarl\u0131 Maket (18g)', type:'minnow', icon:'\ud83d\udc1f', sinkRate:2.0, maxSink:28, appealBonus:1.15, plus:0, blue:{str:0,int:0,luck:0} },
+    { slot:2, id:'lure_sil', name:'UV Glow Karides Silikon (15g)', type:'silicone', icon:'\ud83e\udeb1', sinkRate:3.6, maxSink:75, appealBonus:1.20, plus:0, blue:{str:0,int:0,luck:0} },
+    { slot:3, id:'lure_jig', name:'AbyssZebra Heavy ShoreJig (40g)', type:'jig', icon:'\u26a1', sinkRate:6.8, maxSink:120, appealBonus:1.30, plus:0, blue:{str:0,int:0,luck:0} }
   ],
   alchemy: [
-    { id:'buy_elixir', name:'ğŸ§ª GÃ¼Ã§lendirme Ä°ksiri (Elixir)', price:550, type:'mat', key:'elixir', qty:1, desc:'Ekipmanlara +1 ile +12 arasÄ± seviye basmak iÃ§in kullanÄ±lÄ±r.' },
-    { id:'buy_powder', name:'âœ¨ Åans Tozu (Lucky Powder)', price:320, type:'mat', key:'powder', qty:1, desc:'Simya baÅŸarÄ± ÅŸansÄ±nÄ± +%18 artÄ±rÄ±r.' },
-    { id:'buy_immortal', name:'ğŸ’ Koruma TaÅŸÄ± (Immortal)', price:2800, type:'mat', key:'immortal', qty:1, desc:'+5 Ã¼stÃ¼ baÅŸarÄ±sÄ±z denemede eÅŸyanÄ±n seviye kaybetmesini Ã¶nler.' },
-    { id:'buy_astral', name:'ğŸŒŸ YÄ±ldÄ±z TaÅŸÄ± (Astral)', price:1800, type:'mat', key:'astral', qty:1, desc:'BaÅŸarÄ±sÄ±zlÄ±kta eÅŸyanÄ±n +4 altÄ±na dÃ¼ÅŸmesini engeller.' },
-    { id:'buy_blue', name:'ğŸ”µ Mavi Ä°znitelik Ã–zÃ¼', price:1200, type:'mat', key:'blue', qty:1, desc:'EÅŸyaya kalÄ±cÄ± GÃ¼Ã§, Cazibe veya Åans ekler.' },
-    { id:'buy_chum', name:'ğŸª£ Sardalya Mazmoz Yemleme (Slot 8)', price:280, type:'cons', key:'chum', qty:2, desc:'40 saniye boyunca meradaki balÄ±klarÄ± yemine Ã§eker.' },
-    { id:'buy_repair', name:'ğŸ§ª Nano Misina SoÄŸutucu (Slot 9)', price:220, type:'cons', key:'repair', qty:2, desc:'MÃ¼cadele sÄ±rasÄ±nda aÅŸÄ±rÄ± Ä±sÄ±nan misina gerilimini dÃ¼ÅŸÃ¼rÃ¼r.' }
+    { id:'buy_elixir', name:'\ud83e\uddea G\u00fc\u00e7lendirme \u0130ksiri (Elixir)', price:550, type:'mat', key:'elixir', qty:1, desc:'Ekipmanlara +1 ile +12 aras\u0131 seviye basmak i\u00e7in kullan\u0131l\u0131r.' },
+    { id:'buy_powder', name:'\u2728 \u015eans Tozu (Lucky Powder)', price:320, type:'mat', key:'powder', qty:1, desc:'Simya ba\u015far\u0131 \u015fans\u0131n\u0131 +%18 art\u0131r\u0131r.' },
+    { id:'buy_immortal', name:'\ud83d\udc8e Koruma Ta\u015f\u0131 (Immortal)', price:2800, type:'mat', key:'immortal', qty:1, desc:'+5 \u00fcst\u00fc ba\u015far\u0131s\u0131z denemede e\u015fyan\u0131n seviye kaybetmesini \u00f6nler.' },
+    { id:'buy_astral', name:'\ud83c\udf1f Y\u0131ld\u0131z Ta\u015f\u0131 (Astral)', price:1800, type:'mat', key:'astral', qty:1, desc:'Ba\u015far\u0131s\u0131zl\u0131kta e\u015fyan\u0131n +4 alt\u0131na d\u00fc\u015fmesini engeller.' },
+    { id:'buy_blue', name:'\ud83d\udd35 Mavi \u0130znitelik \u00d6z\u00fc', price:1200, type:'mat', key:'blue', qty:1, desc:'E\u015fyaya kal\u0131c\u0131 G\u00fc\u00e7, Cazibe veya \u015eans ekler.' },
+    { id:'buy_chum', name:'\ud83e\udea3 Sardalya Mazmoz Yemleme (Slot 8)', price:280, type:'cons', key:'chum', qty:2, desc:'40 saniye boyunca meradaki bal\u0131klar\u0131 yemine \u00e7eker.' },
+    { id:'buy_repair', name:'\ud83e\uddea Nano Misina So\u011futucu (Slot 9)', price:220, type:'cons', key:'repair', qty:2, desc:'M\u00fccadele s\u0131ras\u0131nda a\u015f\u0131r\u0131 \u0131s\u0131nan misina gerilimini d\u00fc\u015f\u00fcr\u00fcr.' }
   ]
 };
 
-// ==================== YETENEK AÄACI TANIMLARI ====================
+// ==================== YETENEK A\u011eACI TANIMLARI ====================
 const SKILL_DEFS = [
-  { key:'castDist', name:'ğŸš€ Uzak AtÄ±ÅŸ TekniÄŸi', desc:'KamÄ±ÅŸ savurma hÄ±zÄ±nÄ± ve maksimum atÄ±ÅŸ mesafesini her seviyede +%6 artÄ±rÄ±r.', max:10 },
-  { key:'lureMastery', name:'âš¡ Bilek & Aksiyon Hakimiyeti', desc:'WTD, Twitch ve Dip Jerk aksiyonlarÄ±nÄ±n balÄ±k kandÄ±rma cazibesini +%8 artÄ±rÄ±r.', max:10 },
-  { key:'dragControl', name:'ğŸ›¡ï¸ Kalama & Misina KontrolÃ¼', desc:'MÃ¼cadelede misina gerilim artÄ±ÅŸÄ±nÄ± -%5 azaltÄ±r ve Ã§eker limitini gÃ¼Ã§lendirir.', max:10 },
-  { key:'trophyHunter', name:'ğŸ‘‘ Trofe AvcÄ±sÄ± Sezgisi', desc:'Merada iri ve rekor aÄŸÄ±rlÄ±kta trofe balÄ±klarÄ±n yeme saldÄ±rma ÅŸansÄ±nÄ± +%8 artÄ±rÄ±r.', max:10 },
-  { key:'bazaarMerchant', name:'ğŸ’° BalÄ±k Hali PazarlÄ±ÄŸÄ±', desc:'YakaladÄ±ÄŸÄ±n tÃ¼m balÄ±klarÄ±n BalÄ±k Hali satÄ±ÅŸ fiyatÄ±nÄ± her seviyede +%7 artÄ±rÄ±r.', max:10 }
+  { key:'castDist', name:'\ud83d\ude80 Uzak At\u0131\u015f Tekni\u011fi', desc:'Kam\u0131\u015f savurma h\u0131z\u0131n\u0131 ve maksimum at\u0131\u015f mesafesini her seviyede +%6 art\u0131r\u0131r.', max:10 },
+  { key:'lureMastery', name:'\u26a1 Bilek & Aksiyon Hakimiyeti', desc:'WTD, Twitch ve Dip Jerk aksiyonlar\u0131n\u0131n bal\u0131k kand\u0131rma cazibesini +%8 art\u0131r\u0131r.', max:10 },
+  { key:'dragControl', name:'\ud83d\udee1\ufe0f Kalama & Misina Kontrol\u00fc', desc:'M\u00fccadelede misina gerilim art\u0131\u015f\u0131n\u0131 -%5 azalt\u0131r ve \u00e7eker limitini g\u00fc\u00e7lendirir.', max:10 },
+  { key:'trophyHunter', name:'\ud83d\udc51 Trofe Avc\u0131s\u0131 Sezgisi', desc:'Merada iri ve rekor a\u011f\u0131rl\u0131kta trofe bal\u0131klar\u0131n yeme sald\u0131rma \u015fans\u0131n\u0131 +%8 art\u0131r\u0131r.', max:10 },
+  { key:'bazaarMerchant', name:'\ud83d\udcb0 Bal\u0131k Hali Pazarl\u0131\u011f\u0131', desc:'Yakalad\u0131\u011f\u0131n t\u00fcm bal\u0131klar\u0131n Bal\u0131k Hali sat\u0131\u015f fiyat\u0131n\u0131 her seviyede +%7 art\u0131r\u0131r.', max:10 }
 ];
 
-// ==================== RAKÄ°P AI BALIKÃ‡ILAR (EGE LÄ°GÄ°) ====================
+// ==================== RAK\u0130P AI BALIK\u00c7ILAR (EGE L\u0130G\u0130) ====================
 const AI_RIVALS = [
   { name:'Kaptan_Kemal35', spot:'Karaburun Abyss', bestKg:24.8, pts:4250 },
-  { name:'UrlaSpinMaster', spot:'Karantina AdasÄ±', bestKg:14.2, pts:3180 },
-  { name:'Ã‡eÅŸme_AvcÄ±sÄ±', spot:'IldÄ±r YamaÃ§larÄ±', bestKg:11.6, pts:2640 },
-  { name:'Bornova_LRF', spot:'GÃ¼zelbahÃ§e KanalÄ±', bestKg:6.4, pts:1790 },
-  { name:'FoÃ§aKorsanÄ±', spot:'Urla KÄ±rmalarÄ±', bestKg:8.9, pts:1420 },
-  { name:'KarÅŸÄ±yaka_Olta', spot:'Sahilevleri', bestKg:4.8, pts:980 },
-  { name:'MordoÄŸanJig', spot:'GÃ¼zelbahÃ§e KanalÄ±', bestKg:3.7, pts:640 },
-  { name:'GÃ¶ztepe_Spin', spot:'Sahilevleri', bestKg:2.1, pts:310 }
+  { name:'UrlaSpinMaster', spot:'Karantina Adas\u0131', bestKg:14.2, pts:3180 },
+  { name:'\u00c7e\u015fme_Avc\u0131s\u0131', spot:'Ild\u0131r Yama\u00e7lar\u0131', bestKg:11.6, pts:2640 },
+  { name:'Bornova_LRF', spot:'G\u00fczelbah\u00e7e Kanal\u0131', bestKg:6.4, pts:1790 },
+  { name:'Fo\u00e7aKorsan\u0131', spot:'Urla K\u0131rmalar\u0131', bestKg:8.9, pts:1420 },
+  { name:'Kar\u015f\u0131yaka_Olta', spot:'Sahilevleri', bestKg:4.8, pts:980 },
+  { name:'Mordo\u011fanJig', spot:'G\u00fczelbah\u00e7e Kanal\u0131', bestKg:3.7, pts:640 },
+  { name:'G\u00f6ztepe_Spin', spot:'Sahilevleri', bestKg:2.1, pts:310 }
 ];
 
 // ==================== OYUN DURUMU (STATE) ====================
@@ -779,8 +779,8 @@ const state = {
   fishes: [], particles: [], clouds: []
 };
 
-// ==================== SEVÄ°YE & ÃœNVAN HESAPLAMA ====================
-// Seviye atlamayÄ± hÄ±zlandÄ±rmak iÃ§in eÄŸri yumuÅŸatÄ±ldÄ± (eski: 180 * lv^1.45)
+// ==================== SEV\u0130YE & \u00dcNVAN HESAPLAMA ====================
+// Seviye atlamay\u0131 h\u0131zland\u0131rmak i\u00e7in e\u011fri yumu\u015fat\u0131ld\u0131 (eski: 180 * lv^1.45)
 const BASE_XP_RATE = 1.25;
 function getReqXpForNextLevel(lv) {
   return Math.round(110 * Math.pow(lv, 1.4));
@@ -789,12 +789,12 @@ function getXpMult() { return 1 + (state.boosts.xp.left > 0 ? state.boosts.xp.pc
 function getGoldMult() { return 1 + (state.boosts.gold.left > 0 ? state.boosts.gold.pct / 100 : 0); }
 
 function getRankTitle(lv) {
-  if (lv >= 25) return 'ğŸ‘‘ Ege Efsanesi';
-  if (lv >= 18) return 'ğŸ”± Abyss Trofe AvcÄ±sÄ±';
-  if (lv >= 12) return 'âš¡ ShoreJig UstasÄ±';
-  if (lv >= 7) return 'ğŸŒŠ KÄ±yÄ± Spin UzmanÄ±';
-  if (lv >= 3) return 'ğŸ£ Deneyimli Olta AvcÄ±sÄ±';
-  return 'ğŸ£ Ã‡Ä±rak BalÄ±kÃ§Ä±';
+  if (lv >= 25) return '\ud83d\udc51 Ege Efsanesi';
+  if (lv >= 18) return '\ud83d\udd31 Abyss Trofe Avc\u0131s\u0131';
+  if (lv >= 12) return '\u26a1 ShoreJig Ustas\u0131';
+  if (lv >= 7) return '\ud83c\udf0a K\u0131y\u0131 Spin Uzman\u0131';
+  if (lv >= 3) return '\ud83c\udfa3 Deneyimli Olta Avc\u0131s\u0131';
+  return '\ud83c\udfa3 \u00c7\u0131rak Bal\u0131k\u00e7\u0131';
 }
 
 function addXp(amount, raw) {
@@ -806,13 +806,13 @@ function addXp(amount, raw) {
     state.level++;
     state.skillPoints++;
     playTone(880, 0.35, 'triangle');
-    showToast(`ğŸ‰ SEVÄ°YE ATLADIN! Yeni Seviye: Sv.${state.level} (+1 Yetenek PuanÄ±!)`, '#fbbf24');
+    showToast(`\ud83c\udf89 SEV\u0130YE ATLADIN! Yeni Seviye: Sv.${state.level} (+1 Yetenek Puan\u0131!)`, '#fbbf24');
     req = getReqXpForNextLevel(state.level);
   }
   return gained;
 }
 
-// ==================== KONTRAT (GÃ–REV) SÄ°STEMÄ° ====================
+// ==================== KONTRAT (G\u00d6REV) S\u0130STEM\u0130 ====================
 function generateContract() {
   const availSpecies = FISH_SPECIES.filter(s => s.minLv <= state.level && s.minSpot <= state.spotIdx);
   const sp = availSpecies[Math.floor(Math.random() * availSpecies.length)] || FISH_SPECIES[0];
@@ -846,14 +846,14 @@ function checkContractsOnCatch(fish) {
         const gotXp = addXp(c.rewardXp);
         state.leaguePts += 35;
         if (c.rewardElixir) state.mats.elixir += c.rewardElixir;
-        showToast(`ğŸ“œ KONTRAT TAMAMLANDI (${c.fishName}): +${c.rewardMoney} â‚º, +${gotXp} XP!`, '#fbbf24');
+        showToast(`\ud83d\udcdc KONTRAT TAMAMLANDI (${c.fishName}): +${c.rewardMoney} \u20ba, +${gotXp} XP!`, '#fbbf24');
         state.contracts[idx] = generateContract();
       }
     }
   });
 }
 
-// ==================== KAYIT YÃ–NETÄ°MÄ° ====================
+// ==================== KAYIT Y\u00d6NET\u0130M\u0130 ====================
 function saveProgress() {
   try {
     const saveData = {
@@ -903,7 +903,7 @@ function loadProgress() {
 }
 
 function hardResetGame() {
-  if (!confirm('TÃ¼m kariyer ilerlemeniz sÄ±fÄ±rlanÄ±p Seviye 1\'den baÅŸlayacak. OnaylÄ±yor musunuz?')) return;
+  if (!confirm('T\u00fcm kariyer ilerlemeniz s\u0131f\u0131rlan\u0131p Seviye 1\'den ba\u015flayacak. Onayl\u0131yor musunuz?')) return;
   localStorage.removeItem('aegeanSpinProSave_v3');
   location.reload();
 }
@@ -915,7 +915,7 @@ function exportSaveCode() {
   const box = document.getElementById('saveCodeBox');
   box.value = code; box.select();
   navigator.clipboard?.writeText(code);
-  showToast('ğŸ“‹ KayÄ±t kodu kopyalandÄ±!', '#22c55e');
+  showToast('\ud83d\udccb Kay\u0131t kodu kopyaland\u0131!', '#22c55e');
 }
 
 function importSaveCode() {
@@ -925,11 +925,11 @@ function importSaveCode() {
     const json = decodeURIComponent(atob(code));
     localStorage.setItem('aegeanSpinProSave_v3', json);
     loadProgress(); spawnFishes(); renderHotbar(); updateUI();
-    showToast('âœ… KayÄ±t baÅŸarÄ±yla yÃ¼klendi!', '#22c55e');
-  } catch(e) { showToast('âŒ GeÃ§ersiz kayÄ±t kodu!', '#ef4444'); }
+    showToast('\u2705 Kay\u0131t ba\u015far\u0131yla y\u00fcklendi!', '#22c55e');
+  } catch(e) { showToast('\u274c Ge\u00e7ersiz kay\u0131t kodu!', '#ef4444'); }
 }
 
-// ==================== SES & BÄ°LDÄ°RÄ°M SÄ°STEMÄ° ====================
+// ==================== SES & B\u0130LD\u0130R\u0130M S\u0130STEM\u0130 ====================
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 function playTone(freq, dur, type='sine', vol=0.07) {
   try {
@@ -993,7 +993,7 @@ function getTotalLuckBonus() {
   return 1 + luckLevels * 0.07 + state.skills.trophyHunter * 0.08 + (state.chumTimer > 0 ? 0.25 : 0);
 }
 
-// ==================== PARTÄ°KÃœL SÄ°STEMÄ° (SPLASH, KABARCIK, KUM BULUTU) ====================
+// ==================== PART\u0130K\u00dcL S\u0130STEM\u0130 (SPLASH, KABARCIK, KUM BULUTU) ====================
 function spawnParticles(x, y, count, type='bubble') {
   for (let i = 0; i < count; i++) {
     state.particles.push({
@@ -1008,7 +1008,7 @@ function spawnParticles(x, y, count, type='bubble') {
   }
 }
 
-// ==================== EKOSÄ°STEM VE SÃœRÃœ DOÄURMA MOTORU ====================
+// ==================== EKOS\u0130STEM VE S\u00dcR\u00dc DO\u011eURMA MOTORU ====================
 function spawnFishes() {
   state.fishes = [];
   const maxD = SPOTS[state.spotIdx].maxDepth;
@@ -1038,7 +1038,7 @@ function createSingleFish(pool, maxD) {
   const weightRoll = Math.pow(Math.random(), 1.6 / trophyBoost);
   const kg = +(sp.minKg + weightRoll * (sp.maxKg - sp.minKg)).toFixed(2);
   const facing = Math.random() < 0.5 ? 1 : -1;
-  const distM = 14 + Math.random() * 98; // KÄ±yÄ±dan metre cinsinden uzaklÄ±k (14m - 112m)
+  const distM = 14 + Math.random() * 98; // K\u0131y\u0131dan metre cinsinden uzakl\u0131k (14m - 112m)
 
   return {
     sp, kg, distM, depth,
@@ -1053,13 +1053,13 @@ function createSingleFish(pool, maxD) {
   };
 }
 
-// ==================== OLTA VE MÃœCADELE KONTROLLERÄ° ====================
+// ==================== OLTA VE M\u00dcCADELE KONTROLLER\u0130 ====================
 function startOrTriggerCast() {
   if (state.phase === 'idle') {
     state.phase = 'charging';
     state.castPower = 12;
     state.castDir = 1;
-    document.getElementById('mainActionBtn').innerText = 'ğŸš€ SAVURMAK Ä°Ã‡Ä°N DOKUN [SPACE]';
+    document.getElementById('mainActionBtn').innerText = '\ud83d\ude80 SAVURMAK \u0130\u00c7\u0130N DOKUN [SPACE]';
   } else if (state.phase === 'charging') {
     launchLure();
   } else if (state.phase === 'bite') {
@@ -1081,7 +1081,7 @@ function launchLure() {
   state.lure.flyProgress = 0;
   state.anglerAnim.rodTwitch = -0.55;
   playTone(410, 0.16, 'sine');
-  document.getElementById('mainActionBtn').innerText = 'ğŸ”„ MAKÄ°NE SAR / AKSÄ°YON VER';
+  document.getElementById('mainActionBtn').innerText = '\ud83d\udd04 MAK\u0130NE SAR / AKS\u0130YON VER';
 }
 
 function performLureAction(type) {
@@ -1098,7 +1098,7 @@ function performLureAction(type) {
     state.lure.appeal = Math.min(100, state.lure.appeal + 20 * mult);
     state.lure.dist = Math.max(0, state.lure.dist - 1.3);
     state.lure.depth = Math.max(0.2, state.lure.depth - 0.7);
-    state.lure.actionText = lure.type === 'topwater' ? 'Su ÃœstÃ¼ WTD KÃ¶pÃ¼rtme!' : 'Keskin Twitch Darbesi!';
+    state.lure.actionText = lure.type === 'topwater' ? 'Su \u00dcst\u00fc WTD K\u00f6p\u00fcrtme!' : 'Keskin Twitch Darbesi!';
     state.lure.actionTimer = 0.65;
     spawnParticles(state.lure.dist, state.lure.depth, 5, lure.type === 'topwater' ? 'splash' : 'bubble');
     playTone(590, 0.06, 'triangle');
@@ -1107,7 +1107,7 @@ function performLureAction(type) {
     state.lure.dist = Math.max(0, state.lure.dist - 1.7);
     const wasBottom = state.lure.depth >= maxSpotD - 2.2;
     state.lure.depth = Math.max(0.4, state.lure.depth - 2.1);
-    state.lure.actionText = wasBottom ? 'Dip Kum ZÄ±platma (Bottom Jerk)!' : 'Sert Dikey Jerk!';
+    state.lure.actionText = wasBottom ? 'Dip Kum Z\u0131platma (Bottom Jerk)!' : 'Sert Dikey Jerk!';
     state.lure.actionTimer = 0.75;
     spawnParticles(state.lure.dist, state.lure.depth, 7, wasBottom ? 'sand' : 'bubble');
     playTone(460, 0.08, 'sine');
@@ -1122,9 +1122,9 @@ function strikeFish() {
   state.tension = 32;
   state.anglerAnim.rodTwitch = 0.65;
   playTone(740, 0.22, 'square');
-  showToast(`ğŸ£ TASMA OTURDU! ${state.hookedFish.sp.name} kalamayÄ± zorluyor!`, '#22c55e');
+  showToast(`\ud83c\udfa3 TASMA OTURDU! ${state.hookedFish.sp.name} kalamay\u0131 zorluyor!`, '#22c55e');
   document.getElementById('mainActionBtn').className = 'action-btn';
-  document.getElementById('mainActionBtn').innerText = 'ğŸ”„ BALIÄI Ã‡EK (SARIM YAP)';
+  document.getElementById('mainActionBtn').innerText = '\ud83d\udd04 BALI\u011eI \u00c7EK (SARIM YAP)';
 }
 
 function reelStep(dt) {
@@ -1153,7 +1153,7 @@ function reelFightStep(dt) {
   state.lure.dist = Math.max(0, state.lure.dist - netGain * dt);
   state.lure.depth = Math.max(0.4, state.lure.depth - 3.0 * dt);
 
-  // Misina Ã§ekerine gÃ¶re gerilim artÄ±ÅŸÄ±
+  // Misina \u00e7ekerine g\u00f6re gerilim art\u0131\u015f\u0131
   const lineRatio = f.kg / (state.line.maxKg * (1 + state.skills.dragControl * 0.05));
   const tensionAdded = (14 + fishResistance * 6.5 * dragFactor * Math.max(0.6, lineRatio)) * (1 - state.skills.dragControl * 0.035);
   state.tension += tensionAdded * dt;
@@ -1179,11 +1179,11 @@ function resetCastToShore() {
   state.lure.appeal = 0;
   state.lure.actionText = 'Beklemede';
   document.getElementById('mainActionBtn').className = 'action-btn';
-  document.getElementById('mainActionBtn').innerText = 'ğŸ¯ ATIÅ GÃœCÃœ DOLDUR';
+  document.getElementById('mainActionBtn').innerText = '\ud83c\udfaf ATI\u015e G\u00dcC\u00dc DOLDUR';
   updateUI();
 }
 
-// ==================== BALIK YAKALAMA VE Ã–DÃœLLER ====================
+// ==================== BALIK YAKALAMA VE \u00d6D\u00dcLLER ====================
 function landFish(fish) {
   playTone(880, 0.28, 'triangle');
   const xpGain = addXp(Math.round(fish.sp.xp * (0.75 + (fish.kg / fish.sp.maxKg) * 0.65)));
@@ -1193,7 +1193,7 @@ function landFish(fish) {
 
   if (state.tourney.active && fish.kg > state.tourney.bestKg) {
     state.tourney.bestKg = fish.kg;
-    showToast(`ğŸ† YENÄ° TURNUVA LÄ°DERLÄ°K SKORU: ${fish.kg} kg!`, '#fde047');
+    showToast(`\ud83c\udfc6 YEN\u0130 TURNUVA L\u0130DERL\u0130K SKORU: ${fish.kg} kg!`, '#fde047');
   }
 
   if (!state.dex[fish.sp.id] || fish.kg > state.dex[fish.sp.id].maxKg) {
@@ -1210,22 +1210,22 @@ function landFish(fish) {
     state.cooler.push({ name: fish.sp.name, id: fish.sp.id, kg: fish.kg, val });
   } else {
     state.money += val;
-    showToast(`ğŸ’° Livar dolu: ${fish.sp.name} anÄ±nda ${val} â‚º'ye satÄ±ldÄ±!`, '#fbbf24');
+    showToast(`\ud83d\udcb0 Livar dolu: ${fish.sp.name} an\u0131nda ${val} \u20ba'ye sat\u0131ld\u0131!`, '#fbbf24');
   }
 
   checkContractsOnCatch(fish);
 
   const luck = getTotalLuckBonus();
   const drops = [];
-  if (Math.random() < 0.22 * luck) { state.mats.elixir++; drops.push('ğŸ§ª +1 Ä°ksir'); }
-  if (Math.random() < 0.20 * luck) { state.mats.powder++; drops.push('âœ¨ +1 Åans Tozu'); }
-  if (Math.random() < 0.10 * luck) { state.mats.blue++; drops.push('ğŸ”µ +1 Mavi Ã–z'); }
-  if (Math.random() < 0.14 * luck) { state.hotbarItems.chest++; drops.push('ğŸ“¦ SandÄ±k (Slot 5)'); }
-  if (fish.depth > 30 && Math.random() < 0.12 * luck) { state.hotbarItems.amphora++; drops.push('ğŸº Amfora (Slot 6)'); }
-  if (fish.kg >= fish.sp.maxKg * 0.75 && Math.random() < 0.18 * luck) { state.hotbarItems.pearl++; drops.push('ğŸ¦ª Ä°nci (Slot 7)'); }
+  if (Math.random() < 0.22 * luck) { state.mats.elixir++; drops.push('\ud83e\uddea +1 \u0130ksir'); }
+  if (Math.random() < 0.20 * luck) { state.mats.powder++; drops.push('\u2728 +1 \u015eans Tozu'); }
+  if (Math.random() < 0.10 * luck) { state.mats.blue++; drops.push('\ud83d\udd35 +1 Mavi \u00d6z'); }
+  if (Math.random() < 0.14 * luck) { state.hotbarItems.chest++; drops.push('\ud83d\udce6 Sand\u0131k (Slot 5)'); }
+  if (fish.depth > 30 && Math.random() < 0.12 * luck) { state.hotbarItems.amphora++; drops.push('\ud83c\udffa Amfora (Slot 6)'); }
+  if (fish.kg >= fish.sp.maxKg * 0.75 && Math.random() < 0.18 * luck) { state.hotbarItems.pearl++; drops.push('\ud83e\uddaa \u0130nci (Slot 7)'); }
 
-  showToast(`ğŸŸ YAKALANDI: ${fish.sp.name} (${fish.kg} kg) | DeÄŸeri: ${val} â‚º | +${xpGain} XP${getXpMult() > 1 ? ' âš¡' : ''}`, '#22c55e');
-  if (drops.length > 0) showToast(`ğŸ GANÄ°MET: ${drops.join(', ')}`, '#e879f9');
+  showToast(`\ud83d\udc1f YAKALANDI: ${fish.sp.name} (${fish.kg} kg) | De\u011feri: ${val} \u20ba | +${xpGain} XP${getXpMult() > 1 ? ' \u26a1' : ''}`, '#22c55e');
+  if (drops.length > 0) showToast(`\ud83c\udf81 GAN\u0130MET: ${drops.join(', ')}`, '#e879f9');
 
   const idx = state.fishes.indexOf(fish);
   if (idx !== -1) {
@@ -1241,10 +1241,10 @@ function landFish(fish) {
   updateUI();
 }
 
-// ==================== CANLI TURNUVA SÄ°STEMÄ° ====================
+// ==================== CANLI TURNUVA S\u0130STEM\u0130 ====================
 function startTournament() {
-  if (state.tourney.active) { showToast('âš ï¸ Turnuva zaten devam ediyor!', '#fbbf24'); return; }
-  if (state.money < 100) { showToast('âŒ KatÄ±lÄ±m Ã¼creti (100 â‚º) iÃ§in bakiyeniz yetersiz!', '#ef4444'); return; }
+  if (state.tourney.active) { showToast('\u26a0\ufe0f Turnuva zaten devam ediyor!', '#fbbf24'); return; }
+  if (state.money < 100) { showToast('\u274c Kat\u0131l\u0131m \u00fccreti (100 \u20ba) i\u00e7in bakiyeniz yetersiz!', '#ef4444'); return; }
   state.money -= 100;
   state.tourney.active = true;
   state.tourney.timeLeft = 180;
@@ -1252,7 +1252,7 @@ function startTournament() {
   document.getElementById('tourneyBanner').style.display = 'block';
   closeModals();
   playTone(780, 0.3, 'triangle');
-  showToast('ğŸ 3 DAKÄ°KALIK TROFE TURNUVASI BAÅLADI! En aÄŸÄ±r balÄ±ÄŸÄ± yakala!', '#fde047');
+  showToast('\ud83c\udfc1 3 DAK\u0130KALIK TROFE TURNUVASI BA\u015eLADI! En a\u011f\u0131r bal\u0131\u011f\u0131 yakala!', '#fde047');
   updateUI();
 }
 
@@ -1266,20 +1266,20 @@ function finishTournament() {
     state.mats.elixir += 2;
     state.leaguePts += 150;
     playTone(950, 0.4, 'triangle');
-    showToast(`ğŸ† TURNUVA ÅAMPÄ°YONU OLDUN! (${state.tourney.bestKg} kg vs Rakip ${aiBest} kg) Ã–dÃ¼l: +${prize} â‚º & +2 Ä°ksir!`, '#22c55e');
+    showToast(`\ud83c\udfc6 TURNUVA \u015eAMP\u0130YONU OLDUN! (${state.tourney.bestKg} kg vs Rakip ${aiBest} kg) \u00d6d\u00fcl: +${prize} \u20ba & +2 \u0130ksir!`, '#22c55e');
   } else if (state.tourney.bestKg > 0) {
     const prize = 250;
     state.money += prize;
     state.leaguePts += 40;
-    showToast(`ğŸ¥ˆ Turnuva Bitti! Rakip (${aiBest} kg) birinci oldu. Teselli Ã¶dÃ¼lÃ¼: +${prize} â‚º`, '#fbbf24');
+    showToast(`\ud83e\udd48 Turnuva Bitti! Rakip (${aiBest} kg) birinci oldu. Teselli \u00f6d\u00fcl\u00fc: +${prize} \u20ba`, '#fbbf24');
   } else {
-    showToast(`â° Turnuva sÃ¼resi doldu, balÄ±k kaydedilemedi.`, '#ef4444');
+    showToast(`\u23f0 Turnuva s\u00fcresi doldu, bal\u0131k kaydedilemedi.`, '#ef4444');
   }
   saveProgress();
   updateUI();
 }
 
-// ==================== MENÃœ RENDER FONKSÄ°YONLARI ====================
+// ==================== MEN\u00dc RENDER FONKS\u0130YONLARI ====================
 function openModal(id) {
   closeModals();
   document.getElementById(id).classList.add('open');
@@ -1297,7 +1297,7 @@ function closeModals() { document.querySelectorAll('.modal-backdrop').forEach(m 
 function renderLeagueModal() {
   const rows = [
     ...AI_RIVALS,
-    { name:'â­ SEN (Fatih)', spot:SPOTS[state.spotIdx].name.split(' ')[0], bestKg:state.bestCatchKg, pts:state.leaguePts, isPlayer:true }
+    { name:'\u2b50 SEN (Fatih)', spot:SPOTS[state.spotIdx].name.split(' ')[0], bestKg:state.bestCatchKg, pts:state.leaguePts, isPlayer:true }
   ].sort((a, b) => b.pts - a.pts);
 
   document.getElementById('leagueTableBody').innerHTML = rows.map((r, i) => `
@@ -1322,7 +1322,7 @@ function renderSkillModal() {
           <p>${sk.desc}</p>
         </div>
         <button class="buy-btn" onclick="upgradeSkill('${sk.key}')" ${state.skillPoints <= 0 || cur >= sk.max ? 'disabled' : ''}>
-          ${cur >= sk.max ? 'Maksimum Seviye' : 'Yetenek GeliÅŸtir (1 SP)'}
+          ${cur >= sk.max ? 'Maksimum Seviye' : 'Yetenek Geli\u015ftir (1 SP)'}
         </button>
       </div>
     `;
@@ -1331,9 +1331,9 @@ function renderSkillModal() {
   document.getElementById('contractGrid').innerHTML = state.contracts.map(c => `
     <div class="item-card" style="border-color:rgba(251,191,36,0.35);">
       <div>
-        <h4>ğŸ¯ ${c.target} Adet ${c.fishName} Avla</h4>
-        <p>Ä°lerleme: <b style="color:#38bdf8;">${c.current} / ${c.target}</b></p>
-        <p style="color:#fbbf24; margin-top:4px;">Ã–dÃ¼l: ${c.rewardMoney} â‚º + ${c.rewardXp} XP ${c.rewardElixir ? '+ ğŸ§ª 1 Ä°ksir' : ''}</p>
+        <h4>\ud83c\udfaf ${c.target} Adet ${c.fishName} Avla</h4>
+        <p>\u0130lerleme: <b style="color:#38bdf8;">${c.current} / ${c.target}</b></p>
+        <p style="color:#fbbf24; margin-top:4px;">\u00d6d\u00fcl: ${c.rewardMoney} \u20ba + ${c.rewardXp} XP ${c.rewardElixir ? '+ \ud83e\uddea 1 \u0130ksir' : ''}</p>
       </div>
     </div>
   `).join('');
@@ -1363,12 +1363,12 @@ function renderMarket(tab, btnEl) {
       return `
         <div class="item-card">
           <div>
-            <h4>ğŸ£ ${r.name}</h4>
-            <p>Ã‡ekiÅŸ GÃ¼cÃ¼: <b>${r.power}x</b> | Maks AtÄ±ÅŸ: <b>${r.cast}m</b></p>
-            <p style="color:${lvOk ? '#22c55e' : '#ef4444'};">Gereken Seviye: Sv.${r.reqLv} | Fiyat: <b style="color:#fbbf24;">${r.price} â‚º</b></p>
+            <h4>\ud83c\udfa3 ${r.name}</h4>
+            <p>\u00c7eki\u015f G\u00fcc\u00fc: <b>${r.power}x</b> | Maks At\u0131\u015f: <b>${r.cast}m</b></p>
+            <p style="color:${lvOk ? '#22c55e' : '#ef4444'};">Gereken Seviye: Sv.${r.reqLv} | Fiyat: <b style="color:#fbbf24;">${r.price} \u20ba</b></p>
           </div>
           <button class="buy-btn" onclick="buyGear('rod','${r.id}')" ${state.rod.id===r.id || !lvOk ? 'disabled' : ''}>
-            ${state.rod.id===r.id ? 'KuÅŸanÄ±ldÄ±' : (!lvOk ? `ğŸ”’ Sv.${r.reqLv} Gerekli` : (r.owned ? 'KuÅŸan' : 'SatÄ±n Al'))}
+            ${state.rod.id===r.id ? 'Ku\u015fan\u0131ld\u0131' : (!lvOk ? `\ud83d\udd12 Sv.${r.reqLv} Gerekli` : (r.owned ? 'Ku\u015fan' : 'Sat\u0131n Al'))}
           </button>
         </div>
       `;
@@ -1379,12 +1379,12 @@ function renderMarket(tab, btnEl) {
       return `
         <div class="item-card">
           <div>
-            <h4>âš™ï¸ ${r.name}</h4>
-            <p>Kalama GÃ¼cÃ¼: <b>${r.drag}x</b> | SarÄ±m HÄ±zÄ±: <b>${r.speed}x</b></p>
-            <p style="color:${lvOk ? '#22c55e' : '#ef4444'};">Gereken Seviye: Sv.${r.reqLv} | Fiyat: <b style="color:#fbbf24;">${r.price} â‚º</b></p>
+            <h4>\u2699\ufe0f ${r.name}</h4>
+            <p>Kalama G\u00fcc\u00fc: <b>${r.drag}x</b> | Sar\u0131m H\u0131z\u0131: <b>${r.speed}x</b></p>
+            <p style="color:${lvOk ? '#22c55e' : '#ef4444'};">Gereken Seviye: Sv.${r.reqLv} | Fiyat: <b style="color:#fbbf24;">${r.price} \u20ba</b></p>
           </div>
           <button class="buy-btn" onclick="buyGear('reel','${r.id}')" ${state.reel.id===r.id || !lvOk ? 'disabled' : ''}>
-            ${state.reel.id===r.id ? 'KuÅŸanÄ±ldÄ±' : (!lvOk ? `ğŸ”’ Sv.${r.reqLv} Gerekli` : (r.owned ? 'KuÅŸan' : 'SatÄ±n Al'))}
+            ${state.reel.id===r.id ? 'Ku\u015fan\u0131ld\u0131' : (!lvOk ? `\ud83d\udd12 Sv.${r.reqLv} Gerekli` : (r.owned ? 'Ku\u015fan' : 'Sat\u0131n Al'))}
           </button>
         </div>
       `;
@@ -1395,12 +1395,12 @@ function renderMarket(tab, btnEl) {
       return `
         <div class="item-card">
           <div>
-            <h4>ğŸ§µ ${l.name}</h4>
-            <p>Maksimum Ã‡eker: <b>${l.maxKg} kg</b> | GÃ¶rÃ¼nmezlik Cazibesi: <b>${l.visBonus}x</b></p>
-            <p style="color:${lvOk ? '#22c55e' : '#ef4444'};">Gereken Seviye: Sv.${l.reqLv} | Fiyat: <b style="color:#fbbf24;">${l.price} â‚º</b></p>
+            <h4>\ud83e\uddf5 ${l.name}</h4>
+            <p>Maksimum \u00c7eker: <b>${l.maxKg} kg</b> | G\u00f6r\u00fcnmezlik Cazibesi: <b>${l.visBonus}x</b></p>
+            <p style="color:${lvOk ? '#22c55e' : '#ef4444'};">Gereken Seviye: Sv.${l.reqLv} | Fiyat: <b style="color:#fbbf24;">${l.price} \u20ba</b></p>
           </div>
           <button class="buy-btn" onclick="buyGear('line','${l.id}')" ${state.line.id===l.id || !lvOk ? 'disabled' : ''}>
-            ${state.line.id===l.id ? 'SarÄ±lÄ±' : (!lvOk ? `ğŸ”’ Sv.${l.reqLv} Gerekli` : (l.owned ? 'Makinaya Sar' : 'SatÄ±n Al'))}
+            ${state.line.id===l.id ? 'Sar\u0131l\u0131' : (!lvOk ? `\ud83d\udd12 Sv.${l.reqLv} Gerekli` : (l.owned ? 'Makinaya Sar' : 'Sat\u0131n Al'))}
           </button>
         </div>
       `;
@@ -1410,16 +1410,16 @@ function renderMarket(tab, btnEl) {
       <div class="item-card ${getGlowClass(l.plus)}">
         <div>
           <h4>${l.icon} ${l.name} (+${l.plus})</h4>
-          <p>DalÄ±ÅŸ: <b>${l.maxSink}m</b> | Cazibe: <b>${l.appealBonus.toFixed(2)}x</b></p>
+          <p>Dal\u0131\u015f: <b>${l.maxSink}m</b> | Cazibe: <b>${l.appealBonus.toFixed(2)}x</b></p>
         </div>
-        <button class="buy-btn" onclick="upgradeLureTier(${idx})">Yem Kalitesini ArtÄ±r (950 â‚º)</button>
+        <button class="buy-btn" onclick="upgradeLureTier(${idx})">Yem Kalitesini Art\u0131r (950 \u20ba)</button>
       </div>
     `).join('');
   } else if (tab === 'alchemy') {
     grid.innerHTML = SHOP_ITEMS.alchemy.map(a => `
       <div class="item-card">
-        <div><h4>${a.name}</h4><p>${a.desc}</p><b style="color:#fbbf24;">${a.price} â‚º</b></div>
-        <button class="buy-btn" onclick="buyAlchemyItem('${a.id}')">SatÄ±n Al</button>
+        <div><h4>${a.name}</h4><p>${a.desc}</p><b style="color:#fbbf24;">${a.price} \u20ba</b></div>
+        <button class="buy-btn" onclick="buyAlchemyItem('${a.id}')">Sat\u0131n Al</button>
       </div>
     `).join('');
   }
@@ -1430,61 +1430,61 @@ function buyGear(kind, id) {
   const item = list.find(x => x.id === id);
   if (!item || state.level < item.reqLv) return;
   if (!item.owned) {
-    if (state.money < item.price) { showToast('âŒ Yetersiz bakiye!', '#ef4444'); return; }
+    if (state.money < item.price) { showToast('\u274c Yetersiz bakiye!', '#ef4444'); return; }
     state.money -= item.price; item.owned = true;
   }
   if (kind === 'rod') state.rod = { ...item, plus: state.rod.plus, blue: state.rod.blue };
   else if (kind === 'reel') state.reel = { ...item, plus: state.reel.plus, blue: state.reel.blue };
   else state.line = { ...item };
   saveProgress();
-  showToast(`âœ… ${item.name} kuÅŸanÄ±ldÄ±!`, '#22c55e');
+  showToast(`\u2705 ${item.name} ku\u015fan\u0131ld\u0131!`, '#22c55e');
   renderMarket(kind === 'rod' ? 'rods' : (kind === 'reel' ? 'reels' : 'lines'));
   updateUI();
 }
 
 function upgradeLureTier(idx) {
-  if (state.money < 950) { showToast('âŒ Yetersiz bakiye!', '#ef4444'); return; }
+  if (state.money < 950) { showToast('\u274c Yetersiz bakiye!', '#ef4444'); return; }
   state.money -= 950; state.lures[idx].appealBonus += 0.15;
-  saveProgress(); showToast('ğŸŸ Sahte yem kalitesi artÄ±rÄ±ldÄ±!', '#22c55e');
+  saveProgress(); showToast('\ud83d\udc1f Sahte yem kalitesi art\u0131r\u0131ld\u0131!', '#22c55e');
   renderMarket('lures'); updateUI();
 }
 
 function buyAlchemyItem(id) {
   const item = SHOP_ITEMS.alchemy.find(x => x.id === id);
-  if (!item || state.money < item.price) { showToast('âŒ Yetersiz bakiye!', '#ef4444'); return; }
+  if (!item || state.money < item.price) { showToast('\u274c Yetersiz bakiye!', '#ef4444'); return; }
   state.money -= item.price;
   if (item.type === 'mat') state.mats[item.key] += item.qty;
   if (item.type === 'cons') state.hotbarItems[item.key] += item.qty;
-  saveProgress(); showToast(`âœ… ${item.name} alÄ±ndÄ±!`, '#22c55e');
+  saveProgress(); showToast(`\u2705 ${item.name} al\u0131nd\u0131!`, '#22c55e');
   renderHotbar(); updateUI();
 }
 
 function getAlchemyTargetObj() {
-  if (state.selectedAlchemyTarget === 'rod') return { obj: state.rod, icon: 'ğŸ£' };
-  if (state.selectedAlchemyTarget === 'reel') return { obj: state.reel, icon: 'âš™ï¸' };
+  if (state.selectedAlchemyTarget === 'rod') return { obj: state.rod, icon: '\ud83c\udfa3' };
+  if (state.selectedAlchemyTarget === 'reel') return { obj: state.reel, icon: '\u2699\ufe0f' };
   const idx = parseInt(state.selectedAlchemyTarget.replace('lure', '')) || 0;
   return { obj: state.lures[idx], icon: state.lures[idx].icon };
 }
 
 function renderAlchemyModal() {
   document.getElementById('alchemyMatHeader').innerHTML = `
-    <div class="mat-badge">ğŸ§ª Ä°ksir: <b>${state.mats.elixir}</b></div>
-    <div class="mat-badge">âœ¨ Åans: <b>${state.mats.powder}</b></div>
-    <div class="mat-badge">ğŸ’ Koruma: <b>${state.mats.immortal}</b></div>
-    <div class="mat-badge">ğŸŒŸ YÄ±ldÄ±z: <b>${state.mats.astral}</b></div>
-    <div class="mat-badge">ğŸ”µ Mavi Ã–z: <b>${state.mats.blue}</b></div>
+    <div class="mat-badge">\ud83e\uddea \u0130ksir: <b>${state.mats.elixir}</b></div>
+    <div class="mat-badge">\u2728 \u015eans: <b>${state.mats.powder}</b></div>
+    <div class="mat-badge">\ud83d\udc8e Koruma: <b>${state.mats.immortal}</b></div>
+    <div class="mat-badge">\ud83c\udf1f Y\u0131ld\u0131z: <b>${state.mats.astral}</b></div>
+    <div class="mat-badge">\ud83d\udd35 Mavi \u00d6z: <b>${state.mats.blue}</b></div>
   `;
   const t = getAlchemyTargetObj();
   const box = document.getElementById('alchemyTargetIcon');
   box.className = `alchemy-target-box ${getGlowClass(t.obj.plus)}`;
   box.innerHTML = `${t.icon}<span style="position:absolute;bottom:4px;right:6px;font-size:13px;font-weight:900;color:#fbbf24;">+${t.obj.plus}</span>`;
   document.getElementById('alchemyTargetName').innerText = `${t.obj.name} (+${t.obj.plus})`;
-  document.getElementById('alchemyTargetStats').innerText = `GÃ¼Ã§ Bonusu: +%${t.obj.plus * 10}`;
-  document.getElementById('alchemyBlueStats').innerText = `GÃœÃ‡ +${t.obj.blue.str} | CAZÄ°BE +${t.obj.blue.int} | ÅANS +${t.obj.blue.luck}`;
+  document.getElementById('alchemyTargetStats').innerText = `G\u00fc\u00e7 Bonusu: +%${t.obj.plus * 10}`;
+  document.getElementById('alchemyBlueStats').innerText = `G\u00dc\u00c7 +${t.obj.blue.str} | CAZ\u0130BE +${t.obj.blue.int} | \u015eANS +${t.obj.blue.luck}`;
 
   const candidates = [
-    { key:'rod', name:state.rod.name, plus:state.rod.plus, icon:'ğŸ£' },
-    { key:'reel', name:state.reel.name, plus:state.reel.plus, icon:'âš™ï¸' },
+    { key:'rod', name:state.rod.name, plus:state.rod.plus, icon:'\ud83c\udfa3' },
+    { key:'reel', name:state.reel.name, plus:state.reel.plus, icon:'\u2699\ufe0f' },
     ...state.lures.map((l, i) => ({ key:`lure${i}`, name:l.name, plus:l.plus, icon:l.icon }))
   ];
   document.getElementById('alchemyItemList').innerHTML = candidates.map(c => `
@@ -1492,7 +1492,7 @@ function renderAlchemyModal() {
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h4>${c.icon} ${c.name}</h4><b style="color:#fbbf24; font-size:14px;">+${c.plus}</b>
       </div>
-      <button class="buy-btn" style="background:#7e22ce;">SeÃ§</button>
+      <button class="buy-btn" style="background:#7e22ce;">Se\u00e7</button>
     </div>
   `).join('');
 }
@@ -1500,8 +1500,8 @@ function renderAlchemyModal() {
 function attemptAlchemyPlus() {
   const t = getAlchemyTargetObj().obj;
   const log = document.getElementById('alchemyLog');
-  if (t.plus >= 12) { log.innerText = 'âš¡ Maksimum +12 seviyesinde!'; return; }
-  if (state.mats.elixir <= 0) { log.style.color = '#ef4444'; log.innerText = 'âŒ Yetersiz Ä°ksir!'; return; }
+  if (t.plus >= 12) { log.innerText = '\u26a1 Maksimum +12 seviyesinde!'; return; }
+  if (state.mats.elixir <= 0) { log.style.color = '#ef4444'; log.innerText = '\u274c Yetersiz \u0130ksir!'; return; }
   state.mats.elixir--;
 
   let chance = [0.90, 0.80, 0.70, 0.58, 0.45, 0.35, 0.26, 0.19, 0.14, 0.10, 0.07, 0.05][t.plus] || 0.05;
@@ -1509,16 +1509,16 @@ function attemptAlchemyPlus() {
 
   if (Math.random() <= chance) {
     t.plus++; playTone(920, 0.25, 'triangle');
-    log.style.color = '#22c55e'; log.innerText = `âœ¨ BAÅARILI! +${t.plus} oldu!`;
+    log.style.color = '#22c55e'; log.innerText = `\u2728 BA\u015eARILI! +${t.plus} oldu!`;
   } else {
     playTone(180, 0.3, 'sawtooth');
     if (t.plus >= 5 && document.getElementById('useImmortal').checked && state.mats.immortal > 0) {
-      state.mats.immortal--; log.style.color = '#38bdf8'; log.innerText = `ğŸ’ Koruma TaÅŸÄ± seviye kaybÄ±nÄ± Ã¶nledi!`;
+      state.mats.immortal--; log.style.color = '#38bdf8'; log.innerText = `\ud83d\udc8e Koruma Ta\u015f\u0131 seviye kayb\u0131n\u0131 \u00f6nledi!`;
     } else if (t.plus >= 4 && document.getElementById('useAstral').checked && state.mats.astral > 0) {
-      state.mats.astral--; t.plus = 4; log.style.color = '#fbbf24'; log.innerText = `ğŸŒŸ YÄ±ldÄ±z TaÅŸÄ± +4'te tuttu.`;
+      state.mats.astral--; t.plus = 4; log.style.color = '#fbbf24'; log.innerText = `\ud83c\udf1f Y\u0131ld\u0131z Ta\u015f\u0131 +4'te tuttu.`;
     } else {
       t.plus = Math.max(0, t.plus - 1);
-      log.style.color = '#ef4444'; log.innerText = `ğŸ’¥ BaÅŸarÄ±sÄ±z! +${t.plus} seviyesine dÃ¼ÅŸtÃ¼.`;
+      log.style.color = '#ef4444'; log.innerText = `\ud83d\udca5 Ba\u015far\u0131s\u0131z! +${t.plus} seviyesine d\u00fc\u015ft\u00fc.`;
     }
   }
   saveProgress(); renderAlchemyModal(); renderHotbar(); updateUI();
@@ -1527,23 +1527,23 @@ function attemptAlchemyPlus() {
 function attemptBlueStat() {
   const t = getAlchemyTargetObj().obj;
   const log = document.getElementById('alchemyLog');
-  if (state.mats.blue <= 0) { log.style.color = '#ef4444'; log.innerText = 'âŒ Yetersiz Mavi Ã–z!'; return; }
+  if (state.mats.blue <= 0) { log.style.color = '#ef4444'; log.innerText = '\u274c Yetersiz Mavi \u00d6z!'; return; }
   state.mats.blue--;
   const keys = ['str', 'int', 'luck'];
   const picked = keys[Math.floor(Math.random() * keys.length)];
   t.blue[picked] = Math.min(10, t.blue[picked] + 1);
   playTone(760, 0.18, 'sine');
-  log.style.color = '#60a5fa'; log.innerText = `ğŸ”µ Mavi Ã–zellik Eklendi!`;
+  log.style.color = '#60a5fa'; log.innerText = `\ud83d\udd35 Mavi \u00d6zellik Eklendi!`;
   saveProgress(); renderAlchemyModal(); updateUI();
 }
 
 function renderBazaar() {
   const list = document.getElementById('coolerList');
-  if (state.cooler.length === 0) { list.innerHTML = `<p style="color:#94a3b8;">Livar ÅŸu an boÅŸ.</p>`; return; }
+  if (state.cooler.length === 0) { list.innerHTML = `<p style="color:#94a3b8;">Livar \u015fu an bo\u015f.</p>`; return; }
   list.innerHTML = state.cooler.map((c, i) => `
     <div class="item-card">
-      <div><h4>ğŸŸ ${c.name}</h4><p>AÄŸÄ±rlÄ±k: <b>${c.kg} kg</b> | DeÄŸer: <b style="color:#fbbf24;">${c.val} â‚º</b></p></div>
-      <button class="buy-btn" onclick="sellSingleFish(${i})">Sat (+${c.val} â‚º)</button>
+      <div><h4>\ud83d\udc1f ${c.name}</h4><p>A\u011f\u0131rl\u0131k: <b>${c.kg} kg</b> | De\u011fer: <b style="color:#fbbf24;">${c.val} \u20ba</b></p></div>
+      <button class="buy-btn" onclick="sellSingleFish(${i})">Sat (+${c.val} \u20ba)</button>
     </div>
   `).join('');
 }
@@ -1559,7 +1559,7 @@ function sellAllFish() {
   const total = state.cooler.reduce((sum, f) => sum + f.val, 0);
   state.money += total; state.cooler = [];
   playTone(820, 0.2, 'triangle');
-  saveProgress(); showToast(`ğŸ’° Livardaki balÄ±klar satÄ±ldÄ±: +${total} â‚º`, '#fbbf24');
+  saveProgress(); showToast(`\ud83d\udcb0 Livardaki bal\u0131klar sat\u0131ld\u0131: +${total} \u20ba`, '#fbbf24');
   renderBazaar(); updateUI();
 }
 
@@ -1569,12 +1569,12 @@ function renderMap() {
     return `
       <div class="item-card" style="border-color:${state.spotIdx===s.id?'#fbbf24':'rgba(148,163,184,0.2)'}">
         <div>
-          <h4>ğŸ“ ${s.name}</h4>
+          <h4>\ud83d\udccd ${s.name}</h4>
           <p>Maks Derinlik: <b style="color:#38bdf8;">${s.maxDepth}m</b> | Gereken: <b style="color:${unlocked?'#22c55e':'#ef4444'}">Sv.${s.reqLv}</b></p>
           <p style="margin-top:4px;">${s.desc}</p>
         </div>
         <button class="buy-btn" onclick="selectSpot(${s.id})" ${!unlocked || state.spotIdx===s.id ? 'disabled' : ''}>
-          ${state.spotIdx===s.id ? 'Aktif Mera' : (unlocked ? 'Bu Meraya Git' : `ğŸ”’ Seviye ${s.reqLv} Gerekli`)}
+          ${state.spotIdx===s.id ? 'Aktif Mera' : (unlocked ? 'Bu Meraya Git' : `\ud83d\udd12 Seviye ${s.reqLv} Gerekli`)}
         </button>
       </div>
     `;
@@ -1585,27 +1585,27 @@ function selectSpot(id) {
   if (state.level < SPOTS[id].reqLv) return;
   state.spotIdx = id; resetCastToShore(); spawnFishes();
   saveProgress(); closeModals();
-  showToast(`ğŸ—ºï¸ Yeni Meraya GeÃ§ildi: ${SPOTS[id].name}`, '#38bdf8');
+  showToast(`\ud83d\uddfa\ufe0f Yeni Meraya Ge\u00e7ildi: ${SPOTS[id].name}`, '#38bdf8');
   updateUI();
 }
 
 function renderDex() {
   document.getElementById('dexGrid').innerHTML = FISH_SPECIES.map(s => {
     const rec = state.dex[s.id];
-    const zoneLabel = s.zoneType === 'surface' ? 'Su ÃœstÃ¼' : (s.zoneType === 'mid' ? 'Orta Su' : 'Dip KayalÄ±k');
+    const zoneLabel = s.zoneType === 'surface' ? 'Su \u00dcst\u00fc' : (s.zoneType === 'mid' ? 'Orta Su' : 'Dip Kayal\u0131k');
     return `
       <div class="item-card" style="opacity:${rec ? 1 : 0.6}">
         <div>
-          <h4>${rec ? 'ğŸ†' : 'ğŸ”’'} ${s.name} <span style="font-size:10px; color:#38bdf8;">(Sv.${s.minLv}+)</span></h4>
-          <p>Katman: <b>${zoneLabel} (${s.minDepth}-${s.maxDepth}m)</b> | Borsa: ${s.priceKg} â‚º/kg</p>
-          <p style="color:#fbbf24; margin-top:4px;">${rec ? `Yakalanan: ${rec.count} | Rekor: ${rec.maxKg} kg` : 'HenÃ¼z yakalanmadÄ±'}</p>
+          <h4>${rec ? '\ud83c\udfc6' : '\ud83d\udd12'} ${s.name} <span style="font-size:10px; color:#38bdf8;">(Sv.${s.minLv}+)</span></h4>
+          <p>Katman: <b>${zoneLabel} (${s.minDepth}-${s.maxDepth}m)</b> | Borsa: ${s.priceKg} \u20ba/kg</p>
+          <p style="color:#fbbf24; margin-top:4px;">${rec ? `Yakalanan: ${rec.count} | Rekor: ${rec.maxKg} kg` : 'Hen\u00fcz yakalanmad\u0131'}</p>
         </div>
       </div>
     `;
   }).join('');
 }
 
-// ==================== 9'LU HOTBAR & ARAYÃœZ GÃœNCELLEME ====================
+// ==================== 9'LU HOTBAR & ARAY\u00dcZ G\u00dcNCELLEME ====================
 function renderHotbar() {
   const bar = document.getElementById('quickBar');
   bar.innerHTML = '';
@@ -1623,11 +1623,11 @@ function renderHotbar() {
     bar.appendChild(slot);
   }
   const extras = [
-    { key:'chest', num:5, icon:'ğŸ“¦', label:'SandÄ±k', count:state.hotbarItems.chest },
-    { key:'amphora', num:6, icon:'ğŸº', label:'Amfora', count:state.hotbarItems.amphora },
-    { key:'pearl', num:7, icon:'ğŸ¦ª', label:'Ä°nci', count:state.hotbarItems.pearl },
-    { key:'chum', num:8, icon:'ğŸª£', label:'Yemleme', count:state.hotbarItems.chum },
-    { key:'repair', num:9, icon:'ğŸ§ª', label:'SoÄŸutucu', count:state.hotbarItems.repair }
+    { key:'chest', num:5, icon:'\ud83d\udce6', label:'Sand\u0131k', count:state.hotbarItems.chest },
+    { key:'amphora', num:6, icon:'\ud83c\udffa', label:'Amfora', count:state.hotbarItems.amphora },
+    { key:'pearl', num:7, icon:'\ud83e\uddaa', label:'\u0130nci', count:state.hotbarItems.pearl },
+    { key:'chum', num:8, icon:'\ud83e\udea3', label:'Yemleme', count:state.hotbarItems.chum },
+    { key:'repair', num:9, icon:'\ud83e\uddea', label:'So\u011futucu', count:state.hotbarItems.repair }
   ];
   extras.forEach((ex, idx) => {
     const slot = document.createElement('div');
@@ -1645,31 +1645,31 @@ function renderHotbar() {
 }
 
 function selectHotbarSlot(idx) {
-  if (state.phase !== 'idle') { showToast('âš ï¸ Yem deÄŸiÅŸtirmek iÃ§in oltayÄ± kÄ±yÄ±ya sarÄ±n!', '#fbbf24'); return; }
+  if (state.phase !== 'idle') { showToast('\u26a0\ufe0f Yem de\u011fi\u015ftirmek i\u00e7in oltay\u0131 k\u0131y\u0131ya sar\u0131n!', '#fbbf24'); return; }
   state.activeSlot = idx;
   playTone(520, 0.08, 'triangle');
   renderHotbar(); updateUI();
 }
 
 function useHotbarExtra(key) {
-  if (state.hotbarItems[key] <= 0) { showToast('âŒ Bu slotta Ã¶ÄŸe yok!', '#ef4444'); return; }
+  if (state.hotbarItems[key] <= 0) { showToast('\u274c Bu slotta \u00f6\u011fe yok!', '#ef4444'); return; }
   state.hotbarItems[key]--; playTone(680, 0.18, 'sine');
   if (key === 'chest') {
     const g = 90 + Math.floor(Math.random() * 140);
     state.money += g; state.mats.elixir++;
-    showToast(`ğŸ“¦ SandÄ±k: +${g} â‚º, +1 Ä°ksir!`, '#fbbf24');
+    showToast(`\ud83d\udce6 Sand\u0131k: +${g} \u20ba, +1 \u0130ksir!`, '#fbbf24');
   } else if (key === 'amphora') {
     const g = 180 + Math.floor(Math.random() * 250);
     state.money += g; state.mats.blue++;
-    showToast(`ğŸº Amfora: +${g} â‚º, +1 Mavi Ã–z!`, '#c084fc');
+    showToast(`\ud83c\udffa Amfora: +${g} \u20ba, +1 Mavi \u00d6z!`, '#c084fc');
   } else if (key === 'pearl') {
     const g = 320 + Math.floor(Math.random() * 380);
     state.money += g; state.mats.immortal++;
-    showToast(`ğŸ¦ª Ä°nci: +${g} â‚º, +1 Koruma TaÅŸÄ±!`, '#38bdf8');
+    showToast(`\ud83e\uddaa \u0130nci: +${g} \u20ba, +1 Koruma Ta\u015f\u0131!`, '#38bdf8');
   } else if (key === 'chum') {
-    state.chumTimer = 40; showToast('ğŸª£ Sardalya Mazmozu suya serpildi! (40sn)', '#22c55e');
+    state.chumTimer = 40; showToast('\ud83e\udea3 Sardalya Mazmozu suya serpildi! (40sn)', '#22c55e');
   } else if (key === 'repair') {
-    state.tension = Math.max(0, state.tension - 60); showToast('ğŸ§ª Misina soÄŸutuldu!', '#38bdf8');
+    state.tension = Math.max(0, state.tension - 60); showToast('\ud83e\uddea Misina so\u011futuldu!', '#38bdf8');
   }
   saveProgress(); renderHotbar(); updateUI();
 }
@@ -1677,13 +1677,13 @@ function useHotbarExtra(key) {
 function updateUI() {
   const reqXp = getReqXpForNextLevel(state.level);
   document.getElementById('uiRankTitle').innerText = getRankTitle(state.level);
-  document.getElementById('uiMoney').innerText = `${state.money} â‚º`;
+  document.getElementById('uiMoney').innerText = `${state.money} \u20ba`;
   document.getElementById('uiXp').innerText = `Sv.${state.level} (${state.xp}/${reqXp})`;
   document.getElementById('xpBarFill').style.width = `${Math.min(100, (state.xp / reqXp) * 100)}%`;
   document.getElementById('spotBadge').innerText = SPOTS[state.spotIdx].name.split(' ')[0];
-  document.getElementById('uiRodName').innerText = `KamÄ±ÅŸ: ${state.rod.name.split(' ')[0]} +${state.rod.plus}`;
+  document.getElementById('uiRodName').innerText = `Kam\u0131\u015f: ${state.rod.name.split(' ')[0]} +${state.rod.plus}`;
   document.getElementById('uiLineName').innerText = `Misina: ${state.line.maxKg}kg`;
-  document.getElementById('uiLineLimitText').innerText = `Ã‡eker: ${state.line.maxKg} kg`;
+  document.getElementById('uiLineLimitText').innerText = `\u00c7eker: ${state.line.maxKg} kg`;
   document.getElementById('uiMaxSpotD').innerText = `${SPOTS[state.spotIdx].maxDepth}m`;
   document.getElementById('uiCoolerCount').innerText = `Livar: ${state.cooler.length}/${state.coolerMax}`;
 
@@ -1692,7 +1692,7 @@ function updateUI() {
   else { spBadge.style.display = 'none'; }
 
   document.getElementById('miniContractBox').innerHTML = state.contracts.slice(0, 2).map(c =>
-    `â€¢ ${c.fishName}: <b style="color:#fbbf24;">${c.current}/${c.target}</b> (${c.rewardMoney}â‚º)`
+    `\u2022 ${c.fishName}: <b style="color:#fbbf24;">${c.current}/${c.target}</b> (${c.rewardMoney}\u20ba)`
   ).join('<br>');
 
   document.getElementById('uiDist').innerText = `${state.lure.dist.toFixed(1)} m`;
@@ -1702,13 +1702,13 @@ function updateUI() {
   document.getElementById('tensionBar').style.width = `${Math.min(100, state.tension)}%`;
 }
 
-// ==================== FÄ°ZÄ°K VE OYUN DÃ–NGÃœSÃœ ====================
+// ==================== F\u0130Z\u0130K VE OYUN D\u00d6NG\u00dcS\u00dc ====================
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 function setResolutionScale(scale) {
   state.resolutionScale = scale; resizeCanvas();
-  showToast(`ğŸ–¥ï¸ Ã‡Ã¶zÃ¼nÃ¼rlÃ¼k Ã–lÃ§eÄŸi: ${scale}x`, '#38bdf8');
+  showToast(`\ud83d\udda5\ufe0f \u00c7\u00f6z\u00fcn\u00fcrl\u00fck \u00d6l\u00e7e\u011fi: ${scale}x`, '#38bdf8');
 }
 function toggleFullscreen() {
   if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
@@ -1735,7 +1735,7 @@ function updateGame(dt) {
       b.left -= dt;
       if (b.left <= 0) {
         b.left = 0; b.pct = 0;
-        showToast(`âŒ› ${k === 'xp' ? 'XP' : 'Av DeÄŸeri'} gÃ¼Ã§lendirmesi sona erdi.`, '#fbbf24');
+        showToast(`\u231b ${k === 'xp' ? 'XP' : 'Av De\u011feri'} g\u00fc\u00e7lendirmesi sona erdi.`, '#fbbf24');
         saveProgress();
       }
     }
@@ -1765,7 +1765,7 @@ function updateGame(dt) {
     state.lure.dist = state.lure.targetDist * Math.min(1, state.lure.flyProgress);
     if (state.lure.flyProgress >= 1) {
       state.phase = 'water'; state.lure.depth = 0.35; state.lure.appeal = 28;
-      state.lure.actionText = 'Suya DÃ¼ÅŸtÃ¼ (Splash!)';
+      state.lure.actionText = 'Suya D\u00fc\u015ft\u00fc (Splash!)';
       spawnParticles(state.lure.dist, 0.2, 12, 'splash');
       playTone(230, 0.14, 'sine');
     }
@@ -1785,14 +1785,14 @@ function updateGame(dt) {
     }
     if (state.lure.actionTimer > 0) {
       state.lure.actionTimer -= dt;
-      if (state.lure.actionTimer <= 0) state.lure.actionText = state.keys.w ? 'Sabit SarÄ±m' : 'Dibe SÃ¼zÃ¼lÃ¼yor';
+      if (state.lure.actionTimer <= 0) state.lure.actionText = state.keys.w ? 'Sabit Sar\u0131m' : 'Dibe S\u00fcz\u00fcl\u00fcyor';
     }
   }
 
   if (state.phase === 'bite') {
     state.biteTimer -= dt;
     if (state.keys.space) strikeFish();
-    else if (state.biteTimer <= 0) releaseEscapedFish(state.hookedFish, 'âš ï¸ GeÃ§ kaldÄ±n! BalÄ±k sahte yemi tÃ¼kÃ¼rdÃ¼.');
+    else if (state.biteTimer <= 0) releaseEscapedFish(state.hookedFish, '\u26a0\ufe0f Ge\u00e7 kald\u0131n! Bal\u0131k sahte yemi t\u00fck\u00fcrd\u00fc.');
   }
 
   if (state.phase === 'fighting' && state.hookedFish) {
@@ -1808,13 +1808,13 @@ function updateGame(dt) {
     if (state.tension > state.drag && Math.random() < 0.3) playTone(1180, 0.03, 'sawtooth', 0.04);
 
     if (state.tension >= 100) {
-      releaseEscapedFish(f, `ğŸ’¥ MÄ°SÄ°NA KOPTU! ${f.sp.name} (${f.kg} kg) ${state.line.maxKg}kg misinanÄ± patlattÄ±!`);
+      releaseEscapedFish(f, `\ud83d\udca5 M\u0130S\u0130NA KOPTU! ${f.sp.name} (${f.kg} kg) ${state.line.maxKg}kg misinan\u0131 patlatt\u0131!`);
     } else if (state.lure.dist <= 1.6) {
       landFish(f);
     }
   }
 
-  // à¤ªà¤¾à¤°à¥à¤ŸikÃ¼l GÃ¼ncelleme
+  // \u092a\u093e\u0930\u094d\u091fik\u00fcl G\u00fcncelleme
   for (let i = state.particles.length - 1; i >= 0; i--) {
     const p = state.particles[i];
     p.x += p.vx * 0.02 * dt;
@@ -1823,7 +1823,7 @@ function updateGame(dt) {
     if (p.alpha <= 0) state.particles.splice(i, 1);
   }
 
-  // BalÄ±k Hareketleri & Katman Yapay ZekasÄ±
+  // Bal\u0131k Hareketleri & Katman Yapay Zekas\u0131
   for (let i = state.fishes.length - 1; i >= 0; i--) {
     const f = state.fishes[i];
     f.tailPhase += dt * (f.state === 'fleeing' || f.state === 'hooked' ? 16 : f.swimFreq);
@@ -1860,14 +1860,14 @@ function updateGame(dt) {
       if (distDiffM < 1.6 && depthDiff < 1.2) {
         state.phase = 'bite'; state.biteTimer = 1.35; state.hookedFish = f;
         playTone(620, 0.18, 'square');
-        showToast('âš¡ BALIK YEME SALDIRDI! TASMA AT [SPACE]!', '#fbbf24');
+        showToast('\u26a1 BALIK YEME SALDIRDI! TASMA AT [SPACE]!', '#fbbf24');
         const btn = document.getElementById('mainActionBtn');
-        btn.className = 'action-btn strike'; btn.innerText = 'âš¡ BALIK VURDU! TASMA AT!';
+        btn.className = 'action-btn strike'; btn.innerText = '\u26a1 BALIK VURDU! TASMA AT!';
       }
     } else {
       f.state = 'patrol';
       f.distM += f.vx * 2.2 * dt;
-      // Kendi doÄŸal derinlik katmanÄ±nda yumuÅŸak salÄ±nÄ±m
+      // Kendi do\u011fal derinlik katman\u0131nda yumu\u015fak sal\u0131n\u0131m
       f.depth = f.baseDepth + Math.sin(f.tailPhase * 0.25) * 0.9;
       if (f.distM < 12 && f.turnCooldown <= 0) { f.vx = Math.abs(f.vx); f.facing = 1; f.turnCooldown = 1.0; }
       else if (f.distM > 112 && f.turnCooldown <= 0) { f.vx = -Math.abs(f.vx); f.facing = -1; f.turnCooldown = 1.0; }
@@ -1877,7 +1877,7 @@ function updateGame(dt) {
   updateUI();
 }
 
-// ==================== DETAYLI EKLEMLÄ° BALIKÃ‡I Ã‡Ä°ZÄ°M MOTORU ====================
+// ==================== DETAYLI EKLEML\u0130 BALIK\u00c7I \u00c7\u0130Z\u0130M MOTORU ====================
 function drawArticulatedAngler(ctx, baseX, baseY, scale, time) {
   ctx.save();
   ctx.translate(baseX, baseY);
@@ -1885,15 +1885,15 @@ function drawArticulatedAngler(ctx, baseX, baseY, scale, time) {
 
   const sway = Math.sin(time * 2.2) * 1.5;
 
-  // Bacaklar & Ã‡izmeler
+  // Bacaklar & \u00c7izmeler
   ctx.fillStyle = '#0f172a';
   ctx.fillRect(-12, -22, 10, 22); // Arka bacak
-  ctx.fillRect(2, -22, 10, 22);   // Ã–n bacak
+  ctx.fillRect(2, -22, 10, 22);   // \u00d6n bacak
   ctx.fillStyle = '#334155';
-  ctx.fillRect(-13, -6, 13, 6);   // Ã‡izme
+  ctx.fillRect(-13, -6, 13, 6);   // \u00c7izme
   ctx.fillRect(2, -6, 14, 6);
 
-  // GÃ¶vde & AvcÄ± YeleÄŸi
+  // G\u00f6vde & Avc\u0131 Yele\u011fi
   ctx.fillStyle = '#0284c7';
   ctx.beginPath();
   ctx.roundRect(-14, -56 + sway, 28, 36, 6);
@@ -1904,19 +1904,19 @@ function drawArticulatedAngler(ctx, baseX, baseY, scale, time) {
   ctx.fillRect(-8, -42 + sway, 6, 6);
   ctx.fillRect(2, -42 + sway, 6, 6);
 
-  // BaÅŸ & Åapka
+  // Ba\u015f & \u015eapka
   ctx.fillStyle = '#fcd34d';
   ctx.beginPath();
   ctx.arc(0, -68 + sway, 11, 0, Math.PI * 2);
   ctx.fill();
-  // BalÄ±kÃ§Ä± ÅapkasÄ± (Cap)
+  // Bal\u0131k\u00e7\u0131 \u015eapkas\u0131 (Cap)
   ctx.fillStyle = '#0f172a';
   ctx.beginPath();
   ctx.arc(0, -71 + sway, 11.5, Math.PI, 0);
   ctx.fill();
-  ctx.fillRect(0, -72 + sway, 18, 4); // Åapka siperliÄŸi
+  ctx.fillRect(0, -72 + sway, 18, 4); // \u015eapka siperli\u011fi
 
-  // KamÄ±ÅŸ AÃ§Ä±sÄ± ve Parabolik EÄŸilme
+  // Kam\u0131\u015f A\u00e7\u0131s\u0131 ve Parabolik E\u011filme
   let rodBaseAngle = -0.45 + state.anglerAnim.rodTwitch;
   if (state.phase === 'charging') {
     rodBaseAngle = -1.35 - (state.castPower / 100) * 0.45;
@@ -1926,7 +1926,7 @@ function drawArticulatedAngler(ctx, baseX, baseY, scale, time) {
 
   const handX = 14, handY = -44 + sway;
 
-  // Sol ve SaÄŸ Kol (Omuzdan ele eklemli)
+  // Sol ve Sa\u011f Kol (Omuzdan ele eklemli)
   ctx.strokeStyle = '#0284c7';
   ctx.lineWidth = 7;
   ctx.lineCap = 'round';
@@ -1936,7 +1936,7 @@ function drawArticulatedAngler(ctx, baseX, baseY, scale, time) {
   ctx.lineTo(handX, handY);
   ctx.stroke();
 
-  // Olta Makinesi (Spinning Reel) ve DÃ¶nen Kol
+  // Olta Makinesi (Spinning Reel) ve D\u00f6nen Kol
   ctx.save();
   ctx.translate(handX + 8, handY - 4);
   ctx.fillStyle = '#94a3b8';
@@ -1947,7 +1947,7 @@ function drawArticulatedAngler(ctx, baseX, baseY, scale, time) {
   ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(rx, ry); ctx.stroke();
   ctx.restore();
 
-  // Olta KamÄ±ÅŸÄ± (Parabolik Bezier + KÄ±lavuz HalkalarÄ±)
+  // Olta Kam\u0131\u015f\u0131 (Parabolik Bezier + K\u0131lavuz Halkalar\u0131)
   const rodLen = 95;
   const bend = state.phase === 'fighting' ? Math.min(48, 12 + state.tension * 0.42) : (state.phase === 'water' && state.keys.w ? 8 : 0);
   const tipX = handX + Math.cos(rodBaseAngle) * rodLen;
@@ -1966,7 +1966,7 @@ function drawArticulatedAngler(ctx, baseX, baseY, scale, time) {
   ctx.stroke();
   ctx.restore();
 
-  // AtÄ±ÅŸ GÃ¼cÃ¼ BarÄ±
+  // At\u0131\u015f G\u00fcc\u00fc Bar\u0131
   if (state.phase === 'charging') {
     ctx.fillStyle = 'rgba(0,0,0,0.75)';
     ctx.fillRect(-28, -98, 64, 10);
@@ -1981,7 +1981,7 @@ function drawArticulatedAngler(ctx, baseX, baseY, scale, time) {
   };
 }
 
-// ==================== SAHNE VE DÄ°NAMÄ°K KAMERA RENDER MOTORU ====================
+// ==================== SAHNE VE D\u0130NAM\u0130K KAMERA RENDER MOTORU ====================
 function drawScene(time) {
   ctx.save();
   const vs = state.viewScale || 1;
@@ -1992,7 +1992,7 @@ function drawScene(time) {
   const h = canvas.height / totalScale;
   ctx.clearRect(0, 0, w, h);
 
-  // 1 Metre = 26 Piksel (Ã‡ok daha yakÄ±n, detaylÄ± ve orantÄ±lÄ± Ã¶lÃ§ek!)
+  // 1 Metre = 26 Piksel (\u00c7ok daha yak\u0131n, detayl\u0131 ve orant\u0131l\u0131 \u00f6l\u00e7ek!)
   const pxPerMeter = 26;
   const targetDepthM = (state.phase === 'water' || state.phase === 'bite' || state.phase === 'fighting')
     ? Math.max(0, state.lure.depth - 5.5)
@@ -2001,7 +2001,7 @@ function drawScene(time) {
 
   const waterSurfaceY = 230 - state.camY * pxPerMeter;
 
-  // 1. GÃ–KYÃœZÃœ, ADALAR VE GÃœNEÅ/AY
+  // 1. G\u00d6KY\u00dcZ\u00dc, ADALAR VE G\u00dcNE\u015e/AY
   const skyColors = [
     ['#0b192c', '#1e3a8a', '#38bdf8'],
     ['#1e1b4b', '#9a3412', '#fb923c'],
@@ -2016,13 +2016,13 @@ function drawScene(time) {
     ctx.fillStyle = skyGrad;
     ctx.fillRect(0, 0, w, waterSurfaceY);
 
-    // GÃ¼neÅŸ / Ay
+    // G\u00fcne\u015f / Ay
     ctx.fillStyle = state.timeOfDay === 2 ? '#e2e8f0' : '#fde047';
     ctx.beginPath();
     ctx.arc(w * 0.75, waterSurfaceY * 0.35, 28, 0, Math.PI * 2);
     ctx.fill();
 
-    // Uzak Ege AdalarÄ± ve YarÄ±mada SilÃ¼eti
+    // Uzak Ege Adalar\u0131 ve Yar\u0131mada Sil\u00fceti
     ctx.fillStyle = state.timeOfDay === 2 ? '#09111e' : '#172a45';
     ctx.beginPath();
     ctx.moveTo(160, waterSurfaceY);
@@ -2035,7 +2035,7 @@ function drawScene(time) {
     ctx.fill();
   }
 
-  // 2. DENÄ°Z DERÄ°NLÄ°K GRADYANI VE IÅIK HÃœZME EFEKTÄ°
+  // 2. DEN\u0130Z DER\u0130NL\u0130K GRADYANI VE I\u015eIK H\u00dcZME EFEKT\u0130
   const seaTop = Math.max(0, waterSurfaceY);
   const seaGrad = ctx.createLinearGradient(0, waterSurfaceY, 0, waterSurfaceY + 120 * pxPerMeter);
   seaGrad.addColorStop(0, '#0284c7');
@@ -2046,7 +2046,7 @@ function drawScene(time) {
   ctx.fillStyle = seaGrad;
   ctx.fillRect(0, seaTop, w, h - seaTop);
 
-  // Su altÄ± Ä±ÅŸÄ±k hÃ¼zmeleri
+  // Su alt\u0131 \u0131\u015f\u0131k h\u00fczmeleri
   ctx.save();
   for (let i = 0; i < 5; i++) {
     const rx = 200 + i * 190 + Math.sin(time * 0.5 + i) * 24;
@@ -2061,7 +2061,7 @@ function drawScene(time) {
   }
   ctx.restore();
 
-  // 3. DÄ°P KAYALIKLARI, YOSUNLAR (ERÄ°ÅTE) VE CETVEL
+  // 3. D\u0130P KAYALIKLARI, YOSUNLAR (ER\u0130\u015eTE) VE CETVEL
   const maxSpotDepth = SPOTS[state.spotIdx].maxDepth;
   const bottomY = waterSurfaceY + maxSpotDepth * pxPerMeter;
   if (bottomY < h + 200) {
@@ -2078,7 +2078,7 @@ function drawScene(time) {
     ctx.closePath();
     ctx.fill();
 
-    // Dip EriÅŸteleri / Yosunlar
+    // Dip Eri\u015fteleri / Yosunlar
     ctx.strokeStyle = '#065f46';
     ctx.lineWidth = 3;
     for (let x = 220; x < w - 40; x += 55) {
@@ -2103,10 +2103,10 @@ function drawScene(time) {
     }
   }
 
-  // 4. KIYI Ä°SKELESÄ°, KAYALIKLAR VE EKLEMLÄ° BALIKÃ‡I
+  // 4. KIYI \u0130SKELES\u0130, KAYALIKLAR VE EKLEML\u0130 BALIK\u00c7I
   let tipPos = { tipWorldX: 165, tipWorldY: waterSurfaceY - 75 };
   if (waterSurfaceY > -160) {
-    // KayalÄ±k KÄ±yÄ± ve AhÅŸap Ä°skele
+    // Kayal\u0131k K\u0131y\u0131 ve Ah\u015fap \u0130skele
     ctx.fillStyle = '#1e293b';
     ctx.beginPath();
     ctx.moveTo(0, waterSurfaceY + 120);
@@ -2116,7 +2116,7 @@ function drawScene(time) {
     ctx.closePath();
     ctx.fill();
 
-    // AhÅŸap Ä°skele Platformu
+    // Ah\u015fap \u0130skele Platformu
     ctx.fillStyle = '#78350f';
     ctx.fillRect(10, waterSurfaceY - 30, 155, 9);
     ctx.fillStyle = '#451a03';
@@ -2124,18 +2124,18 @@ function drawScene(time) {
       ctx.fillRect(px, waterSurfaceY - 22, 8, 36);
     }
 
-    // BÃ¼yÃ¼k ve OrantÄ±lÄ± Eklemli BalÄ±kÃ§Ä± (Scale 1.25)
+    // B\u00fcy\u00fck ve Orant\u0131l\u0131 Eklemli Bal\u0131k\u00e7\u0131 (Scale 1.25)
     tipPos = drawArticulatedAngler(ctx, 108, waterSurfaceY - 30, 1.25, time);
   }
 
-  // 5. SAHTE YEM, MÄ°SÄ°NA VE PARTÄ°KÃœLLER
+  // 5. SAHTE YEM, M\u0130S\u0130NA VE PART\u0130K\u00dcLLER
   const lureScreenX = 205 + (state.lure.dist / 120) * (w - 255);
   const lureScreenY = state.phase === 'flying'
     ? waterSurfaceY - Math.sin(state.lure.flyProgress * Math.PI) * 115
     : waterSurfaceY + state.lure.depth * pxPerMeter;
 
   if (state.phase !== 'idle' && state.phase !== 'charging') {
-    // Sonar GÃ¶rÃ¼ÅŸ HalkasÄ± (Yemin etrafÄ±ndaki aktif algÄ±lama alanÄ±)
+    // Sonar G\u00f6r\u00fc\u015f Halkas\u0131 (Yemin etraf\u0131ndaki aktif alg\u0131lama alan\u0131)
     if (state.phase === 'water') {
       ctx.strokeStyle = 'rgba(56, 189, 248, 0.16)';
       ctx.lineWidth = 1;
@@ -2144,7 +2144,7 @@ function drawScene(time) {
       ctx.stroke();
     }
 
-    // Misina Ã‡izimi
+    // Misina \u00c7izimi
     ctx.strokeStyle = state.tension > 75 ? '#ef4444' : 'rgba(226, 232, 240, 0.75)';
     ctx.lineWidth = state.tension > 75 ? 1.8 : 1.2;
     ctx.beginPath();
@@ -2152,7 +2152,7 @@ function drawScene(time) {
     ctx.lineTo(lureScreenX, lureScreenY);
     ctx.stroke();
 
-    // Sahte Yem Ã‡izimi
+    // Sahte Yem \u00c7izimi
     const activeLure = state.lures[state.activeSlot];
     const lureGlow = getGlowColor(activeLure.plus, time);
     ctx.save();
@@ -2167,7 +2167,7 @@ function drawScene(time) {
     ctx.restore();
   }
 
-  // Su YÃ¼zeyi DalgalarÄ±
+  // Su Y\u00fczeyi Dalgalar\u0131
   if (waterSurfaceY > -20 && waterSurfaceY < h) {
     ctx.strokeStyle = 'rgba(186, 230, 253, 0.75)';
     ctx.lineWidth = 2.5;
@@ -2179,13 +2179,13 @@ function drawScene(time) {
     ctx.stroke();
   }
 
-  // 6. BALIKLARIN ORGANÄ°K YÃœZME ANÄ°MASYONU VE SONAR SÄ°SÄ°
+  // 6. BALIKLARIN ORGAN\u0130K Y\u00dcZME AN\u0130MASYONU VE SONAR S\u0130S\u0130
   state.fishes.forEach(f => {
     const fx = 205 + (f.distM / 120) * (w - 255);
     const fy = waterSurfaceY + f.depth * pxPerMeter;
     if (fy < -50 || fy > h + 50) return;
 
-    // Sonar Mesafe Sisi: Yeme uzak balÄ±klar yarÄ± ÅŸeffaf silÃ¼et gÃ¶rÃ¼nÃ¼r, yaklaÅŸtÄ±kÃ§a netleÅŸir!
+    // Sonar Mesafe Sisi: Yeme uzak bal\u0131klar yar\u0131 \u015feffaf sil\u00fcet g\u00f6r\u00fcn\u00fcr, yakla\u015ft\u0131k\u00e7a netle\u015fir!
     const distToLurePx = Math.hypot(fx - lureScreenX, fy - lureScreenY);
     let visibilityAlpha = 0.28;
     if (state.phase !== 'idle' && distToLurePx < 220) {
@@ -2198,14 +2198,14 @@ function drawScene(time) {
     ctx.globalAlpha = visibilityAlpha;
     ctx.translate(fx, fy);
     ctx.scale(f.facing, 1);
-    // YÃ¼zme esnasÄ±nda hafif burun salÄ±nÄ±mÄ± (yaw/pitch)
+    // Y\u00fczme esnas\u0131nda hafif burun sal\u0131n\u0131m\u0131 (yaw/pitch)
     ctx.rotate(Math.sin(f.tailPhase) * 0.055);
 
     const sprite = fishSprites[f.sp.id];
     const isReadySprite = sprite && ((sprite instanceof HTMLImageElement && sprite.complete && sprite.naturalWidth > 0) || sprite instanceof HTMLCanvasElement);
 
     if (isReadySprite) {
-      // PNG GÃ¶rseli 3 Dilimli Dalga Efektiyle Ã‡iz (CanlÄ± Kuyruk Ã‡Ä±rpma!)
+      // PNG G\u00f6rseli 3 Dilimli Dalga Efektiyle \u00c7iz (Canl\u0131 Kuyruk \u00c7\u0131rpma!)
       const sw = sprite.naturalWidth || sprite.width;
       const sh = sprite.naturalHeight || sprite.height;
       const drawW = size * 2.5, drawH = size * 1.28;
@@ -2220,7 +2220,7 @@ function drawScene(time) {
         );
       }
     } else {
-      // Tam DetaylÄ± VektÃ¶rel BalÄ±k (Kuyruk, GÃ¶vde, Ã‡izgiler ve GÃ¶z)
+      // Tam Detayl\u0131 Vekt\u00f6rel Bal\u0131k (Kuyruk, G\u00f6vde, \u00c7izgiler ve G\u00f6z)
       const wag = Math.sin(f.tailPhase) * 4.5;
       ctx.fillStyle = f.sp.col1;
       ctx.beginPath();
@@ -2258,7 +2258,7 @@ function drawScene(time) {
     }
   });
 
-  // PartikÃ¼llerin Ã‡izimi
+  // Partik\u00fcllerin \u00c7izimi
   state.particles.forEach(p => {
     const px = 205 + (p.x / 120) * (w - 255);
     const py = waterSurfaceY + p.y * pxPerMeter;
@@ -2269,7 +2269,7 @@ function drawScene(time) {
     ctx.restore();
   });
 
-  // 7. SU ALTINDAYKEN SOL ÃœSTTE CANLI "KIYI & OLTA" PIP KAMERASI
+  // 7. SU ALTINDAYKEN SOL \u00dcSTTE CANLI "KIYI & OLTA" PIP KAMERASI
   if (state.camY > 3.5) {
     ctx.save();
     ctx.translate(0, state.hudOffset || 0);
@@ -2286,7 +2286,7 @@ function drawScene(time) {
     ctx.fillStyle = '#78350f'; ctx.fillRect(14, 86, 85, 6);
     drawArticulatedAngler(ctx, 56, 86, 0.65, time);
     ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 9px sans-serif';
-    ctx.fillText('ğŸ¥ KIYI KAMERASI', 22, 28);
+    ctx.fillText('\ud83c\udfa5 KIYI KAMERASI', 22, 28);
     ctx.restore();
   }
 
@@ -2301,7 +2301,7 @@ function loop(now) {
   requestAnimationFrame(loop);
 }
 
-// ==================== KLAVYE & DOKUNMATÄ°K KONTROLLER ====================
+// ==================== KLAVYE & DOKUNMAT\u0130K KONTROLLER ====================
 window.addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
   if (k === ' ') { e.preventDefault(); state.keys.space = true; startOrTriggerCast(); }
@@ -2338,7 +2338,7 @@ document.getElementById('dragSlider').oninput = e => {
 };
 document.getElementById('timeBtn').onclick = () => {
   state.timeOfDay = (state.timeOfDay + 1) % 3;
-  const labels = ['ğŸŒ… Sabah Suyu', 'ğŸŒ‡ GÃ¼n BatÄ±mÄ±', 'ğŸŒ™ Gece AvÄ±'];
+  const labels = ['\ud83c\udf05 Sabah Suyu', '\ud83c\udf07 G\u00fcn Bat\u0131m\u0131', '\ud83c\udf19 Gece Av\u0131'];
   document.getElementById('timeBtn').innerText = labels[state.timeOfDay];
 };
 
@@ -2350,7 +2350,7 @@ requestAnimationFrame(loop);
 </script>
 
 <script>
-// ==================== MOBÄ°L YERLEÅÄ°M & DOKUNMATÄ°K KONTROLLER ====================
+// ==================== MOB\u0130L YERLE\u015e\u0130M & DOKUNMAT\u0130K KONTROLLER ====================
 (function () {
   const root = document.documentElement;
   const $ = id => document.getElementById(id);
@@ -2358,7 +2358,7 @@ requestAnimationFrame(loop);
 
   function closeDock() { root.classList.remove('dock-open'); }
 
-  // Cihaza Ã¶zel tercihler (kayÄ±t kodundan baÄŸÄ±msÄ±z)
+  // Cihaza \u00f6zel tercihler (kay\u0131t kodundan ba\u011f\u0131ms\u0131z)
   const PREF_KEY = 'aegeanSpinPrefs_v1';
   const prefs = { ui: 'auto', mouse: true };
   try { Object.assign(prefs, JSON.parse(localStorage.getItem(PREF_KEY) || '{}')); } catch (_) {}
@@ -2385,7 +2385,7 @@ requestAnimationFrame(loop);
 
     const area = $('viewportArea');
     const cw = area.clientWidth, ch = area.clientHeight;
-    // Oyun dÃ¼nyasÄ± ~820x480 tasarÄ±m alanÄ±na gÃ¶re kÃ¼Ã§Ã¼ltÃ¼lÃ¼r (kÃ¼Ã§Ã¼k ekranlarda her ÅŸey sÄ±ÄŸsÄ±n)
+    // Oyun d\u00fcnyas\u0131 ~820x480 tasar\u0131m alan\u0131na g\u00f6re k\u00fc\u00e7\u00fclt\u00fcl\u00fcr (k\u00fc\u00e7\u00fck ekranlarda her \u015fey s\u0131\u011fs\u0131n)
     const vs = Math.min(2.4, Math.max(0.5, Math.min(cw / 820, ch / 480)));
     state.viewScale = vs;
     state.hudOffset = mobile ? Math.round(46 / vs) : 0;
@@ -2411,14 +2411,14 @@ requestAnimationFrame(loop);
     }
   };
 
-  // --- Ã‡ekmece ---
+  // --- \u00c7ekmece ---
   $('mMenuBtn').addEventListener('click', () => root.classList.toggle('dock-open'));
   $('dockScrim').addEventListener('click', closeDock);
   $('dockClose').addEventListener('click', closeDock);
   const _openModal = window.openModal;
   window.openModal = function () { closeDock(); return _openModal.apply(this, arguments); };
 
-  // --- Tam ekran (Android/masaÃ¼stÃ¼) ---
+  // --- Tam ekran (Android/masa\u00fcst\u00fc) ---
   const fsBtn = $('mFsBtn');
   if (root.requestFullscreen) {
     fsBtn.classList.add('supported');
@@ -2432,7 +2432,7 @@ requestAnimationFrame(loop);
     });
   }
 
-  // --- BasÄ±lÄ± tutma destekli butonlar (Ã§oklu dokunuÅŸ uyumlu) ---
+  // --- Bas\u0131l\u0131 tutma destekli butonlar (\u00e7oklu dokunu\u015f uyumlu) ---
   function hold(btn, down, up) {
     btn.addEventListener('pointerdown', e => {
       e.preventDefault();
@@ -2453,7 +2453,7 @@ requestAnimationFrame(loop);
   hold($('tcTwitch'), () => performLureAction('twitch'));
   hold($('tcJerk'), () => performLureAction('jerk'));
 
-  // --- Kalama (drag) kaydÄ±rÄ±cÄ±sÄ± eÅŸitleme ---
+  // --- Kalama (drag) kayd\u0131r\u0131c\u0131s\u0131 e\u015fitleme ---
   const tcDrag = $('tcDrag'), mainDrag = $('dragSlider');
   tcDrag.addEventListener('input', () => {
     mainDrag.value = tcDrag.value;
@@ -2463,20 +2463,20 @@ requestAnimationFrame(loop);
 
   // --- HUD & buton etiketi senkronu ---
   const labels = {
-    idle:     ['ğŸ¯', 'ATIÅ'],
-    charging: ['ğŸš€', 'SAVUR!'],
-    flying:   ['â³', 'UÃ‡UYOR'],
-    water:    ['ğŸ£', 'AKSÄ°YON'],
-    bite:     ['âš¡', 'TASMA!'],
-    fighting: ['ğŸ’ª', 'Ã‡EK']
+    idle:     ['\ud83c\udfaf', 'ATI\u015e'],
+    charging: ['\ud83d\ude80', 'SAVUR!'],
+    flying:   ['\u23f3', 'U\u00c7UYOR'],
+    water:    ['\ud83c\udfa3', 'AKS\u0130YON'],
+    bite:     ['\u26a1', 'TASMA!'],
+    fighting: ['\ud83d\udcaa', '\u00c7EK']
   };
   let lastPhase = null;
   setInterval(() => {
     if (!root.classList.contains('mobile')) return;
     $('mhMoney').textContent = $('uiMoney').textContent;
     $('mhXp').textContent = $('uiXp').textContent;
-    $('mhDist').textContent = 'ğŸ“ ' + $('uiDist').textContent;
-    $('mhDepth').textContent = 'â¬‡ï¸ ' + $('uiDepth').textContent;
+    $('mhDist').textContent = '\ud83d\udccf ' + $('uiDist').textContent;
+    $('mhDepth').textContent = '\u2b07\ufe0f ' + $('uiDepth').textContent;
     const st = $('uiStateBadge');
     $('mhState').textContent = st.textContent; $('mhState').style.color = st.style.color;
     $('mhTension').style.width = $('tensionBar').style.width;
@@ -2484,7 +2484,7 @@ requestAnimationFrame(loop);
 
     if (state.phase !== lastPhase) {
       lastPhase = state.phase;
-      const l = labels[state.phase] || ['ğŸ¯', 'AKSÄ°YON'];
+      const l = labels[state.phase] || ['\ud83c\udfaf', 'AKS\u0130YON'];
       $('tcAct').innerHTML = l[0] + '<small>' + l[1] + '</small>';
       $('tcAct').classList.toggle('strike', state.phase === 'bite');
     }
@@ -2493,7 +2493,7 @@ requestAnimationFrame(loop);
     }
   }, 100);
 
-  // --- GÃ¼venlik: takÄ±lÄ± kalan tuÅŸlarÄ± sÄ±fÄ±rla ---
+  // --- G\u00fcvenlik: tak\u0131l\u0131 kalan tu\u015flar\u0131 s\u0131f\u0131rla ---
   function releaseAll() {
     state.keys.w = false; state.keys.space = false;
     document.querySelectorAll('.tc-btn.pressed').forEach(b => b.classList.remove('pressed'));
@@ -2501,7 +2501,7 @@ requestAnimationFrame(loop);
   window.addEventListener('blur', releaseAll);
   document.addEventListener('visibilitychange', () => { if (document.hidden) releaseAll(); });
 
-  // --- KaydÄ±rma / yakÄ±nlaÅŸtÄ±rma engelleri ---
+  // --- Kayd\u0131rma / yak\u0131nla\u015ft\u0131rma engelleri ---
   document.addEventListener('touchmove', e => {
     if (!e.target.closest('#rightDock, .modal-body, textarea, input[type="range"]')) e.preventDefault();
   }, { passive: false });
@@ -2512,7 +2512,7 @@ requestAnimationFrame(loop);
   document.addEventListener('touchend', unlockAudio, { once: true });
   document.addEventListener('click', unlockAudio, { once: true });
 
-  // --- Yeniden boyutlandÄ±rma ---
+  // --- Yeniden boyutland\u0131rma ---
   if (window.visualViewport) window.visualViewport.addEventListener('resize', () => resizeCanvas());
   if (window.ResizeObserver) {
     let roBusy = false;
@@ -2525,7 +2525,7 @@ requestAnimationFrame(loop);
 
   // Dikey modda bir kerelik ipucu
   if (root.classList.contains('portrait')) {
-    setTimeout(() => showToast('ğŸ“± Daha rahat oynamak iÃ§in telefonu yatay Ã§evir', '#38bdf8'), 1500);
+    setTimeout(() => showToast('\ud83d\udcf1 Daha rahat oynamak i\u00e7in telefonu yatay \u00e7evir', '#38bdf8'), 1500);
   }
 })();
 </script>
@@ -2539,12 +2539,12 @@ requestAnimationFrame(loop);
 
   // ---------- PREMIUM ----------
   const PREMIUM_ITEMS = [
-    { id:'xp50',   icon:'ğŸ“˜', name:'Ã‡Ä±rak NotlarÄ±',            desc:'TÃ¼m XP kazanÃ§larÄ±na +%50.',                       dur:300, effects:{ xp:50 },            base:250 },
-    { id:'xp100',  icon:'ğŸ“—', name:'Usta BalÄ±kÃ§Ä± EÄŸitimi',     desc:'TÃ¼m XP kazanÃ§larÄ±na +%100 (2 kat XP).',           dur:600, effects:{ xp:100 },           base:800 },
-    { id:'xp200',  icon:'ğŸ“•', name:'Efsane Rehber',            desc:'KÄ±sa ve yoÄŸun: +%200 XP (3 kat XP).',            dur:300, effects:{ xp:200 },           base:1300 },
-    { id:'gold50', icon:'ğŸ’°', name:'PazarlÄ±k UstasÄ± FermanÄ±',  desc:'YakaladÄ±ÄŸÄ±n balÄ±klarÄ±n deÄŸeri +%50.',            dur:600, effects:{ gold:50 },          base:700 },
-    { id:'combo',  icon:'ğŸ‘‘', name:'Kaptan Paketi',            desc:'+%100 XP ve +%30 Av DeÄŸeri. Paket indirimli!',    dur:600, effects:{ xp:100, gold:30 },  base:1300 },
-    { id:'potion', icon:'ğŸ¶', name:'TecrÃ¼be ÅiÅŸesi',           desc:'AnÄ±nda: sonraki seviye iÃ§in gereken XPâ€™nin %30â€™u.', dur:0,   instant:true, base:500 }
+    { id:'xp50',   icon:'\ud83d\udcd8', name:'\u00c7\u0131rak Notlar\u0131',            desc:'T\u00fcm XP kazan\u00e7lar\u0131na +%50.',                       dur:300, effects:{ xp:50 },            base:250 },
+    { id:'xp100',  icon:'\ud83d\udcd7', name:'Usta Bal\u0131k\u00e7\u0131 E\u011fitimi',     desc:'T\u00fcm XP kazan\u00e7lar\u0131na +%100 (2 kat XP).',           dur:600, effects:{ xp:100 },           base:800 },
+    { id:'xp200',  icon:'\ud83d\udcd5', name:'Efsane Rehber',            desc:'K\u0131sa ve yo\u011fun: +%200 XP (3 kat XP).',            dur:300, effects:{ xp:200 },           base:1300 },
+    { id:'gold50', icon:'\ud83d\udcb0', name:'Pazarl\u0131k Ustas\u0131 Ferman\u0131',  desc:'Yakalad\u0131\u011f\u0131n bal\u0131klar\u0131n de\u011feri +%50.',            dur:600, effects:{ gold:50 },          base:700 },
+    { id:'combo',  icon:'\ud83d\udc51', name:'Kaptan Paketi',            desc:'+%100 XP ve +%30 Av De\u011feri. Paket indirimli!',    dur:600, effects:{ xp:100, gold:30 },  base:1300 },
+    { id:'potion', icon:'\ud83c\udf76', name:'Tecr\u00fcbe \u015ei\u015fesi',           desc:'An\u0131nda: sonraki seviye i\u00e7in gereken XP\u2019nin %30\u2019u.', dur:0,   instant:true, base:500 }
   ];
   const premPrice = it => Math.max(10, Math.round(it.base * (1 + (state.level - 1) * 0.12) / 10) * 10);
   const fmtTime = s => { s = Math.max(0, Math.ceil(s)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
@@ -2552,9 +2552,9 @@ requestAnimationFrame(loop);
 
   function effectText(it) {
     const parts = [];
-    if (it.effects && it.effects.xp) parts.push('âš¡ XP +%' + it.effects.xp);
-    if (it.effects && it.effects.gold) parts.push('ğŸ’° DeÄŸer +%' + it.effects.gold);
-    return parts.join(' â€¢ ');
+    if (it.effects && it.effects.xp) parts.push('\u26a1 XP +%' + it.effects.xp);
+    if (it.effects && it.effects.gold) parts.push('\ud83d\udcb0 De\u011fer +%' + it.effects.gold);
+    return parts.join(' \u2022 ');
   }
 
   window.renderPremium = function () {
@@ -2563,10 +2563,10 @@ requestAnimationFrame(loop);
         <div>
           <h4>${it.icon} ${it.name}</h4>
           <p>${it.desc}</p>
-          <p style="margin-top:4px;color:#fde047;">${it.instant ? 'â±ï¸ AnÄ±nda etki' : effectText(it) + ' â€¢ â±ï¸ ' + durLabel(it.dur)}</p>
-          <p style="margin-top:4px;">Fiyat: <b style="color:#fbbf24;">${premPrice(it).toLocaleString('tr-TR')} â‚º</b></p>
+          <p style="margin-top:4px;color:#fde047;">${it.instant ? '\u23f1\ufe0f An\u0131nda etki' : effectText(it) + ' \u2022 \u23f1\ufe0f ' + durLabel(it.dur)}</p>
+          <p style="margin-top:4px;">Fiyat: <b style="color:#fbbf24;">${premPrice(it).toLocaleString('tr-TR')} \u20ba</b></p>
         </div>
-        <button class="buy-btn gold" data-price="${premPrice(it)}" onclick="buyPremium('${it.id}')">SatÄ±n Al</button>
+        <button class="buy-btn gold" data-price="${premPrice(it)}" onclick="buyPremium('${it.id}')">Sat\u0131n Al</button>
       </div>`).join('');
     tickPremium();
   };
@@ -2576,10 +2576,10 @@ requestAnimationFrame(loop);
     if (!m || !m.classList.contains('open')) return;
     const chips = [];
     const bx = state.boosts.xp, bg = state.boosts.gold;
-    if (bx.left > 0) chips.push(`<span class="prem-chip">âš¡ XP +%${bx.pct} â€¢ ${fmtTime(bx.left)}</span>`);
-    if (bg.left > 0) chips.push(`<span class="prem-chip">ğŸ’° Av DeÄŸeri +%${bg.pct} â€¢ ${fmtTime(bg.left)}</span>`);
-    $('premiumActive').innerHTML = `<b style="color:#38bdf8;">Aktif:</b> ` + (chips.join('') || '<span style="color:#94a3b8;">Åu an aktif gÃ¼Ã§lendirme yok.</span>') +
-      `<span style="margin-left:auto;">Bakiye: <b style="color:#fbbf24;">${Math.floor(state.money).toLocaleString('tr-TR')} â‚º</b></span>`;
+    if (bx.left > 0) chips.push(`<span class="prem-chip">\u26a1 XP +%${bx.pct} \u2022 ${fmtTime(bx.left)}</span>`);
+    if (bg.left > 0) chips.push(`<span class="prem-chip">\ud83d\udcb0 Av De\u011feri +%${bg.pct} \u2022 ${fmtTime(bg.left)}</span>`);
+    $('premiumActive').innerHTML = `<b style="color:#38bdf8;">Aktif:</b> ` + (chips.join('') || '<span style="color:#94a3b8;">\u015eu an aktif g\u00fc\u00e7lendirme yok.</span>') +
+      `<span style="margin-left:auto;">Bakiye: <b style="color:#fbbf24;">${Math.floor(state.money).toLocaleString('tr-TR')} \u20ba</b></span>`;
     $('premiumGrid').querySelectorAll('.buy-btn[data-price]').forEach(b => { b.disabled = state.money < Number(b.dataset.price); });
   }
   setInterval(tickPremium, 500);
@@ -2587,18 +2587,18 @@ requestAnimationFrame(loop);
   window.buyPremium = function (id) {
     const it = PREMIUM_ITEMS.find(x => x.id === id); if (!it) return;
     const price = premPrice(it);
-    if (state.money < price) { showToast('âŒ Yetersiz bakiye!', '#ef4444'); return; }
+    if (state.money < price) { showToast('\u274c Yetersiz bakiye!', '#ef4444'); return; }
 
     if (it.instant) {
       state.money -= price;
       const gain = Math.round(getReqXpForNextLevel(state.level) * 0.3);
       addXp(gain, true);
-      showToast(`ğŸ¶ TecrÃ¼be ÅiÅŸesi: +${gain} XP!`, '#38bdf8');
+      showToast(`\ud83c\udf76 Tecr\u00fcbe \u015ei\u015fesi: +${gain} XP!`, '#38bdf8');
     } else {
       for (const [type, pct] of Object.entries(it.effects)) {
         const cur = state.boosts[type];
         if (cur.left > 0 && cur.pct > pct) {
-          showToast(`âš ï¸ Daha gÃ¼Ã§lÃ¼ bir ${type === 'xp' ? 'XP' : 'Av DeÄŸeri'} gÃ¼Ã§lendirmesi zaten aktif!`, '#fbbf24');
+          showToast(`\u26a0\ufe0f Daha g\u00fc\u00e7l\u00fc bir ${type === 'xp' ? 'XP' : 'Av De\u011feri'} g\u00fc\u00e7lendirmesi zaten aktif!`, '#fbbf24');
           return;
         }
       }
@@ -2608,29 +2608,29 @@ requestAnimationFrame(loop);
         if (cur.left > 0 && cur.pct === pct) cur.left += it.dur;
         else { cur.pct = pct; cur.left = it.dur; }
       }
-      showToast(`ğŸ’ ${it.name} aktif! (${durLabel(it.dur)})`, '#fde047');
+      showToast(`\ud83d\udc8e ${it.name} aktif! (${durLabel(it.dur)})`, '#fde047');
     }
     playTone(760, 0.2, 'triangle');
     saveProgress(); updateUI(); renderPremium();
   };
 
-  // Aktif boost gÃ¶stergeleri (masaÃ¼stÃ¼: sol alt, mobil: HUD satÄ±rÄ±)
+  // Aktif boost g\u00f6stergeleri (masa\u00fcst\u00fc: sol alt, mobil: HUD sat\u0131r\u0131)
   setInterval(() => {
     const bx = state.boosts.xp, bg = state.boosts.gold;
     const items = [];
-    if (bx.left > 0) items.push(`âš¡ XP +%${bx.pct} ${fmtTime(bx.left)}`);
-    if (bg.left > 0) items.push(`ğŸ’° DeÄŸer +%${bg.pct} ${fmtTime(bg.left)}`);
+    if (bx.left > 0) items.push(`\u26a1 XP +%${bx.pct} ${fmtTime(bx.left)}`);
+    if (bg.left > 0) items.push(`\ud83d\udcb0 De\u011fer +%${bg.pct} ${fmtTime(bg.left)}`);
     $('boostChips').innerHTML = items.map(t => `<div class="chip">${t}</div>`).join('');
     const row = $('mhBoostRow');
     row.style.display = items.length ? 'flex' : 'none';
     $('mhBoost').textContent = items.join('  ');
   }, 500);
 
-  // Sekme kapanÄ±rken/arka plana geÃ§erken kaydet (boost sÃ¼resi vb. kaybolmasÄ±n)
+  // Sekme kapan\u0131rken/arka plana ge\u00e7erken kaydet (boost s\u00fcresi vb. kaybolmas\u0131n)
   window.addEventListener('beforeunload', () => saveProgress());
   document.addEventListener('visibilitychange', () => { if (document.hidden) saveProgress(); });
 
-  // ---------- ARAYÃœZ BOYUTU ----------
+  // ---------- ARAY\u00dcZ BOYUTU ----------
   function markUiButtons() {
     document.querySelectorAll('#uiScaleRow .buy-btn').forEach(b => {
       b.classList.toggle('on', String(prefs.ui) === b.dataset.ui);
@@ -2638,22 +2638,22 @@ requestAnimationFrame(loop);
   }
   window.setUiScale = function (v) {
     prefs.ui = v; window.__savePrefs(); markUiButtons(); resizeCanvas();
-    showToast('ğŸ” ArayÃ¼z boyutu: ' + (v === 'auto' ? 'Otomatik (' + Math.round((window.__ui || 1) * 100) + '%)' : Math.round(v * 100) + '%'), '#38bdf8');
+    showToast('\ud83d\udd0d Aray\u00fcz boyutu: ' + (v === 'auto' ? 'Otomatik (' + Math.round((window.__ui || 1) * 100) + '%)' : Math.round(v * 100) + '%'), '#38bdf8');
   };
   markUiButtons();
 
   // ---------- FARE MODU ----------
-  const KEY_HINT = '[1-4] Sahte Yem  |  [5-7] Ganimet SandÄ±ÄŸÄ±/Ä°nci  |  [8-9] Yemleme & OnarÄ±m';
-  const MOUSE_HINT = 'ğŸ–±ï¸ Sol tÄ±k basÄ±lÄ±: gÃ¼Ã§ doldur & savur / sar  â€¢  SaÄŸ tÄ±k: Twitch  â€¢  Orta tÄ±k: Jerk  â€¢  Tekerlek: yem seÃ§ / drag  â€¢  [1-9] kÄ±sayollar';
+  const KEY_HINT = '[1-4] Sahte Yem  |  [5-7] Ganimet Sand\u0131\u011f\u0131/\u0130nci  |  [8-9] Yemleme & Onar\u0131m';
+  const MOUSE_HINT = '\ud83d\uddb1\ufe0f Sol t\u0131k bas\u0131l\u0131: g\u00fc\u00e7 doldur & savur / sar  \u2022  Sa\u011f t\u0131k: Twitch  \u2022  Orta t\u0131k: Jerk  \u2022  Tekerlek: yem se\u00e7 / drag  \u2022  [1-9] k\u0131sayollar';
   function refreshMouseUi() {
-    $('mouseModeBtn').textContent = 'ğŸ–±ï¸ Fare Modu: ' + (prefs.mouse ? 'AÃ‡IK' : 'KAPALI');
+    $('mouseModeBtn').textContent = '\ud83d\uddb1\ufe0f Fare Modu: ' + (prefs.mouse ? 'A\u00c7IK' : 'KAPALI');
     $('mouseModeBtn').style.borderColor = prefs.mouse ? '#22c55e' : '';
     $('quickTooltip').textContent = prefs.mouse ? MOUSE_HINT : KEY_HINT;
     if (!prefs.mouse) canvas.style.cursor = 'crosshair';
   }
   window.toggleMouseMode = function () {
     prefs.mouse = !prefs.mouse; window.__savePrefs(); releaseMouse(); refreshMouseUi();
-    showToast(prefs.mouse ? 'ğŸ–±ï¸ Fare modu aÃ§Ä±ldÄ±: oyun alanÄ±na tÄ±klayarak oyna!' : 'âŒ¨ï¸ Fare modu kapandÄ± (klavye kontrolÃ¼).', '#38bdf8');
+    showToast(prefs.mouse ? '\ud83d\uddb1\ufe0f Fare modu a\u00e7\u0131ld\u0131: oyun alan\u0131na t\u0131klayarak oyna!' : '\u2328\ufe0f Fare modu kapand\u0131 (klavye kontrol\u00fc).', '#38bdf8');
   };
 
   let mouseHeld = false, mouseReel = false, downAt = 0, lastWheel = 0;
@@ -2672,16 +2672,16 @@ requestAnimationFrame(loop);
     mouseHeld = true; downAt = performance.now();
     try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
     const ph = state.phase;
-    if (ph === 'idle') startOrTriggerCast();                 // gÃ¼Ã§ doldurmaya baÅŸla
-    else if (ph === 'charging') launchLure();                // tÄ±k-tÄ±k stili: ikinci tÄ±k savurur
-    else if (ph === 'bite') { startOrTriggerCast(); state.keys.w = true; mouseReel = true; }   // tasma + basÄ±lÄ± tutarak Ã§ek
-    else if (ph === 'water' || ph === 'fighting') { state.keys.w = true; mouseReel = true; }   // basÄ±lÄ± tut = sar
+    if (ph === 'idle') startOrTriggerCast();                 // g\u00fc\u00e7 doldurmaya ba\u015fla
+    else if (ph === 'charging') launchLure();                // t\u0131k-t\u0131k stili: ikinci t\u0131k savurur
+    else if (ph === 'bite') { startOrTriggerCast(); state.keys.w = true; mouseReel = true; }   // tasma + bas\u0131l\u0131 tutarak \u00e7ek
+    else if (ph === 'water' || ph === 'fighting') { state.keys.w = true; mouseReel = true; }   // bas\u0131l\u0131 tut = sar
   });
   const onUp = () => {
     if (!mouseHeld) return;
     const heldMs = performance.now() - downAt;
     releaseMouse();
-    if (state.phase === 'charging' && heldMs > 250) launchLure();   // basÄ±lÄ± tutup bÄ±rakÄ±nca savur
+    if (state.phase === 'charging' && heldMs > 250) launchLure();   // bas\u0131l\u0131 tutup b\u0131rak\u0131nca savur
   };
   ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => canvas.addEventListener(t, onUp));
   window.addEventListener('blur', releaseMouse);
@@ -2703,7 +2703,7 @@ requestAnimationFrame(loop);
     }
   }, { passive: false });
 
-  // ---------- ATIÅ GÃœCÃœ GÃ–STERGESÄ° & Ä°MLEÃ‡ ----------
+  // ---------- ATI\u015e G\u00dcC\u00dc G\u00d6STERGES\u0130 & \u0130MLE\u00c7 ----------
   const cursors = { idle: 'pointer', charging: 'grabbing', flying: 'default', water: 'grab', bite: 'pointer', fighting: 'grabbing' };
   setInterval(() => {
     const charging = state.phase === 'charging';
