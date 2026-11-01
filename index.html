@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Aegean Spin Pro: Deep Sea & Alchemy Edition</title>
+<title>Aegean Spin Pro: Ultimate Deep Sea Edition</title>
 <style>
   :root {
     --bg-dark: #07111e;
@@ -18,450 +18,112 @@
   * { box-sizing: border-box; user-select: none; -webkit-user-select: none; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
   body, html { width: 100vw; height: 100vh; overflow: hidden; background: var(--bg-dark); color: #f1f5f9; touch-action: manipulation; }
 
-  /* ANA YERLEŞİM: SOL OYUN ALANI + SAĞ SABİT PANEL */
-  #appLayout {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-  }
-  #viewportArea {
-    position: relative;
-    flex: 1;
-    height: 100vh;
-    overflow: hidden;
-    background: #040b14;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #gameCanvas {
-    display: block;
-    cursor: crosshair;
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-  }
+  #appLayout { display: flex; width: 100vw; height: 100vh; }
+  #viewportArea { position: relative; flex: 1; height: 100vh; overflow: hidden; background: #040b14; display: flex; align-items: center; justify-content: center; }
+  #gameCanvas { display: block; cursor: crosshair; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
 
-  /* SAĞ SABİT KONTROL PANELİ */
   #rightDock {
-    width: 320px;
-    height: 100vh;
-    background: var(--panel-bg);
-    border-left: 2px solid var(--border-col);
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    gap: 8px;
-    z-index: 20;
-    box-shadow: -8px 0 25px rgba(0,0,0,0.6);
-    overflow-y: auto;
+    width: 330px; height: 100vh; background: var(--panel-bg); border-left: 2px solid var(--border-col);
+    display: flex; flex-direction: column; padding: 10px; gap: 8px; z-index: 20; box-shadow: -8px 0 25px rgba(0,0,0,0.6); overflow-y: auto;
   }
 
-  .dock-card {
-    background: rgba(15, 31, 54, 0.85);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    border-radius: 10px;
-    padding: 9px 11px;
-  }
-  .dock-title {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--accent);
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  .dock-card { background: rgba(15, 31, 54, 0.85); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 10px; padding: 9px 11px; }
+  .dock-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
 
-  /* OYUNCU STATLARI */
-  .stat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-  .stat-item {
-    background: rgba(2, 8, 20, 0.65);
-    padding: 6px 8px;
-    border-radius: 7px;
-    border: 1px solid rgba(255,255,255,0.06);
-  }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .stat-item { background: rgba(2, 8, 20, 0.65); padding: 6px 8px; border-radius: 7px; border: 1px solid rgba(255,255,255,0.06); }
   .stat-label { font-size: 10px; color: #94a3b8; }
   .stat-val { font-size: 14px; font-weight: 800; color: #fff; margin-top: 1px; }
   .stat-val.gold { color: var(--gold); }
   .stat-val.xp { color: #38bdf8; }
 
-  /* TELEMETRİ & SONAR */
-  .telemetry-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    margin-bottom: 4px;
-  }
-  .bar-wrap {
-    width: 100%;
-    height: 10px;
-    background: #091526;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.12);
-    margin: 4px 0;
-  }
-  .bar-fill {
-    height: 100%;
-    width: 0%;
-    transition: width 0.08s linear;
-  }
+  .telemetry-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+  .bar-wrap { width: 100%; height: 10px; background: #091526; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); margin: 4px 0; }
+  .bar-fill { height: 100%; width: 0%; transition: width 0.08s linear; }
 
-  /* AKSİYON BUTONLARI */
   .action-btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    background: linear-gradient(135deg, #0284c7, #0369a1);
-    color: #fff;
-    font-weight: 800;
-    font-size: 13px;
-    cursor: pointer;
-    transition: 0.15s;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.4);
+    background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; font-weight: 800; font-size: 13px; cursor: pointer; transition: 0.15s; text-align: center; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
   }
   .action-btn:active { transform: scale(0.98); }
   .action-btn.strike {
-    background: linear-gradient(135deg, #eab308, #ca8a04);
-    border-color: #fde047;
-    color: #000;
-    animation: pulseBtn 0.6s infinite alternate;
+    background: linear-gradient(135deg, #eab308, #ca8a04); border-color: #fde047; color: #000; animation: pulseBtn 0.6s infinite alternate;
   }
-  @keyframes pulseBtn {
-    from { transform: scale(1); box-shadow: 0 0 10px #eab308; }
-    to { transform: scale(1.03); box-shadow: 0 0 22px #fde047; }
-  }
+  @keyframes pulseBtn { from { transform: scale(1); box-shadow: 0 0 10px #eab308; } to { transform: scale(1.03); box-shadow: 0 0 22px #fde047; } }
 
-  .btn-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    margin-top: 6px;
-  }
+  .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
   .sub-btn {
-    padding: 9px 6px;
-    border-radius: 7px;
-    border: 1px solid rgba(148,163,184,0.25);
-    background: rgba(15, 23, 42, 0.9);
-    color: #e2e8f0;
-    font-weight: 700;
-    font-size: 11px;
-    cursor: pointer;
-    transition: 0.15s;
+    padding: 9px 6px; border-radius: 7px; border: 1px solid rgba(148,163,184,0.25);
+    background: rgba(15, 23, 42, 0.9); color: #e2e8f0; font-weight: 700; font-size: 11px; cursor: pointer; transition: 0.15s;
   }
   .sub-btn:hover { border-color: var(--accent); background: rgba(30, 58, 95, 0.8); }
 
-  /* MENÜ BUTONLARI GRID */
-  .menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .menu-btn {
-    padding: 9px 8px;
-    border-radius: 8px;
-    border: 1px solid rgba(56, 189, 248, 0.25);
-    background: rgba(12, 26, 46, 0.9);
-    color: #f8fafc;
-    font-size: 11px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    transition: 0.15s;
+    padding: 9px 8px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.25);
+    background: rgba(12, 26, 46, 0.9); color: #f8fafc; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.15s;
   }
   .menu-btn:hover { background: rgba(2, 132, 199, 0.28); border-color: var(--accent); }
-  .menu-btn.alchemy {
-    border-color: rgba(192, 132, 252, 0.5);
-    background: linear-gradient(135deg, rgba(88, 28, 135, 0.45), rgba(30, 27, 75, 0.7));
-    color: #f3e8ff;
-  }
-  .menu-btn.alchemy:hover { border-color: #e879f9; box-shadow: 0 0 12px rgba(192,132,252,0.4); }
+  .menu-btn.alchemy { border-color: rgba(192, 132, 252, 0.5); background: linear-gradient(135deg, rgba(88, 28, 135, 0.45), rgba(30, 27, 75, 0.7)); color: #f3e8ff; }
 
-  /* 9'LU HIZLI EKİPMAN BARI */
-  #quickBarWrap {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 15;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    pointer-events: auto;
-  }
-  #quickTooltip {
-    background: rgba(10, 14, 24, 0.92);
-    border: 1px solid #475569;
-    padding: 3px 10px;
-    border-radius: 5px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #f8fafc;
-    pointer-events: none;
-    text-shadow: 0 1px 2px #000;
-  }
-  #quickBar {
-    display: flex;
-    gap: 4px;
-    background: rgba(17, 24, 39, 0.92);
-    padding: 5px;
-    border-radius: 8px;
-    border: 2px solid #475569;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.75);
-  }
-  .q-slot {
-    width: 54px;
-    height: 54px;
-    background: linear-gradient(180deg, #1e293b, #0f172a);
-    border: 2px solid #334155;
-    border-radius: 6px;
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: 0.1s;
-  }
+  #quickBarWrap { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 15; display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: auto; }
+  #quickTooltip { background: rgba(10, 14, 24, 0.92); border: 1px solid #475569; padding: 3px 10px; border-radius: 5px; font-size: 11px; font-weight: 700; color: #f8fafc; pointer-events: none; text-shadow: 0 1px 2px #000; }
+  #quickBar { display: flex; gap: 4px; background: rgba(17, 24, 39, 0.92); padding: 5px; border-radius: 8px; border: 2px solid #475569; box-shadow: 0 8px 24px rgba(0,0,0,0.75); }
+  .q-slot { width: 54px; height: 54px; background: linear-gradient(180deg, #1e293b, #0f172a); border: 2px solid #334155; border-radius: 6px; position: relative; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.1s; }
   .q-slot:hover { border-color: #94a3b8; transform: translateY(-2px); }
-  .q-slot.active {
-    border-color: #fbbf24;
-    box-shadow: 0 0 12px rgba(251, 191, 36, 0.65), inset 0 0 8px rgba(251, 191, 36, 0.3);
-  }
-  .q-key {
-    position: absolute;
-    top: 2px;
-    left: 4px;
-    font-size: 9px;
-    font-weight: 800;
-    color: #94a3b8;
-  }
-  .q-plus {
-    position: absolute;
-    top: 2px;
-    right: 4px;
-    font-size: 10px;
-    font-weight: 900;
-    color: #fbbf24;
-    text-shadow: 0 0 4px #000;
-  }
-  .q-count {
-    position: absolute;
-    bottom: 2px;
-    right: 4px;
-    font-size: 11px;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 1px 1px 0 #000;
-  }
+  .q-slot.active { border-color: #fbbf24; box-shadow: 0 0 12px rgba(251, 191, 36, 0.65), inset 0 0 8px rgba(251, 191, 36, 0.3); }
+  .q-key { position: absolute; top: 2px; left: 4px; font-size: 9px; font-weight: 800; color: #94a3b8; }
+  .q-plus { position: absolute; top: 2px; right: 4px; font-size: 10px; font-weight: 900; color: #fbbf24; text-shadow: 0 0 4px #000; }
+  .q-count { position: absolute; bottom: 2px; right: 4px; font-size: 11px; font-weight: 900; color: #fff; text-shadow: 1px 1px 0 #000; }
   .q-icon { font-size: 22px; line-height: 1; }
   .q-sub { font-size: 8px; color: #cbd5e1; margin-top: 2px; max-width: 48px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-  /* AURA PARLAMA EFEKTLERİ */
   .glow-5 { box-shadow: 0 0 10px #38bdf8, inset 0 0 6px #38bdf8 !important; border-color: #38bdf8 !important; }
   .glow-7 { box-shadow: 0 0 14px #fbbf24, inset 0 0 8px #fbbf24 !important; border-color: #fbbf24 !important; }
   .glow-9 { box-shadow: 0 0 16px #c084fc, inset 0 0 10px #e879f9 !important; border-color: #e879f9 !important; }
-  .glow-10 {
-    animation: mythicGlow 1.2s infinite alternate;
-    border-color: #f43f5e !important;
-  }
-  @keyframes mythicGlow {
-    0% { box-shadow: 0 0 16px #f43f5e, inset 0 0 10px #fbbf24; }
-    50% { box-shadow: 0 0 22px #38bdf8, inset 0 0 12px #c084fc; }
-    100% { box-shadow: 0 0 20px #22c55e, inset 0 0 12px #fde047; }
-  }
+  .glow-10 { animation: mythicGlow 1.2s infinite alternate; border-color: #f43f5e !important; }
+  @keyframes mythicGlow { 0% { box-shadow: 0 0 16px #f43f5e, inset 0 0 10px #fbbf24; } 50% { box-shadow: 0 0 22px #38bdf8, inset 0 0 12px #c084fc; } 100% { box-shadow: 0 0 20px #22c55e, inset 0 0 12px #fde047; } }
 
-  /* BİLDİRİM TOAST */
-  #toastArea {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 15;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    pointer-events: none;
-  }
-  .toast-msg {
-    background: rgba(9, 18, 34, 0.88);
-    border-left: 4px solid var(--accent);
-    padding: 7px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.5);
-    animation: fadeInOut 3.4s forwards;
-  }
-  @keyframes fadeInOut {
-    0% { opacity: 0; transform: translateX(-15px); }
-    10% { opacity: 1; transform: translateX(0); }
-    85% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(-8px); }
-  }
+  #toastArea { position: absolute; top: 12px; left: 12px; z-index: 15; display: flex; flex-direction: column; gap: 5px; pointer-events: none; }
+  .toast-msg { background: rgba(9, 18, 34, 0.88); border-left: 4px solid var(--accent); padding: 7px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; color: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.5); animation: fadeInOut 3.4s forwards; }
+  @keyframes fadeInOut { 0% { opacity: 0; transform: translateX(-15px); } 10% { opacity: 1; transform: translateX(0); } 85% { opacity: 1; } 100% { opacity: 0; transform: translateY(-8px); } }
 
-  /* MODAL PENCERELERİ */
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(2, 6, 15, 0.8);
-    backdrop-filter: blur(5px);
-    z-index: 50;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(2, 6, 15, 0.8); backdrop-filter: blur(5px); z-index: 50; display: none; align-items: center; justify-content: center; padding: 20px; }
   .modal-backdrop.open { display: flex; }
-  .modal-window {
-    width: min(860px, 95vw);
-    max-height: 88vh;
-    background: #0b172a;
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.85);
-  }
-  .modal-header {
-    padding: 14px 18px;
-    background: rgba(15, 29, 52, 0.95);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  .modal-window { width: min(860px, 95vw); max-height: 88vh; background: #0b172a; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 14px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.85); }
+  .modal-header { padding: 14px 18px; background: rgba(15, 29, 52, 0.95); border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
   .modal-header h2 { font-size: 16px; color: var(--accent); }
-  .close-btn {
-    background: rgba(239, 68, 68, 0.2);
-    border: 1px solid #ef4444;
-    color: #fca5a5;
-    padding: 5px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 800;
-  }
-  .modal-body {
-    padding: 16px;
-    overflow-y: auto;
-    flex: 1;
-  }
+  .close-btn { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-weight: 800; }
+  .modal-body { padding: 16px; overflow-y: auto; flex: 1; }
 
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 10px;
-  }
-  .item-card {
-    background: rgba(17, 32, 56, 0.85);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    border-radius: 10px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 8px;
-  }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+  .item-card { background: rgba(17, 32, 56, 0.85); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }
   .item-card h4 { font-size: 13px; color: #f8fafc; }
   .item-card p { font-size: 11px; color: #94a3b8; line-height: 1.35; }
-  .buy-btn {
-    padding: 8px 10px;
-    border-radius: 6px;
-    border: none;
-    background: #0284c7;
-    color: #fff;
-    font-weight: 800;
-    font-size: 11px;
-    cursor: pointer;
-  }
+  .buy-btn { padding: 8px 10px; border-radius: 6px; border: none; background: #0284c7; color: #fff; font-weight: 800; font-size: 11px; cursor: pointer; }
   .buy-btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
 
-  .alchemy-layout {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 16px;
-  }
-  .alchemy-chamber {
-    background: radial-gradient(circle at center, #1e1b4b, #090d16);
-    border: 2px solid #a855f7;
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  .alchemy-target-box {
-    width: 84px;
-    height: 84px;
-    border-radius: 14px;
-    background: #0f172a;
-    border: 2px solid #c084fc;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 34px;
-    position: relative;
-  }
-  .mat-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(192, 132, 252, 0.35);
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 700;
-  }
-  .tab-bar {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-  .tab-btn {
-    padding: 7px 13px;
-    border-radius: 7px;
-    border: 1px solid rgba(148,163,184,0.25);
-    background: #0f1d33;
-    color: #cbd5e1;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-  }
+  .alchemy-layout { display: grid; grid-template-columns: 280px 1fr; gap: 16px; }
+  .alchemy-chamber { background: radial-gradient(circle at center, #1e1b4b, #090d16); border: 2px solid #a855f7; border-radius: 12px; padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .alchemy-target-box { width: 84px; height: 84px; border-radius: 14px; background: #0f172a; border: 2px solid #c084fc; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 34px; position: relative; }
+  .mat-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(192, 132, 252, 0.35); padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+  .tab-bar { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .tab-btn { padding: 7px 13px; border-radius: 7px; border: 1px solid rgba(148,163,184,0.25); background: #0f1d33; color: #cbd5e1; font-size: 12px; font-weight: 700; cursor: pointer; }
   .tab-btn.active { background: #0284c7; color: #fff; border-color: #38bdf8; }
 </style>
 </head>
 <body>
 
 <div id="appLayout">
-  <!-- OYUN ALANI -->
   <div id="viewportArea">
     <canvas id="gameCanvas"></canvas>
     <div id="toastArea"></div>
-
     <div id="quickBarWrap">
       <div id="quickTooltip">[1-4] Sahte Yem  |  [5-7] Sandık/İnci  |  [8-9] Yemleme & Onarım</div>
       <div id="quickBar"></div>
     </div>
   </div>
 
-  <!-- SAĞ KONTROL PANELİ -->
   <aside id="rightDock">
     <div class="dock-card">
       <div class="dock-title">
@@ -471,7 +133,7 @@
       <div class="stat-grid">
         <div class="stat-item">
           <div class="stat-label">Nakit Bakiye</div>
-          <div class="stat-val gold" id="uiMoney">450 ₺</div>
+          <div class="stat-val gold" id="uiMoney">150 ₺</div>
         </div>
         <div class="stat-item">
           <div class="stat-label">Av Puanı & Seviye</div>
@@ -484,7 +146,6 @@
       </div>
     </div>
 
-    <!-- SONAR -->
     <div class="dock-card">
       <div class="dock-title">
         <span>📡 DERİNLİK & SONAR</span>
@@ -509,7 +170,6 @@
       </div>
     </div>
 
-    <!-- KONTROLLER -->
     <div class="dock-card">
       <div class="dock-title"><span>⚡ OLTA KONTROLÜ</span><span style="font-size:10px; color:#94a3b8;">[DOKUN / SPACE]</span></div>
       <button id="mainActionBtn" class="action-btn">🎯 ATIŞ GÜCÜ DOLDUR</button>
@@ -523,23 +183,21 @@
       </div>
     </div>
 
-    <!-- SİMYA ÖZETİ -->
     <div class="dock-card" style="border-color:rgba(192,132,252,0.35);">
       <div class="dock-title" style="color:#e879f9;">
         <span>🧪 SİMYA MATERYALLERİ</span>
         <span style="font-size:10px;">Avlardan Düşer</span>
       </div>
       <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px; font-size:11px;">
-        <div class="stat-item">🧪 İksir: <b id="matElixir">3</b></div>
-        <div class="stat-item">✨ ŞansTozu: <b id="matPowder">3</b></div>
-        <div class="stat-item">💎 Koruma: <b id="matImmortal">1</b></div>
-        <div class="stat-item">🌟 Yıldız: <b id="matAstral">1</b></div>
-        <div class="stat-item">🔵 Mavi Öz: <b id="matBlue">2</b></div>
+        <div class="stat-item">🧪 İksir: <b id="matElixir">1</b></div>
+        <div class="stat-item">✨ ŞansTozu: <b id="matPowder">1</b></div>
+        <div class="stat-item">💎 Koruma: <b id="matImmortal">0</b></div>
+        <div class="stat-item">🌟 Yıldız: <b id="matAstral">0</b></div>
+        <div class="stat-item">🔵 Mavi Öz: <b id="matBlue">0</b></div>
         <div class="stat-item">🧊 Livar: <b id="uiCoolerCount">0/15</b></div>
       </div>
     </div>
 
-    <!-- İSTASYONLAR & MENÜLER -->
     <div class="dock-card" style="margin-top:auto;">
       <div class="dock-title"><span>🏛️ İSTASYONLAR & AYARLAR</span></div>
       <div class="menu-grid">
@@ -657,7 +315,6 @@
   </div>
 </div>
 
-<!-- YENİ: ÇÖZÜNÜRLÜK & KAYIT AYARLARI MODALI -->
 <div id="settingsModal" class="modal-backdrop">
   <div class="modal-window">
     <div class="modal-header">
@@ -667,22 +324,19 @@
     <div class="modal-body" style="line-height:1.6; font-size:13px; color:#e2e8f0;">
       <div style="background:rgba(15,31,54,0.9); padding:12px; border-radius:10px; margin-bottom:14px; border:1px solid rgba(56,189,248,0.3);">
         <h4 style="color:#fbbf24; margin-bottom:6px;">🖥️ Çözünürlük ve Görüntü Modu</h4>
-        <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">Cihazınızın performansına göre ekran çözünürlüğünü ölçeklendirebilir veya tam ekrana geçebilirsiniz:</p>
         <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
-          <button class="buy-btn" onclick="setResolutionScale(0.5)">Düşük Kalite (Hızlı / Mobil)</button>
-          <button class="buy-btn" onclick="setResolutionScale(1.0)" style="background:#22c55e;">Normal Kalite (1:1)</button>
-          <button class="buy-btn" onclick="setResolutionScale(1.5)" style="background:#7e22ce;">Ultra Keskin (Retina)</button>
+          <button class="buy-btn" onclick="setResolutionScale(0.5)">Düşük Kalite</button>
+          <button class="buy-btn" onclick="setResolutionScale(1.0)" style="background:#22c55e;">Normal (1:1)</button>
+          <button class="buy-btn" onclick="setResolutionScale(1.5)" style="background:#7e22ce;">Ultra Keskin</button>
         </div>
-        <button class="action-btn" style="background:#0284c7;" onclick="toggleFullscreen()">📺 Tam Ekran Moduna Geç (Fullscreen)</button>
+        <button class="action-btn" style="background:#0284c7;" onclick="toggleFullscreen()">📺 Tam Ekran Moduna Geç</button>
       </div>
-
       <div style="background:rgba(15,31,54,0.9); padding:12px; border-radius:10px; border:1px solid rgba(56,189,248,0.3);">
-        <h4 style="color:#fbbf24; margin-bottom:6px;">💾 Cihazlar Arası İlerleme Kodu (iPad / PC Transfer)</h4>
-        <p style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">Farklı bir cihaza geçerken bu kodu kopyalayıp diğer cihazda yükleyebilirsiniz:</p>
+        <h4 style="color:#fbbf24; margin-bottom:6px;">💾 Kayıt Aktarımı</h4>
         <textarea id="saveCodeBox" style="width:100%; height:58px; background:#040b14; color:#38bdf8; border:1px solid #334155; border-radius:6px; padding:6px; font-size:11px;"></textarea>
         <div style="display:flex; gap:8px; margin-top:8px;">
           <button class="buy-btn" onclick="exportSaveCode()">📋 Kopyala</button>
-          <button class="buy-btn" style="background:#22c55e;" onclick="importSaveCode()">📥 Kodu Yükle</button>
+          <button class="buy-btn" style="background:#22c55e;" onclick="importSaveCode()">📥 Yükle</button>
         </div>
       </div>
     </div>
@@ -691,30 +345,30 @@
 
 <script>
 const FISH_SPECIES = [
-  { id:'zargana', name:'Zargana', minDepth:0, maxDepth:8, minKg:0.25, maxKg:1.1, priceKg:180, xp:22, speed:2.5, power:0.8, body:'needle', col1:'#1e40af', col2:'#93c5fd', pref:['topwater','minnow'] },
-  { id:'istavrit', name:'Sarıkuyruk İstavrit', minDepth:2, maxDepth:14, minKg:0.15, maxKg:0.65, priceKg:160, xp:18, speed:2.1, power:0.6, body:'fusiform', col1:'#3b82f6', col2:'#e2e8f0', pref:['silicone','minnow','jig'] },
-  { id:'uskumru', name:'Uskumru', minDepth:3, maxDepth:18, minKg:0.3, maxKg:1.2, priceKg:210, xp:25, speed:2.3, power:0.9, body:'fusiform', col1:'#0f766e', col2:'#cbd5e1', stripes:true, pref:['minnow','jig'] },
-  { id:'lufer', name:'Lüfer', minDepth:1, maxDepth:16, minKg:0.45, maxKg:2.2, priceKg:480, xp:55, speed:2.6, power:1.5, body:'fusiform', col1:'#1e3a8a', col2:'#cbd5e1', pref:['topwater','minnow','jig'] },
-  { id:'kofana', name:'Sırtıkara Kofana', minDepth:1, maxDepth:18, minKg:2.5, maxKg:7.5, priceKg:560, xp:120, speed:2.9, power:2.4, body:'fusiform', col1:'#172554', col2:'#94a3b8', pref:['topwater','minnow'] },
-  { id:'kilic', name:'Kılıç Balığı', minDepth:4, maxDepth:25, minKg:8.0, maxKg:38.0, priceKg:620, xp:320, speed:3.5, power:4.2, body:'sword', col1:'#0f172a', col2:'#64748b', pref:['topwater','jig'] },
-  { id:'ispari', name:'İspari', minDepth:8, maxDepth:24, minKg:0.15, maxKg:0.6, priceKg:150, xp:16, speed:1.6, power:0.6, body:'oval', col1:'#64748b', col2:'#e2e8f0', spot:true, pref:['silicone'] },
-  { id:'sarpa', name:'Sarpa', minDepth:8, maxDepth:26, minKg:0.3, maxKg:1.3, priceKg:170, xp:24, speed:1.9, power:0.95, body:'oval', col1:'#0369a1', col2:'#fef08a', stripes:true, pref:['silicone','minnow'] },
-  { id:'melanur', name:'Melanur', minDepth:6, maxDepth:22, minKg:0.25, maxKg:0.95, priceKg:230, xp:28, speed:2.1, power:0.9, body:'oval', col1:'#1e293b', col2:'#cbd5e1', spot:true, pref:['topwater','minnow','silicone'] },
-  { id:'levrek', name:'Avcı Levrek', minDepth:4, maxDepth:28, minKg:0.7, maxKg:6.2, priceKg:520, xp:85, speed:2.4, power:1.9, body:'fusiform', col1:'#334155', col2:'#f1f5f9', pref:['topwater','minnow','silicone'] },
-  { id:'barakuda', name:'Sarıağız Baraküda', minDepth:5, maxDepth:30, minKg:0.9, maxKg:4.8, priceKg:340, xp:75, speed:3.1, power:1.8, body:'needle', col1:'#3f3f46', col2:'#d4d4d8', stripes:true, pref:['minnow','topwater'] },
-  { id:'palamut', name:'Palamut', minDepth:10, maxDepth:35, minKg:0.8, maxKg:2.6, priceKg:290, xp:50, speed:2.8, power:1.5, body:'fusiform', col1:'#0c4a6e', col2:'#e0f2fe', stripes:true, pref:['minnow','jig'] },
-  { id:'torik', name:'Torik', minDepth:14, maxDepth:42, minKg:3.0, maxKg:8.5, priceKg:380, xp:135, speed:3.2, power:2.7, body:'fusiform', col1:'#082f49', col2:'#bae6fd', stripes:true, pref:['jig','minnow'] },
-  { id:'karagoz', name:'Bantlı Karagöz', minDepth:25, maxDepth:55, minKg:0.35, maxKg:1.8, priceKg:320, xp:42, speed:1.8, power:1.2, body:'oval', col1:'#334155', col2:'#e2e8f0', stripes:true, pref:['silicone','jig'] },
-  { id:'mirmir', name:'Çizgili Mırmır', minDepth:22, maxDepth:50, minKg:0.3, maxKg:1.5, priceKg:340, xp:40, speed:1.8, power:1.1, body:'fusiform', col1:'#475569', col2:'#f8fafc', stripes:true, pref:['silicone'] },
-  { id:'cipura', name:'Alyanak Çipura', minDepth:25, maxDepth:62, minKg:0.5, maxKg:4.2, priceKg:460, xp:70, speed:2.0, power:1.7, body:'oval', col1:'#475569', col2:'#f1f5f9', goldBrow:true, pref:['silicone','jig'] },
-  { id:'mercan', name:'Kırma Mercan', minDepth:35, maxDepth:75, minKg:0.4, maxKg:2.8, priceKg:490, xp:68, speed:1.9, power:1.5, body:'oval', col1:'#e11d48', col2:'#fda4af', pref:['silicone','jig'] },
-  { id:'iskorpit', name:'Kızıl İskorpit', minDepth:30, maxDepth:70, minKg:0.3, maxKg:1.9, priceKg:260, xp:48, speed:1.3, power:1.3, body:'heavy', col1:'#991b1b', col2:'#f87171', pref:['silicone','jig'] },
-  { id:'eskina', name:'Kaya Eşkina', minDepth:32, maxDepth:68, minKg:0.6, maxKg:3.8, priceKg:410, xp:72, speed:1.7, power:1.6, body:'oval', col1:'#451a03', col2:'#d97706', pref:['silicone'] },
-  { id:'sinarit', name:'Taş Sinariti (Trofe)', minDepth:38, maxDepth:82, minKg:2.2, maxKg:11.5, priceKg:680, xp:180, speed:2.5, power:3.1, body:'oval', col1:'#1e40af', col2:'#f472b6', pref:['jig','minnow','silicone'] },
-  { id:'lagos', name:'Beyaz Lagos', minDepth:45, maxDepth:88, minKg:3.5, maxKg:16.0, priceKg:720, xp:220, speed:2.1, power:3.5, body:'heavy', col1:'#3f2e21', col2:'#a8a29e', pref:['jig','silicone'] },
-  { id:'tranca', name:'Derin Deniz Trançası', minDepth:68, maxDepth:115, minKg:4.5, maxKg:19.0, priceKg:750, xp:260, speed:2.4, power:3.8, body:'oval', col1:'#be123c', col2:'#fecdd3', pref:['jig'] },
-  { id:'akya', name:'Dev Akya', minDepth:60, maxDepth:118, minKg:6.0, maxKg:28.0, priceKg:640, xp:310, speed:3.3, power:4.4, body:'fusiform', col1:'#0369a1', col2:'#fde047', pref:['jig','topwater'] },
-  { id:'fener', name:'Abyss Fener Balığı', minDepth:85, maxDepth:120, minKg:2.5, maxKg:9.5, priceKg:890, xp:350, speed:1.6, power:2.9, body:'angler', col1:'#31102f', col2:'#a21caf', pref:['jig','silicone'] }
+  { id:'zargana', name:'Zargana', minDepth:0, maxDepth:8, minKg:0.25, maxKg:1.1, priceKg:140, xp:35, speed:2.5, power:0.8, body:'needle', col1:'#1e40af', col2:'#93c5fd', pref:['topwater','minnow'] },
+  { id:'istavrit', name:'Sarıkuyruk İstavrit', minDepth:2, maxDepth:14, minKg:0.15, maxKg:0.65, priceKg:120, xp:25, speed:2.1, power:0.6, body:'fusiform', col1:'#3b82f6', col2:'#e2e8f0', pref:['silicone','minnow','jig'] },
+  { id:'uskumru', name:'Uskumru', minDepth:3, maxDepth:18, minKg:0.3, maxKg:1.2, priceKg:160, xp:45, speed:2.3, power:0.9, body:'fusiform', col1:'#0f766e', col2:'#cbd5e1', stripes:true, pref:['minnow','jig'] },
+  { id:'lufer', name:'Lüfer', minDepth:1, maxDepth:16, minKg:0.45, maxKg:2.2, priceKg:380, xp:95, speed:2.6, power:1.5, body:'fusiform', col1:'#1e3a8a', col2:'#cbd5e1', pref:['topwater','minnow','jig'] },
+  { id:'kofana', name:'Sırtıkara Kofana', minDepth:1, maxDepth:18, minKg:2.5, maxKg:7.5, priceKg:480, xp:220, speed:2.9, power:2.4, body:'fusiform', col1:'#172554', col2:'#94a3b8', pref:['topwater','minnow'] },
+  { id:'kilic', name:'Kılıç Balığı', minDepth:4, maxDepth:25, minKg:8.0, maxKg:38.0, priceKg:550, xp:550, speed:3.5, power:4.2, body:'sword', col1:'#0f172a', col2:'#64748b', pref:['topwater','jig'] },
+  { id:'ispari', name:'İspari', minDepth:8, maxDepth:24, minKg:0.15, maxKg:0.6, priceKg:110, xp:22, speed:1.6, power:0.6, body:'oval', col1:'#64748b', col2:'#e2e8f0', spot:true, pref:['silicone'] },
+  { id:'sarpa', name:'Sarpa', minDepth:8, maxDepth:26, minKg:0.3, maxKg:1.3, priceKg:130, xp:38, speed:1.9, power:0.95, body:'oval', col1:'#0369a1', col2:'#fef08a', stripes:true, pref:['silicone','minnow'] },
+  { id:'melanur', name:'Melanur', minDepth:6, maxDepth:22, minKg:0.25, maxKg:0.95, priceKg:190, xp:50, speed:2.1, power:0.9, body:'oval', col1:'#1e293b', col2:'#cbd5e1', spot:true, pref:['topwater','minnow','silicone'] },
+  { id:'levrek', name:'Avcı Levrek', minDepth:4, maxDepth:28, minKg:0.7, maxKg:6.2, priceKg:420, xp:150, speed:2.4, power:1.9, body:'fusiform', col1:'#334155', col2:'#f1f5f9', pref:['topwater','minnow','silicone'] },
+  { id:'barakuda', name:'Sarıağız Baraküda', minDepth:5, maxDepth:30, minKg:0.9, maxKg:4.8, priceKg:290, xp:130, speed:3.1, power:1.8, body:'needle', col1:'#3f3f46', col2:'#d4d4d8', stripes:true, pref:['minnow','topwater'] },
+  { id:'palamut', name:'Palamut', minDepth:10, maxDepth:35, minKg:0.8, maxKg:2.6, priceKg:240, xp:90, speed:2.8, power:1.5, body:'fusiform', col1:'#0c4a6e', col2:'#e0f2fe', stripes:true, pref:['minnow','jig'] },
+  { id:'torik', name:'Torik', minDepth:14, maxDepth:42, minKg:3.0, maxKg:8.5, priceKg:320, xp:240, speed:3.2, power:2.7, body:'fusiform', col1:'#082f49', col2:'#bae6fd', stripes:true, pref:['jig','minnow'] },
+  { id:'karagoz', name:'Bantlı Karagöz', minDepth:25, maxDepth:55, minKg:0.35, maxKg:1.8, priceKg:280, xp:75, speed:1.8, power:1.2, body:'oval', col1:'#334155', col2:'#e2e8f0', stripes:true, pref:['silicone','jig'] },
+  { id:'mirmir', name:'Çizgili Mırmır', minDepth:22, maxDepth:50, minKg:0.3, maxKg:1.5, priceKg:290, xp:70, speed:1.8, power:1.1, body:'fusiform', col1:'#475569', col2:'#f8fafc', stripes:true, pref:['silicone'] },
+  { id:'cipura', name:'Alyanak Çipura', minDepth:25, maxDepth:62, minKg:0.5, maxKg:4.2, priceKg:390, xp:140, speed:2.0, power:1.7, body:'oval', col1:'#475569', col2:'#f1f5f9', goldBrow:true, pref:['silicone','jig'] },
+  { id:'mercan', name:'Kırma Mercan', minDepth:35, maxDepth:75, minKg:0.4, maxKg:2.8, priceKg:410, xp:160, speed:1.9, power:1.5, body:'oval', col1:'#e11d48', col2:'#fda4af', pref:['silicone','jig'] },
+  { id:'iskorpit', name:'Kızıl İskorpit', minDepth:30, maxDepth:70, minKg:0.3, maxKg:1.9, priceKg:220, xp:85, speed:1.3, power:1.3, body:'heavy', col1:'#991b1b', col2:'#f87171', pref:['silicone','jig'] },
+  { id:'eskina', name:'Kaya Eşkina', minDepth:32, maxDepth:68, minKg:0.6, maxKg:3.8, priceKg:350, xp:135, speed:1.7, power:1.6, body:'oval', col1:'#451a03', col2:'#d97706', pref:['silicone'] },
+  { id:'sinarit', name:'Taş Sinariti (Trofe)', minDepth:38, maxDepth:82, minKg:2.2, maxKg:11.5, priceKg:590, xp:380, speed:2.5, power:3.1, body:'oval', col1:'#1e40af', col2:'#f472b6', pref:['jig','minnow','silicone'] },
+  { id:'lagos', name:'Beyaz Lagos', minDepth:45, maxDepth:88, minKg:3.5, maxKg:16.0, priceKg:650, xp:460, speed:2.1, power:3.5, body:'heavy', col1:'#3f2e21', col2:'#a8a29e', pref:['jig','silicone'] },
+  { id:'tranca', name:'Derin Deniz Trançası', minDepth:68, maxDepth:115, minKg:4.5, maxKg:19.0, priceKg:710, xp:580, speed:2.4, power:3.8, body:'oval', col1:'#be123c', col2:'#fecdd3', pref:['jig'] },
+  { id:'akya', name:'Dev Akya', minDepth:60, maxDepth:118, minKg:6.0, maxKg:28.0, priceKg:620, xp:650, speed:3.3, power:4.4, body:'fusiform', col1:'#0369a1', col2:'#fde047', pref:['jig','topwater'] },
+  { id:'fener', name:'Abyss Fener Balığı', minDepth:85, maxDepth:120, minKg:2.5, maxKg:9.5, priceKg:820, xp:750, speed:1.6, power:2.9, body:'angler', col1:'#31102f', col2:'#a21caf', pref:['jig','silicone'] }
 ];
 
 const fishSprites = {};
@@ -726,26 +380,26 @@ FISH_SPECIES.forEach(sp => {
 
 const SPOTS = [
   { id:0, name:'Sahilevleri Kayalıkları', maxDepth:28, reqXp:0, desc:'Sığ ve orta su avı. İstavrit, İspari, Zargana ve Levrek merası.' },
-  { id:1, name:'Güzelbahçe Mendirek Kanalı', maxDepth:48, reqXp:250, desc:'Derinleşen kanal. Lüfer, Çipura, Mırmır ve Baraküda geçiş noktası.' },
-  { id:2, name:'Urla Karantina Adası Kırmaları', maxDepth:72, reqXp:750, desc:'Taşlık kırmalar. Mercan, Karagöz, Eşkina ve Sinarit yatakları.' },
-  { id:3, name:'Çeşme Ildır Açık Yamaçları', maxDepth:95, reqXp:1800, desc:'Sert akıntılı derin yamaçlar. Lagos, Kofana, Torik ve Trança.' },
-  { id:4, name:'Karaburun 120m Uçurum (Abyss)', maxDepth:120, reqXp:3600, desc:'120 metre derinlikteki kanyon. Dev Akya, Kılıç ve Fener Balığı!' }
+  { id:1, name:'Güzelbahçe Mendirek Kanalı', maxDepth:48, reqXp:800, desc:'Derinleşen kanal. Lüfer, Çipura, Mırmır ve Baraküda geçiş noktası.' },
+  { id:2, name:'Urla Karantina Adası Kırmaları', maxDepth:72, reqXp:2800, desc:'Taşlık kırmalar. Mercan, Karagöz, Eşkina ve Sinarit yatakları.' },
+  { id:3, name:'Çeşme Ildır Açık Yamaçları', maxDepth:95, reqXp:7500, desc:'Sert akıntılı derin yamaçlar. Lagos, Kofana, Torik ve Trança.' },
+  { id:4, name:'Karaburun 120m Uçurum (Abyss)', maxDepth:120, reqXp:16000, desc:'120 metre derinlikteki kanyon. Dev Akya, Kılıç ve Fener Balığı!' }
 ];
 
 const SHOP_ITEMS = {
   rods: [
     { id:'rod1', name:'EgeCast XT 270cm 10-30g', price:0, power:1.0, cast:55, owned:true },
-    { id:'rod2', name:'MarinTech Seabass 290cm', price:1400, power:1.35, cast:72, owned:false },
-    { id:'rod3', name:'AquaForge ShoreJig 300cm', price:3800, power:1.8, cast:90, owned:false },
-    { id:'rod4', name:'Poseidon Carbon Pro S96M', price:7900, power:2.4, cast:105, owned:false },
-    { id:'rod5', name:'TitanAbyss Accura 100H', price:16500, power:3.3, cast:120, owned:false }
+    { id:'rod2', name:'MarinTech Seabass 290cm', price:3200, power:1.35, cast:72, owned:false },
+    { id:'rod3', name:'AquaForge ShoreJig 300cm', price:9800, power:1.8, cast:90, owned:false },
+    { id:'rod4', name:'Poseidon Carbon Pro S96M', price:24500, power:2.4, cast:105, owned:false },
+    { id:'rod5', name:'TitanAbyss Accura 100H', price:58000, power:3.3, cast:120, owned:false }
   ],
   reels: [
     { id:'reel1', name:'EgeSpin FX 4000', price:0, drag:1.0, speed:1.0, owned:true },
-    { id:'reel2', name:'MarinTech LT 4000-C', price:1250, drag:1.3, speed:1.15, owned:false },
-    { id:'reel3', name:'AquaForge Strada 4000XG', price:3600, drag:1.75, speed:1.3, owned:false },
-    { id:'reel4', name:'Poseidon TwinDrag XD 5000', price:8200, drag:2.3, speed:1.45, owned:false },
-    { id:'reel5', name:'TitanAbyss SW 6000HG', price:18000, drag:3.2, speed:1.65, owned:false }
+    { id:'reel2', name:'MarinTech LT 4000-C', price:2800, drag:1.3, speed:1.15, owned:false },
+    { id:'reel3', name:'AquaForge Strada 4000XG', price:8900, drag:1.75, speed:1.3, owned:false },
+    { id:'reel4', name:'Poseidon TwinDrag XD 5000', price:22000, drag:2.3, speed:1.45, owned:false },
+    { id:'reel5', name:'TitanAbyss SW 6000HG', price:52000, drag:3.2, speed:1.65, owned:false }
   ],
   lures: [
     { slot:0, id:'lure_top', name:'HydroWalk 98 Su Üstü WTD (14g)', type:'topwater', icon:'🦐', sinkRate:0, maxSink:1.5, appealBonus:1.1, plus:0, blue:{str:0,int:0,luck:0} },
@@ -754,23 +408,23 @@ const SHOP_ITEMS = {
     { slot:3, id:'lure_jig', name:'AbyssZebra Heavy Jig (40g)', type:'jig', icon:'⚡', sinkRate:6.5, maxSink:120, appealBonus:1.35, plus:0, blue:{str:0,int:0,luck:0} }
   ],
   alchemy: [
-    { id:'buy_elixir', name:'🧪 Güçlendirme İksiri (Elixir)', price:450, type:'mat', key:'elixir', qty:1, desc:'Ekipmanlara +1 ile +12 arası seviye basmak için kullanılır.' },
-    { id:'buy_powder', name:'✨ Şans Tozu (Lucky Powder)', price:250, type:'mat', key:'powder', qty:1, desc:'Simya başarı şansını +%20 artırır.' },
-    { id:'buy_immortal', name:'💎 Koruma Taşı (Immortal)', price:1800, type:'mat', key:'immortal', qty:1, desc:'+5 üstü başarısız denemede eşyanın sıfırlanmasını önler!' },
-    { id:'buy_astral', name:'🌟 Yıldız Taşı (Astral)', price:1200, type:'mat', key:'astral', qty:1, desc:'Başarısızlıkta eşyanın +4 altına düşmesini engeller.' },
-    { id:'buy_blue', name:'🔵 Mavi İznitelik Taşı', price:950, type:'mat', key:'blue', qty:1, desc:'Eşyaya Güç, Cazibe ve Şans ekler.' },
-    { id:'buy_chum', name:'🪣 Derin Deniz Yemleme (Slot 8)', price:300, type:'cons', key:'chum', qty:2, desc:'30 sn boyunca balık vuruş şansını +%50 artırır.' },
-    { id:'buy_repair', name:'🧪 Nano Misina Kiti (Slot 9)', price:220, type:'cons', key:'repair', qty:2, desc:'Gerginliği anında düşürür.' }
+    { id:'buy_elixir', name:'🧪 Güçlendirme İksiri (Elixir)', price:650, type:'mat', key:'elixir', qty:1, desc:'Ekipman seviye basma materyali.' },
+    { id:'buy_powder', name:'✨ Şans Tozu (Lucky Powder)', price:380, type:'mat', key:'powder', qty:1, desc:'Başarı şansını +%20 artırır.' },
+    { id:'buy_immortal', name:'💎 Koruma Taşı (Immortal)', price:3500, type:'mat', key:'immortal', qty:1, desc:'+5 üstü yanmayı önler.' },
+    { id:'buy_astral', name:'🌟 Yıldız Taşı (Astral)', price:2200, type:'mat', key:'astral', qty:1, desc:'+4 altına düşmeyi önler.' },
+    { id:'buy_blue', name:'🔵 Mavi Öz', price:1400, type:'mat', key:'blue', qty:1, desc:'İznitelik ekler.' },
+    { id:'buy_chum', name:'🪣 Yemleme', price:400, type:'cons', key:'chum', qty:2, desc:'30sn cazibe artırır.' },
+    { id:'buy_repair', name:'🧪 Nano Misina', price:300, type:'cons', key:'repair', qty:2, desc:'Gerginlik düşürür.' }
   ]
 };
 
 const state = {
-  money: 450, xp: 0, level: 1, spotIdx: 0, timeOfDay: 0, drag: 65, activeSlot: 0,
+  money: 150, xp: 0, level: 1, spotIdx: 0, timeOfDay: 0, drag: 65, activeSlot: 0,
   rod: { ...SHOP_ITEMS.rods[0], plus: 0, blue: { str:0, int:0, luck:0 } },
   reel: { ...SHOP_ITEMS.reels[0], plus: 0, blue: { str:0, int:0, luck:0 } },
   lures: JSON.parse(JSON.stringify(SHOP_ITEMS.lures)),
-  mats: { elixir: 3, powder: 3, immortal: 1, astral: 1, blue: 2 },
-  hotbarItems: { chest: 1, amphora: 0, pearl: 0, chum: 2, repair: 2 },
+  mats: { elixir: 1, powder: 1, immortal: 0, astral: 0, blue: 0 },
+  hotbarItems: { chest: 0, amphora: 0, pearl: 0, chum: 2, repair: 2 },
   chumTimer: 0, cooler: [], coolerMax: 15, dex: {}, dailyBonusId: 'levrek',
   selectedAlchemyTarget: 'rod', resolutionScale: 1.0,
   phase: 'idle', castPower: 0, castDir: 1,
@@ -779,22 +433,17 @@ const state = {
   keys: { w:false, a:false, s:false, d:false, space:false }, fishes: []
 };
 
-// ÇÖZÜNÜRLÜK ÖLÇEKLEME VE FULLSCREEN FONKSİYONLARI
 function setResolutionScale(scale) {
   state.resolutionScale = scale;
   resizeCanvas();
-  showToast(`🖥️ Çözünürlük ölçeği ayarlandı: x${scale}`, '#38bdf8');
+  showToast(`🖥️ Çözünürlük: x${scale}`, '#38bdf8');
 }
 
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen().catch(err => {
-      showToast('⚠️ Tam ekran modu tarayıcı tarafından engellendi.', '#ef4444');
-    });
+    document.documentElement.requestFullscreen().catch(err => {});
   } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
+    if (document.exitFullscreen) document.exitFullscreen();
   }
 }
 
@@ -808,13 +457,13 @@ function saveProgress() {
       ownedRods: SHOP_ITEMS.rods.map(r => r.owned),
       ownedReels: SHOP_ITEMS.reels.map(r => r.owned)
     };
-    localStorage.setItem('aegeanSpinProSave_v1', JSON.stringify(saveData));
+    localStorage.setItem('aegeanSpinProSave_v2', JSON.stringify(saveData));
   } catch(e){}
 }
 
 function loadProgress() {
   try {
-    const raw = localStorage.getItem('aegeanSpinProSave_v1');
+    const raw = localStorage.getItem('aegeanSpinProSave_v2');
     if (!raw) return;
     const data = JSON.parse(raw);
     state.money = data.money ?? state.money;
@@ -836,13 +485,12 @@ function loadProgress() {
 
 function exportSaveCode() {
   saveProgress();
-  const raw = localStorage.getItem('aegeanSpinProSave_v1') || '{}';
+  const raw = localStorage.getItem('aegeanSpinProSave_v2') || '{}';
   const code = btoa(encodeURIComponent(raw));
   const box = document.getElementById('saveCodeBox');
-  box.value = code;
-  box.select();
+  box.value = code; box.select();
   navigator.clipboard?.writeText(code);
-  showToast('📋 Kayıt kodu panoya kopyalandı!', '#22c55e');
+  showToast('📋 Kayıt kodu kopyalandı!', '#22c55e');
 }
 
 function importSaveCode() {
@@ -850,16 +498,10 @@ function importSaveCode() {
     const code = document.getElementById('saveCodeBox').value.trim();
     if (!code) return;
     const json = decodeURIComponent(atob(code));
-    const data = JSON.parse(json);
-    localStorage.setItem('aegeanSpinProSave_v1', JSON.stringify(data));
-    loadProgress();
-    spawnFishes();
-    renderHotbar();
-    updateUI();
-    showToast('✅ Kayıt başarıyla yüklendi!', '#22c55e');
-  } catch(e) {
-    showToast('❌ Geçersiz kayıt kodu!', '#ef4444');
-  }
+    localStorage.setItem('aegeanSpinProSave_v2', json);
+    loadProgress(); spawnFishes(); renderHotbar(); updateUI();
+    showToast('✅ Kayıt yüklendi!', '#22c55e');
+  } catch(e) { showToast('❌ Geçersiz kod!', '#ef4444'); }
 }
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -868,24 +510,19 @@ function playTone(freq, dur, type='sine', vol=0.08) {
     if (audioCtx.state === 'suspended') audioCtx.resume();
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
     gain.gain.setValueAtTime(vol, audioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + dur);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + dur);
   } catch(e){}
 }
 
 function showToast(msg, color='#38bdf8') {
   const area = document.getElementById('toastArea');
   const el = document.createElement('div');
-  el.className = 'toast-msg';
-  el.style.borderLeftColor = color;
-  el.innerHTML = msg;
-  area.appendChild(el);
+  el.className = 'toast-msg'; el.style.borderLeftColor = color;
+  el.innerHTML = msg; area.appendChild(el);
   setTimeout(() => el.remove(), 3400);
 }
 
@@ -969,55 +606,43 @@ function renderHotbar() {
 }
 
 function selectHotbarSlot(idx) {
-  if (state.phase !== 'idle') {
-    showToast('⚠️ Önce oltayı kıyıya sarın!', '#fbbf24');
-    return;
-  }
+  if (state.phase !== 'idle') { showToast('⚠️ Oltayı sarın!', '#fbbf24'); return; }
   state.activeSlot = idx;
   const l = state.lures[idx];
   playTone(520, 0.08, 'triangle');
-  showToast(`🎣 Seçili Yem: ${l.name} (+${l.plus})`, '#38bdf8');
-  renderHotbar();
-  updateUI();
+  showToast(`🎣 Yem: ${l.name}`, '#38bdf8');
+  renderHotbar(); updateUI();
 }
 
 function useHotbarExtra(key) {
-  if (state.hotbarItems[key] <= 0) {
-    showToast('❌ Bu slotta öğe yok!', '#ef4444');
-    return;
-  }
-  state.hotbarItems[key]--;
-  playTone(680, 0.18, 'sine');
+  if (state.hotbarItems[key] <= 0) { showToast('❌ Öğe yok!', '#ef4444'); return; }
+  state.hotbarItems[key]--; playTone(680, 0.18, 'sine');
 
   if (key === 'chest') {
-    const gold = Math.floor(150 + Math.random() * 350);
-    state.money += gold; state.mats.elixir += 2; state.mats.powder += 1;
-    showToast(`📦 Sandık Açıldı: +${gold} ₺, +2 İksir, +1 Şans Tozu!`, '#fbbf24');
+    const gold = Math.floor(100 + Math.random() * 200);
+    state.money += gold; state.mats.elixir += 1;
+    showToast(`📦 Sandık: +${gold} ₺, +1 İksir`, '#fbbf24');
   } else if (key === 'amphora') {
-    const gold = Math.floor(280 + Math.random() * 500);
-    state.money += gold; state.mats.astral += 1; state.mats.blue += 2;
-    showToast(`🏺 Amfora Açıldı: +${gold} ₺, +1 Yıldız Taşı, +2 Mavi Öz!`, '#c084fc');
+    const gold = Math.floor(200 + Math.random() * 350);
+    state.money += gold; state.mats.blue += 1;
+    showToast(`🏺 Amfora: +${gold} ₺, +1 Mavi Öz`, '#c084fc');
   } else if (key === 'pearl') {
-    const gold = Math.floor(400 + Math.random() * 600);
-    state.money += gold; state.mats.immortal += 1; state.mats.elixir += 2;
-    showToast(`🦪 İstridye İncisi: +${gold} ₺, +1 Koruma Taşı!`, '#38bdf8');
+    const gold = Math.floor(350 + Math.random() * 500);
+    state.money += gold; state.mats.immortal += 1;
+    showToast(`🦪 İnci: +${gold} ₺, +1 Koruma`, '#38bdf8');
   } else if (key === 'chum') {
-    state.chumTimer = 30;
-    showToast('🪣 Yemleme Yapıldı! (30 sn +%50 Cazibe)', '#22c55e');
+    state.chumTimer = 30; showToast('🪣 Yemleme aktif!', '#22c55e');
   } else if (key === 'repair') {
-    state.tension = Math.max(0, state.tension - 65);
-    showToast('🧪 Misina gerginliği düşürüldü.', '#38bdf8');
+    state.tension = Math.max(0, state.tension - 65); showToast('🧪 Gerginlik düştü.', '#38bdf8');
   }
-  saveProgress();
-  renderHotbar();
-  updateUI();
+  saveProgress(); renderHotbar(); updateUI();
 }
 
 function spawnFishes() {
   state.fishes = [];
   const maxD = SPOTS[state.spotIdx].maxDepth;
   const available = FISH_SPECIES.filter(s => s.minDepth <= maxD);
-  for (let i = 0; i < 22; i++) {
+  for (let i = 0; i < 28; i++) {
     state.fishes.push(createSingleFish(available, maxD));
   }
 }
@@ -1030,31 +655,21 @@ function createSingleFish(available, maxD) {
   const kg = +(sp.minKg + Math.random() * (sp.maxKg - sp.minKg)).toFixed(2);
   const facing = Math.random() < 0.5 ? 1 : -1;
   return {
-    sp, kg, x: 240 + Math.random() * 900, depth,
-    vx: facing * (0.4 + sp.speed * 0.35), vy: 0, facing,
+    sp, kg, x: 220 + Math.random() * 950, depth,
+    vx: facing * (0.3 + sp.speed * 0.28), vy: (Math.random() - 0.5) * 0.2, facing,
     turnCooldown: 0, state: 'patrol', tailPhase: Math.random() * Math.PI * 2
   };
 }
 
 function releaseEscapedFish(fish, msg) {
-  showToast(msg, '#ef4444');
-  playTone(150, 0.3, 'sawtooth');
-  if (fish) {
-    fish.state = 'fleeing';
-    fish.facing = 1;
-    fish.vx = 6.5;
-  }
-  state.hookedFish = null;
-  resetCastToShore();
+  showToast(msg, '#ef4444'); playTone(150, 0.3, 'sawtooth');
+  if (fish) { fish.state = 'fleeing'; fish.facing = 1; fish.vx = 6.5; }
+  state.hookedFish = null; resetCastToShore();
 }
 
 function resetCastToShore() {
-  state.phase = 'idle';
-  state.tension = 0;
-  state.lure.dist = 0;
-  state.lure.depth = 0;
-  state.lure.appeal = 0;
-  state.lure.actionText = 'Beklemede';
+  state.phase = 'idle'; state.tension = 0; state.lure.dist = 0;
+  state.lure.depth = 0; state.lure.appeal = 0; state.lure.actionText = 'Beklemede';
   document.getElementById('mainActionBtn').className = 'action-btn';
   document.getElementById('mainActionBtn').innerText = '🎯 ATIŞ GÜCÜ DOLDUR';
   updateUI();
@@ -1062,9 +677,7 @@ function resetCastToShore() {
 
 function startOrTriggerCast() {
   if (state.phase === 'idle') {
-    state.phase = 'charging';
-    state.castPower = 10;
-    state.castDir = 1;
+    state.phase = 'charging'; state.castPower = 10; state.castDir = 1;
     document.getElementById('mainActionBtn').innerText = '🚀 FIRLATMAK İÇİN DOKUN';
   } else if (state.phase === 'charging') {
     launchLure();
@@ -1082,9 +695,7 @@ function launchLure() {
   const maxCast = state.rod.cast * (1 + state.rod.plus * 0.04);
   const ratio = state.castPower / 100;
   state.lure.targetDist = 15 + ratio * (maxCast - 15);
-  state.lure.dist = 2;
-  state.lure.depth = 0;
-  state.lure.flyProgress = 0;
+  state.lure.dist = 2; state.lure.depth = 0; state.lure.flyProgress = 0;
   playTone(380, 0.15, 'sine');
   document.getElementById('mainActionBtn').innerText = '🔄 MAKİNE SAR / ÇEK';
 }
@@ -1099,15 +710,13 @@ function performLureAction(type) {
     state.lure.appeal = Math.min(100, state.lure.appeal + 22 * mult);
     state.lure.dist = Math.max(0, state.lure.dist - 1.4);
     state.lure.depth = Math.max(0.2, state.lure.depth - 0.8);
-    state.lure.actionText = lure.type === 'topwater' ? 'WTD Aksiyonu!' : 'Keskin Twitch!';
-    state.lure.actionTimer = 0.6;
+    state.lure.actionText = 'Keskin Twitch!'; state.lure.actionTimer = 0.6;
     playTone(580, 0.06, 'triangle');
   } else if (type === 'jerk') {
     state.lure.appeal = Math.min(100, state.lure.appeal + 28 * mult);
     state.lure.dist = Math.max(0, state.lure.dist - 1.8);
     state.lure.depth = Math.max(0.4, state.lure.depth - 2.2);
-    state.lure.actionText = 'Sert Dip Jerk!';
-    state.lure.actionTimer = 0.7;
+    state.lure.actionText = 'Sert Dip Jerk!'; state.lure.actionTimer = 0.7;
     playTone(460, 0.08, 'sine');
   }
   if (state.lure.dist <= 1) resetCastToShore();
@@ -1115,11 +724,9 @@ function performLureAction(type) {
 
 function strikeFish() {
   if (state.phase !== 'bite' || !state.hookedFish) return;
-  state.phase = 'fighting';
-  state.hookedFish.state = 'hooked';
-  state.tension = 35;
+  state.phase = 'fighting'; state.hookedFish.state = 'hooked'; state.tension = 35;
   playTone(740, 0.2, 'square');
-  showToast(`🎣 TASMA OTURDU! ${state.hookedFish.sp.name} (${state.hookedFish.kg} kg)`, '#22c55e');
+  showToast(`🎣 TASMA! ${state.hookedFish.sp.name} (${state.hookedFish.kg} kg)`, '#22c55e');
   document.getElementById('mainActionBtn').className = 'action-btn';
   document.getElementById('mainActionBtn').innerText = '🔄 BALIĞI ÇEK (SAR)';
 }
@@ -1152,7 +759,7 @@ function landFish(fish) {
   playTone(880, 0.25, 'triangle');
   const xpGain = Math.round(fish.sp.xp * (0.8 + fish.kg / fish.sp.maxKg));
   state.xp += xpGain;
-  state.level = 1 + Math.floor(state.xp / 250);
+  state.level = 1 + Math.floor(state.xp / 450);
 
   if (!state.dex[fish.sp.id] || fish.kg > state.dex[fish.sp.id].maxKg) {
     state.dex[fish.sp.id] = { count: (state.dex[fish.sp.id]?.count || 0) + 1, maxKg: fish.kg };
@@ -1165,19 +772,17 @@ function landFish(fish) {
     state.cooler.push({ name: fish.sp.name, id: fish.sp.id, kg: fish.kg, val });
   } else {
     state.money += val;
-    showToast(`💰 Livar dolu: ${fish.sp.name} anında ${val} ₺'ye satıldı!`, '#fbbf24');
+    showToast(`💰 Livar dolu: ${fish.sp.name} otomatik satıldı: +${val} ₺`, '#fbbf24');
   }
 
   const luck = getTotalLuckBonus();
   const drops = [];
-  if (Math.random() < 0.45 * luck) { state.mats.elixir++; drops.push('🧪 +1 İksir'); }
-  if (Math.random() < 0.40 * luck) { state.mats.powder++; drops.push('✨ +1 Şans Tozu'); }
-  if (Math.random() < 0.22 * luck) { state.mats.blue++; drops.push('🔵 +1 Mavi Öz'); }
-  if (Math.random() < 0.12 * luck) { state.mats.astral++; drops.push('🌟 +1 Yıldız'); }
-  if (Math.random() < 0.09 * luck) { state.mats.immortal++; drops.push('💎 +1 Koruma'); }
-  if (Math.random() < 0.25 * luck) { state.hotbarItems.chest++; drops.push('📦 Sandık'); }
+  if (Math.random() < 0.35 * luck) { state.mats.elixir++; drops.push('🧪 +1 İksir'); }
+  if (Math.random() < 0.30 * luck) { state.mats.powder++; drops.push('✨ +1 Şans'); }
+  if (Math.random() < 0.15 * luck) { state.mats.blue++; drops.push('🔵 +1 Mavi Öz'); }
+  if (Math.random() < 0.20 * luck) { state.hotbarItems.chest++; drops.push('📦 Sandık'); }
 
-  showToast(`🐟 YAKALANDI: ${fish.sp.name} (${fish.kg} kg) | +${val} ₺`, '#22c55e');
+  showToast(`🐟 YAKALANDI: ${fish.sp.name} (${fish.kg} kg) | +${val} ₺ | +${xpGain} XP`, '#22c55e');
   if (drops.length > 0) showToast(`🎁 GANİMET: ${drops.join(', ')}`, '#e879f9');
 
   const idx = state.fishes.indexOf(fish);
@@ -1187,11 +792,7 @@ function landFish(fish) {
     state.fishes[idx] = createSingleFish(avail, maxD);
   }
 
-  state.hookedFish = null;
-  saveProgress();
-  resetCastToShore();
-  renderHotbar();
-  updateUI();
+  state.hookedFish = null; saveProgress(); resetCastToShore(); renderHotbar(); updateUI();
 }
 
 function getAlchemyTargetObj() {
@@ -1216,8 +817,8 @@ function renderAlchemyModal() {
   box.innerHTML = `${t.icon}<span style="position:absolute;bottom:4px;right:6px;font-size:13px;font-weight:900;color:#fbbf24;">+${t.obj.plus}</span>`;
 
   document.getElementById('alchemyTargetName').innerText = `${t.obj.name} (+${t.obj.plus})`;
-  document.getElementById('alchemyTargetStats').innerText = `Güç Bonusu: +%${t.obj.plus * 12} | Hedef: +${Math.min(12, t.obj.plus + 1)}`;
-  document.getElementById('alchemyBlueStats').innerText = `Özellikler: GÜÇ +${t.obj.blue.str} | CAZİBE +${t.obj.blue.int} | ŞANS +${t.obj.blue.luck}`;
+  document.getElementById('alchemyTargetStats').innerText = `Güç Bonusu: +%${t.obj.plus * 12}`;
+  document.getElementById('alchemyBlueStats').innerText = `GÜÇ +${t.obj.blue.str} | CAZİBE +${t.obj.blue.int} | ŞANS +${t.obj.blue.luck}`;
 
   const list = document.getElementById('alchemyItemList');
   const candidates = [
@@ -1229,10 +830,8 @@ function renderAlchemyModal() {
   list.innerHTML = candidates.map(c => `
     <div class="item-card ${getGlowClass(c.plus)}" style="cursor:pointer; border-color:${state.selectedAlchemyTarget===c.key?'#fbbf24':'rgba(148,163,184,0.2)'}" onclick="state.selectedAlchemyTarget='${c.key}'; renderAlchemyModal();">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h4>${c.icon} ${c.name}</h4>
-        <b style="color:#fbbf24; font-size:14px;">+${c.plus}</b>
+        <h4>${c.icon} ${c.name}</h4><b style="color:#fbbf24; font-size:14px;">+${c.plus}</b>
       </div>
-      <p style="color:#60a5fa; font-weight:700;">GÜÇ:${c.blue.str} | CAZİBE:${c.blue.int}</p>
       <button class="buy-btn" style="background:#7e22ce;">Seç</button>
     </div>
   `).join('');
@@ -1241,43 +840,27 @@ function renderAlchemyModal() {
 function attemptAlchemyPlus() {
   const t = getAlchemyTargetObj().obj;
   const log = document.getElementById('alchemyLog');
-  if (t.plus >= 12) { log.innerText = '⚡ Zaten maksimum +12 seviye!'; return; }
+  if (t.plus >= 12) { log.innerText = '⚡ Maksimum +12!'; return; }
   if (state.mats.elixir <= 0) { log.style.color = '#ef4444'; log.innerText = '❌ Yetersiz İksir!'; return; }
   state.mats.elixir--;
 
-  const useLucky = document.getElementById('useLuckyPowder').checked;
-  const useImm = document.getElementById('useImmortal').checked;
-  const useAst = document.getElementById('useAstral').checked;
-
-  let chance = [0.95, 0.88, 0.78, 0.68, 0.55, 0.45, 0.36, 0.28, 0.22, 0.16, 0.12, 0.09][t.plus] || 0.1;
-  if (useLucky && state.mats.powder > 0) { state.mats.powder--; chance += 0.20; }
+  let chance = [0.90, 0.82, 0.72, 0.60, 0.48, 0.38, 0.30, 0.22, 0.16, 0.11, 0.08, 0.05][t.plus] || 0.05;
+  if (document.getElementById('useLuckyPowder').checked && state.mats.powder > 0) { state.mats.powder--; chance += 0.18; }
 
   if (Math.random() <= chance) {
-    t.plus++;
-    playTone(920, 0.25, 'triangle');
-    log.style.color = '#22c55e';
-    log.innerText = `✨ BAŞARILI! +${t.plus} oldu!`;
-    showToast(`⚗️ ${t.name} artı basıldı: +${t.plus}`, '#22c55e');
+    t.plus++; playTone(920, 0.25, 'triangle');
+    log.style.color = '#22c55e'; log.innerText = `✨ BAŞARILI! +${t.plus}`;
+    showToast(`⚗️ Yükseltildi: +${t.plus}`, '#22c55e');
   } else {
     playTone(180, 0.3, 'sawtooth');
-    if (t.plus >= 5 && useImm && state.mats.immortal > 0) {
-      state.mats.immortal--;
-      log.style.color = '#38bdf8';
-      log.innerText = `💎 Koruma Taşı eşyayı korudu!`;
-    } else if (t.plus >= 4 && useAst && state.mats.astral > 0) {
-      state.mats.astral--; t.plus = 4;
-      log.style.color = '#fbbf24';
-      log.innerText = `🌟 Yıldız Taşı eşyayı +4'te tuttu.`;
+    if (t.plus >= 5 && document.getElementById('useImmortal').checked && state.mats.immortal > 0) {
+      state.mats.immortal--; log.style.color = '#38bdf8'; log.innerText = `💎 Koruma Taşı korudu!`;
     } else {
       t.plus = Math.max(0, t.plus - 1);
-      log.style.color = '#ef4444';
-      log.innerText = `💥 Başarısız! +${t.plus} seviyesine düştü.`;
+      log.style.color = '#ef4444'; log.innerText = `💥 Başarısız! +${t.plus} seviyesine düştü.`;
     }
   }
-  saveProgress();
-  renderAlchemyModal();
-  renderHotbar();
-  updateUI();
+  saveProgress(); renderAlchemyModal(); renderHotbar(); updateUI();
 }
 
 function attemptBlueStat() {
@@ -1289,25 +872,19 @@ function attemptBlueStat() {
   const picked = keys[Math.floor(Math.random() * keys.length)];
   t.blue[picked] = Math.min(10, t.blue[picked] + 1);
   playTone(760, 0.18, 'sine');
-  log.style.color = '#60a5fa';
-  log.innerText = `🔵 Mavi Öz Eklendi (${picked.toUpperCase()} +${t.blue[picked]})`;
-  saveProgress();
-  renderAlchemyModal();
-  updateUI();
+  log.style.color = '#60a5fa'; log.innerText = `🔵 Mavi Öz Eklendi (${picked.toUpperCase()} +${t.blue[picked]})`;
+  saveProgress(); renderAlchemyModal(); updateUI();
 }
 
 function openModal(id) {
-  closeModals();
-  document.getElementById(id).classList.add('open');
+  closeModals(); document.getElementById(id).classList.add('open');
   if (id === 'alchemyModal') renderAlchemyModal();
   if (id === 'marketModal') renderMarket('rods');
   if (id === 'bazaarModal') renderBazaar();
   if (id === 'mapModal') renderMap();
   if (id === 'dexModal') renderDex();
 }
-function closeModals() {
-  document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('open'));
-}
+function closeModals() { document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('open')); }
 
 function renderMarket(tab, btnEl) {
   if (btnEl) {
@@ -1318,29 +895,29 @@ function renderMarket(tab, btnEl) {
   if (tab === 'rods') {
     grid.innerHTML = SHOP_ITEMS.rods.map(r => `
       <div class="item-card">
-        <div><h4>🎣 ${r.name}</h4><p>Güç: ${r.power}x | Atış: ${r.cast}m</p></div>
-        <button class="buy-btn" onclick="buyGear('rod','${r.id}')" ${state.rod.id===r.id?'disabled':''}>${state.rod.id===r.id ? 'Kuşanıldı' : (r.owned ? 'Kuşan' : `${r.price} ₺`)}</button>
+        <div><h4>🎣 ${r.name}</h4><p>Güç: ${r.power}x | Atış: ${r.cast}m</p><b style="color:#fbbf24;">${r.price} ₺</b></div>
+        <button class="buy-btn" onclick="buyGear('rod','${r.id}')" ${state.rod.id===r.id?'disabled':''}>${state.rod.id===r.id ? 'Kuşanıldı' : (r.owned ? 'Kuşan' : 'Satın Al')}</button>
       </div>
     `).join('');
   } else if (tab === 'reels') {
     grid.innerHTML = SHOP_ITEMS.reels.map(r => `
       <div class="item-card">
-        <div><h4>⚙️ ${r.name}</h4><p>Kalama: ${r.drag}x</p></div>
-        <button class="buy-btn" onclick="buyGear('reel','${r.id}')" ${state.reel.id===r.id?'disabled':''}>${state.reel.id===r.id ? 'Kuşanıldı' : (r.owned ? 'Kuşan' : `${r.price} ₺`)}</button>
+        <div><h4>⚙️ ${r.name}</h4><p>Kalama: ${r.drag}x</p><b style="color:#fbbf24;">${r.price} ₺</b></div>
+        <button class="buy-btn" onclick="buyGear('reel','${r.id}')" ${state.reel.id===r.id?'disabled':''}>${state.reel.id===r.id ? 'Kuşanıldı' : (r.owned ? 'Kuşan' : 'Satın Al')}</button>
       </div>
     `).join('');
   } else if (tab === 'lures') {
     grid.innerHTML = state.lures.map((l, idx) => `
       <div class="item-card ${getGlowClass(l.plus)}">
         <div><h4>${l.icon} ${l.name}</h4><p>Dalış: ${l.maxSink}m</p></div>
-        <button class="buy-btn" onclick="upgradeLureTier(${idx})">Geliştir (600 ₺)</button>
+        <button class="buy-btn" onclick="upgradeLureTier(${idx})">Geliştir (1200 ₺)</button>
       </div>
     `).join('');
   } else if (tab === 'alchemy') {
     grid.innerHTML = SHOP_ITEMS.alchemy.map(a => `
       <div class="item-card">
-        <div><h4>${a.name}</h4><p>${a.desc}</p></div>
-        <button class="buy-btn" onclick="buyAlchemyItem('${a.id}')">${a.price} ₺</button>
+        <div><h4>${a.name}</h4><p>${a.desc}</p><b style="color:#fbbf24;">${a.price} ₺</b></div>
+        <button class="buy-btn" onclick="buyAlchemyItem('${a.id}')">Satın Al</button>
       </div>
     `).join('');
   }
@@ -1356,20 +933,15 @@ function buyGear(kind, id) {
   }
   if (kind === 'rod') state.rod = { ...item, plus: state.rod.plus, blue: state.rod.blue };
   else state.reel = { ...item, plus: state.reel.plus, blue: state.reel.blue };
-  saveProgress();
-  showToast(`✅ ${item.name} kuşanıldı!`, '#22c55e');
-  renderMarket(kind === 'rod' ? 'rods' : 'reels');
-  updateUI();
+  saveProgress(); showToast(`✅ ${item.name} kuşanıldı!`, '#22c55e');
+  renderMarket(kind === 'rod' ? 'rods' : 'reels'); updateUI();
 }
 
 function upgradeLureTier(idx) {
-  if (state.money < 600) { showToast('❌ Yetersiz bakiye!', '#ef4444'); return; }
-  state.money -= 600;
-  state.lures[idx].appealBonus += 0.2;
-  saveProgress();
-  showToast('🐟 Yem cazibesi artırıldı!', '#22c55e');
-  renderMarket('lures');
-  updateUI();
+  if (state.money < 1200) { showToast('❌ Yetersiz bakiye!', '#ef4444'); return; }
+  state.money -= 1200; state.lures[idx].appealBonus += 0.15;
+  saveProgress(); showToast('🐟 Yem cazibesi artırıldı!', '#22c55e');
+  renderMarket('lures'); updateUI();
 }
 
 function buyAlchemyItem(id) {
@@ -1378,18 +950,13 @@ function buyAlchemyItem(id) {
   state.money -= item.price;
   if (item.type === 'mat') state.mats[item.key] += item.qty;
   if (item.type === 'cons') state.hotbarItems[item.key] += item.qty;
-  saveProgress();
-  showToast(`✅ ${item.name} alındı!`, '#22c55e');
-  renderHotbar();
-  updateUI();
+  saveProgress(); showToast(`✅ ${item.name} alındı!`, '#22c55e');
+  renderHotbar(); updateUI();
 }
 
 function renderBazaar() {
   const list = document.getElementById('coolerList');
-  if (state.cooler.length === 0) {
-    list.innerHTML = `<p style="color:#94a3b8;">Livar boş.</p>`;
-    return;
-  }
+  if (state.cooler.length === 0) { list.innerHTML = `<p style="color:#94a3b8;">Livar boş.</p>`; return; }
   list.innerHTML = state.cooler.map((c, i) => `
     <div class="item-card">
       <div><h4>🐟 ${c.name}</h4><p>${c.kg} kg | <b style="color:#fbbf24;">${c.val} ₺</b></p></div>
@@ -1399,24 +966,17 @@ function renderBazaar() {
 }
 
 function sellSingleFish(idx) {
-  const f = state.cooler[idx];
-  if (!f) return;
-  state.money += f.val;
-  state.cooler.splice(idx, 1);
-  saveProgress();
-  renderBazaar();
-  updateUI();
+  const f = state.cooler[idx]; if (!f) return;
+  state.money += f.val; state.cooler.splice(idx, 1);
+  saveProgress(); renderBazaar(); updateUI();
 }
 
 function sellAllFish() {
   if (state.cooler.length === 0) return;
   const total = state.cooler.reduce((sum, f) => sum + f.val, 0);
-  state.money += total;
-  state.cooler = [];
-  saveProgress();
-  showToast(`💰 Tüm balıklar satıldı: +${total} ₺`, '#fbbf24');
-  renderBazaar();
-  updateUI();
+  state.money += total; state.cooler = [];
+  saveProgress(); showToast(`💰 Satıldı: +${total} ₺`, '#fbbf24');
+  renderBazaar(); updateUI();
 }
 
 function renderMap() {
@@ -1432,13 +992,8 @@ function renderMap() {
 }
 
 function selectSpot(id) {
-  state.spotIdx = id;
-  resetCastToShore();
-  spawnFishes();
-  saveProgress();
-  closeModals();
-  showToast(`🗺️ Mera: ${SPOTS[id].name}`, '#38bdf8');
-  updateUI();
+  state.spotIdx = id; resetCastToShore(); spawnFishes();
+  saveProgress(); closeModals(); showToast(`🗺️ Mera: ${SPOTS[id].name}`, '#38bdf8'); updateUI();
 }
 
 function renderDex() {
@@ -1486,12 +1041,10 @@ const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
   const area = document.getElementById('viewportArea');
-  const w = area.clientWidth;
-  const h = area.clientHeight;
+  const w = area.clientWidth; const h = area.clientHeight;
   canvas.width = Math.round(w * state.resolutionScale);
   canvas.height = Math.round(h * state.resolutionScale);
-  canvas.style.width = `${w}px`;
-  canvas.style.height = `${h}px`;
+  canvas.style.width = `${w}px`; canvas.style.height = `${h}px`;
 }
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
@@ -1511,11 +1064,8 @@ function updateGame(dt) {
     state.lure.flyProgress += dt * 1.45;
     state.lure.dist = state.lure.targetDist * Math.min(1, state.lure.flyProgress);
     if (state.lure.flyProgress >= 1) {
-      state.phase = 'water';
-      state.lure.depth = 0.4;
-      state.lure.appeal = 30;
-      state.lure.actionText = 'Suya Düştü';
-      playTone(220, 0.12, 'sine');
+      state.phase = 'water'; state.lure.depth = 0.4; state.lure.appeal = 30;
+      state.lure.actionText = 'Suya Düştü'; playTone(220, 0.12, 'sine');
     }
   }
 
@@ -1533,7 +1083,7 @@ function updateGame(dt) {
     }
     if (state.lure.actionTimer > 0) {
       state.lure.actionTimer -= dt;
-      if (state.lure.actionTimer <= 0) state.lure.actionText = state.keys.w ? 'Düz Sarım' : 'Süzülüyor';
+      if (state.lure.actionTimer <= 0) state.lure.actionText = state.keys.w ? 'Sarım' : 'Süzülüyor';
     }
   }
 
@@ -1585,31 +1135,34 @@ function updateGame(dt) {
       continue;
     }
 
+    // Katman tabanlı gerçekçi davranış (Sadece ortada gezmezler, derinliklerine göre yüzerler)
+    f.depth += f.vy * dt * 3;
+    if (f.depth < f.sp.minDepth) { f.depth = f.sp.minDepth; f.vy *= -1; }
+    if (f.depth > Math.min(f.sp.maxDepth, maxSpotDepth)) { f.depth = Math.min(f.sp.maxDepth, maxSpotDepth); f.vy *= -1; }
+    if (Math.random() < 0.01) f.vy = (Math.random() - 0.5) * 0.25;
+
     const depthDiff = Math.abs(f.depth - state.lure.depth);
     const distDiff = Math.abs(f.x - lureScreenX);
     const likesLure = f.sp.pref.includes(activeLure.type);
-    const attractRadius = (likesLure ? 210 : 120) * (0.5 + state.lure.appeal / 100);
+    const attractRadius = (likesLure ? 190 : 100) * (0.5 + state.lure.appeal / 100);
 
-    if (state.phase === 'water' && depthDiff < 9 && distDiff < attractRadius && state.lure.appeal > 12) {
+    if (state.phase === 'water' && depthDiff < 8 && distDiff < attractRadius && state.lure.appeal > 15) {
       f.state = 'chase';
       const dirX = lureScreenX > f.x ? 1 : -1;
       f.facing = dirX;
       f.x += dirX * f.sp.speed * 42 * dt;
       f.depth += Math.sign(state.lure.depth - f.depth) * 3.5 * dt;
 
-      if (distDiff < 18 && depthDiff < 2.2) {
-        state.phase = 'bite';
-        state.biteTimer = 1.45;
-        state.hookedFish = f;
+      if (distDiff < 18 && depthDiff < 2.0) {
+        state.phase = 'bite'; state.biteTimer = 1.35; state.hookedFish = f;
         playTone(620, 0.18, 'square');
         showToast('⚡ BALIK VURDU! TASMA AT!', '#fbbf24');
         const btn = document.getElementById('mainActionBtn');
-        btn.className = 'action-btn strike';
-        btn.innerText = '⚡ BALIK VURDU! TASMA AT!';
+        btn.className = 'action-btn strike'; btn.innerText = '⚡ BALIK VURDU! TASMA AT!';
       }
     } else {
       f.state = 'patrol';
-      f.x += f.vx * 35 * dt;
+      f.x += f.vx * 32 * dt;
       if (f.x < 210 && f.turnCooldown <= 0) { f.vx = Math.abs(f.vx); f.facing = 1; f.turnCooldown = 0.8; }
       else if (f.x > logicalWidth - 60 && f.turnCooldown <= 0) { f.vx = -Math.abs(f.vx); f.facing = -1; f.turnCooldown = 0.8; }
     }
@@ -1626,7 +1179,7 @@ function drawScene(time) {
   ctx.clearRect(0, 0, w, h);
 
   const pxPerMeter = 16;
-  const waterSurfaceY = 145 - state.cameraY * pxPerMeter;
+  const waterSurfaceY = 150 - state.cameraY * pxPerMeter;
 
   const skyColors = [
     ['#0f172a', '#1e3a8a', '#38bdf8'],
@@ -1636,37 +1189,22 @@ function drawScene(time) {
 
   if (waterSurfaceY > 0) {
     const skyGrad = ctx.createLinearGradient(0, 0, 0, Math.max(10, waterSurfaceY));
-    skyGrad.addColorStop(0, skyColors[0]);
-    skyGrad.addColorStop(0.6, skyColors[1]);
-    skyGrad.addColorStop(1, skyColors[2]);
-    ctx.fillStyle = skyGrad;
-    ctx.fillRect(0, 0, w, Math.max(0, waterSurfaceY));
+    skyGrad.addColorStop(0, skyColors[0]); skyGrad.addColorStop(0.6, skyColors[1]); skyGrad.addColorStop(1, skyColors[2]);
+    ctx.fillStyle = skyGrad; ctx.fillRect(0, 0, w, Math.max(0, waterSurfaceY));
   }
 
   const seaTop = Math.max(0, waterSurfaceY);
   const seaGrad = ctx.createLinearGradient(0, waterSurfaceY, 0, waterSurfaceY + 120 * pxPerMeter);
-  seaGrad.addColorStop(0, '#0284c7');
-  seaGrad.addColorStop(0.18, '#0369a1');
-  seaGrad.addColorStop(0.45, '#075985');
-  seaGrad.addColorStop(0.75, '#082f49');
-  seaGrad.addColorStop(1, '#020617');
-  ctx.fillStyle = seaGrad;
-  ctx.fillRect(0, seaTop, w, h - seaTop);
+  seaGrad.addColorStop(0, '#0284c7'); seaGrad.addColorStop(0.18, '#0369a1'); seaGrad.addColorStop(0.45, '#075985'); seaGrad.addColorStop(0.75, '#082f49'); seaGrad.addColorStop(1, '#020617');
+  ctx.fillStyle = seaGrad; ctx.fillRect(0, seaTop, w, h - seaTop);
 
   ctx.save();
   for (let i = 0; i < 6; i++) {
     const rx = 220 + i * 180 + Math.sin(time * 0.4 + i) * 20;
     const rayGrad = ctx.createLinearGradient(rx, waterSurfaceY, rx + 70, waterSurfaceY + 420);
-    rayGrad.addColorStop(0, 'rgba(186, 230, 253, 0.14)');
-    rayGrad.addColorStop(1, 'rgba(186, 230, 253, 0)');
+    rayGrad.addColorStop(0, 'rgba(186, 230, 253, 0.14)'); rayGrad.addColorStop(1, 'rgba(186, 230, 253, 0)');
     ctx.fillStyle = rayGrad;
-    ctx.beginPath();
-    ctx.moveTo(rx, waterSurfaceY);
-    ctx.lineTo(rx + 55, waterSurfaceY);
-    ctx.lineTo(rx + 140, waterSurfaceY + 420);
-    ctx.lineTo(rx - 20, waterSurfaceY + 420);
-    ctx.closePath();
-    ctx.fill();
+    ctx.beginPath(); ctx.moveTo(rx, waterSurfaceY); ctx.lineTo(rx + 55, waterSurfaceY); ctx.lineTo(rx + 140, waterSurfaceY + 420); ctx.lineTo(rx - 20, waterSurfaceY + 420); ctx.closePath(); ctx.fill();
   }
   ctx.restore();
 
@@ -1674,65 +1212,42 @@ function drawScene(time) {
   ctx.font = 'bold 10px sans-serif';
   for (let m = 0; m <= 120; m += 10) {
     const my = waterSurfaceY + m * pxPerMeter;
-    if (my >= 20 && my <= h - 20) {
-      ctx.fillRect(168, my, 8, 1);
-      ctx.fillText(`${m}m`, 138, my + 3);
-    }
+    if (my >= 20 && my <= h - 20) { ctx.fillRect(168, my, 8, 1); ctx.fillText(`${m}m`, 138, my + 3); }
   }
 
   const maxSpotDepth = SPOTS[state.spotIdx].maxDepth;
   const bottomY = waterSurfaceY + maxSpotDepth * pxPerMeter;
   if (bottomY < h + 150) {
     ctx.fillStyle = '#0f172a';
-    ctx.beginPath();
-    ctx.moveTo(0, h);
-    ctx.lineTo(0, waterSurfaceY + 25);
-    ctx.lineTo(165, waterSurfaceY + 45);
+    ctx.beginPath(); ctx.moveTo(0, h); ctx.lineTo(0, waterSurfaceY + 25); ctx.lineTo(165, waterSurfaceY + 45);
     for (let x = 165; x <= w; x += 60) {
-      const bump = Math.sin(x * 0.03) * 14;
-      ctx.lineTo(x, bottomY + bump);
+      const bump = Math.sin(x * 0.03) * 14; ctx.lineTo(x, bottomY + bump);
     }
-    ctx.lineTo(w, h);
-    ctx.closePath();
-    ctx.fill();
+    ctx.lineTo(w, h); ctx.closePath(); ctx.fill();
   }
 
+  // DENGELİ VE ORANTILI BALIKÇI PLATFORMU
   if (waterSurfaceY > -120) {
-    ctx.fillStyle = '#1e293b';
-    ctx.fillRect(0, waterSurfaceY - 12, 145, 45);
-    ctx.fillStyle = '#334155';
-    ctx.fillRect(10, waterSurfaceY - 18, 130, 8);
+    ctx.fillStyle = '#1e293b'; ctx.fillRect(0, waterSurfaceY - 18, 155, 60);
+    ctx.fillStyle = '#334155'; ctx.fillRect(10, waterSurfaceY - 26, 140, 10);
 
-    const fx = 95, fy = waterSurfaceY - 18;
-    ctx.fillStyle = '#0ea5e9';
-    ctx.fillRect(fx - 8, fy - 34, 16, 22);
-    ctx.fillStyle = '#fde047';
-    ctx.beginPath();
-    ctx.arc(fx, fy - 42, 8, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#1e293b';
-    ctx.fillRect(fx - 7, fy - 12, 6, 12);
-    ctx.fillRect(fx + 1, fy - 12, 6, 12);
+    const fx = 105, fy = waterSurfaceY - 26;
+    ctx.fillStyle = '#0ea5e9'; ctx.fillRect(fx - 10, fy - 40, 20, 28);
+    ctx.fillStyle = '#fde047'; ctx.beginPath(); ctx.arc(fx, fy - 52, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#1e293b'; ctx.fillRect(fx - 9, fy - 12, 7, 14); ctx.fillRect(fx + 2, fy - 12, 7, 14);
 
     const rodGlow = getGlowColor(state.rod.plus, time);
     ctx.save();
     if (rodGlow) { ctx.shadowColor = rodGlow; ctx.shadowBlur = 16; }
-    ctx.strokeStyle = rodGlow || '#e2e8f0';
-    ctx.lineWidth = 3.2;
-    const bend = state.phase === 'fighting' ? Math.min(28, state.tension * 0.28) : 0;
-    const tipX = fx + 58;
-    const tipY = fy - 52 + bend;
-    ctx.beginPath();
-    ctx.moveTo(fx + 4, fy - 24);
-    ctx.quadraticCurveTo(fx + 32, fy - 48, tipX, tipY);
-    ctx.stroke();
+    ctx.strokeStyle = rodGlow || '#e2e8f0'; ctx.lineWidth = 3.5;
+    const bend = state.phase === 'fighting' ? Math.min(32, state.tension * 0.3) : 0;
+    const tipX = fx + 68; const tipY = fy - 62 + bend;
+    ctx.beginPath(); ctx.moveTo(fx + 6, fy - 28); ctx.quadraticCurveTo(fx + 38, fy - 56, tipX, tipY); ctx.stroke();
     ctx.restore();
 
     if (state.phase === 'charging') {
-      ctx.fillStyle = 'rgba(0,0,0,0.7)';
-      ctx.fillRect(fx - 25, fy - 72, 64, 10);
-      ctx.fillStyle = '#fbbf24';
-      ctx.fillRect(fx - 23, fy - 70, (state.castPower / 100) * 60, 6);
+      ctx.fillStyle = 'rgba(0,0,0,0.7)'; ctx.fillRect(fx - 25, fy - 82, 64, 10);
+      ctx.fillStyle = '#fbbf24'; ctx.fillRect(fx - 23, fy - 80, (state.castPower / 100) * 60, 6);
     }
 
     if (state.phase !== 'idle' && state.phase !== 'charging') {
@@ -1742,32 +1257,22 @@ function drawScene(time) {
         : waterSurfaceY + state.lure.depth * pxPerMeter;
 
       ctx.strokeStyle = state.tension > 75 ? '#ef4444' : 'rgba(226, 232, 240, 0.65)';
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.moveTo(tipX, tipY);
-      ctx.lineTo(lureX, lureY);
-      ctx.stroke();
+      ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(tipX, tipY); ctx.lineTo(lureX, lureY); ctx.stroke();
 
       const activeLure = state.lures[state.activeSlot];
       const lureGlow = getGlowColor(activeLure.plus, time);
       ctx.save();
       if (lureGlow) { ctx.shadowColor = lureGlow; ctx.shadowBlur = 15; }
-      ctx.fillStyle = lureGlow || '#38bdf8';
-      ctx.beginPath();
-      ctx.ellipse(lureX, lureY, 9, 4, 0, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.fillStyle = lureGlow || '#38bdf8'; ctx.beginPath(); ctx.ellipse(lureX, lureY, 9, 4, 0, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
     }
   }
 
   if (waterSurfaceY > -20 && waterSurfaceY < h) {
-    ctx.strokeStyle = 'rgba(186, 230, 253, 0.65)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    for (let x = 140; x < w; x += 18) {
+    ctx.strokeStyle = 'rgba(186, 230, 253, 0.65)'; ctx.lineWidth = 2; ctx.beginPath();
+    for (let x = 150; x < w; x += 18) {
       const wy = waterSurfaceY + Math.sin(x * 0.04 + time * 3) * 2.5;
-      if (x === 140) ctx.moveTo(x, wy);
-      else ctx.lineTo(x, wy);
+      if (x === 150) ctx.moveTo(x, wy); else ctx.lineTo(x, wy);
     }
     ctx.stroke();
   }
@@ -1776,57 +1281,21 @@ function drawScene(time) {
     const fy = waterSurfaceY + f.depth * pxPerMeter;
     if (fy < -40 || fy > h + 40) return;
     const size = Math.max(14, Math.min(44, 13 + Math.sqrt(f.kg) * 6.5));
-    ctx.save();
-    ctx.translate(f.x, fy);
-    ctx.scale(f.facing, 1);
+    ctx.save(); ctx.translate(f.x, fy); ctx.scale(f.facing, 1);
 
     const sprite = fishSprites[f.sp.id];
     if (sprite && sprite.complete && sprite.naturalWidth > 0) {
       ctx.drawImage(sprite, -size * 1.2, -size * 0.6, size * 2.4, size * 1.2);
     } else {
       const wag = Math.sin(f.tailPhase) * 4;
-      ctx.fillStyle = f.sp.col1;
-      ctx.beginPath();
-      ctx.moveTo(-size * 0.85, 0);
-      ctx.lineTo(-size * 1.35, -size * 0.42 + wag);
-      ctx.lineTo(-size * 1.2, wag * 0.5);
-      ctx.lineTo(-size * 1.35, size * 0.42 + wag);
-      ctx.closePath();
-      ctx.fill();
-
-      const grad = ctx.createLinearGradient(0, -size * 0.45, 0, size * 0.45);
-      grad.addColorStop(0, f.sp.col1);
-      grad.addColorStop(1, f.sp.col2);
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      const ry = f.sp.body === 'needle' ? size * 0.18 : (f.sp.body === 'oval' ? size * 0.46 : size * 0.32);
-      ctx.ellipse(0, 0, size, ry, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      if (f.sp.body === 'sword') {
-        ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2.2;
-        ctx.beginPath(); ctx.moveTo(size, 0); ctx.lineTo(size * 1.65, 0); ctx.stroke();
-      } else if (f.sp.body === 'angler') {
-        ctx.fillStyle = '#fde047'; ctx.shadowColor = '#fde047'; ctx.shadowBlur = 10;
-        ctx.beginPath(); ctx.arc(size * 1.1, -size * 0.45, 4, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
-      }
-
-      if (f.sp.stripes) {
-        ctx.strokeStyle = 'rgba(15,23,42,0.35)'; ctx.lineWidth = 2;
-        for (let s = -size * 0.4; s <= size * 0.4; s += size * 0.25) {
-          ctx.beginPath(); ctx.moveTo(s, -ry * 0.8); ctx.lineTo(s, ry * 0.8); ctx.stroke();
-        }
-      }
-
-      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(size * 0.58, -ry * 0.22, Math.max(2.2, size * 0.1), 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(size * 0.61, -ry * 0.22, Math.max(1.2, size * 0.05), 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = f.sp.col1; ctx.beginPath();
+      ctx.moveTo(-size * 0.85, 0); ctx.lineTo(-size * 1.35, -size * 0.42 + wag); ctx.lineTo(-size * 1.2, wag * 0.5); ctx.lineTo(-size * 1.35, size * 0.42 + wag); ctx.closePath(); ctx.fill();
     }
     ctx.restore();
 
     if (f.state === 'chase' || f.state === 'hooked') {
       ctx.fillStyle = f.state === 'hooked' ? '#fbbf24' : '#38bdf8';
-      ctx.font = 'bold 11px sans-serif';
-      ctx.fillText(`${f.sp.name} (${f.kg}kg)`, f.x - 32, fy - size * 0.6 - 6);
+      ctx.font = 'bold 11px sans-serif'; ctx.fillText(`${f.sp.name} (${f.kg}kg)`, f.x - 32, fy - size * 0.6 - 6);
     }
   });
   ctx.restore();
@@ -1834,9 +1303,7 @@ function drawScene(time) {
 
 function loop(now) {
   const dt = Math.min(0.05, (now - lastTime) / 1000);
-  lastTime = now;
-  updateGame(dt);
-  drawScene(now / 1000);
+  lastTime = now; updateGame(dt); drawScene(now / 1000);
   requestAnimationFrame(loop);
 }
 
@@ -1880,10 +1347,7 @@ document.getElementById('timeBtn').onclick = () => {
   document.getElementById('timeBtn').innerText = labels[state.timeOfDay];
 };
 
-loadProgress();
-spawnFishes();
-renderHotbar();
-updateUI();
+loadProgress(); spawnFishes(); renderHotbar(); updateUI();
 requestAnimationFrame(loop);
 </script>
 </body>
