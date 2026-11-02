@@ -4018,40 +4018,44 @@ requestAnimationFrame(loop);
   // Pencere değişirse takılı kalmayı önle
   window.addEventListener('blur', stopSpaceReeling);
 })();
-</script>
-  <script>
-// ==================== KESİN ÇÖZÜM YAMASI (HABİTAT, ZEMİN SINIRI VE SPACE TUŞU) ====================
+<script>
+// ==================== MASTER EGE SPIN ONARIM YAMASI (DERİNLİK, HABİTAT VE SPACE) ====================
 (function() {
-  // 1. MERA VE DİP TÜRÜ TABLOSU (Her balık sadece kendi merasında ve kendi dip yapısında çıkar)
-  // r: Kayalık, s: Kumluk, w: Erişte (Yosun), m: Çamur/Derin, o: Açık Su (Pelajik)
+  // 1. ZEMİN VE DERİNLİK MOTORU
+  window.seabedAt = function(d, s) {
+    s = s || SPOTS[state.spotIdx];
+    const boatFactor = s.boat ? 0.35 : 0;
+    return s.maxDepth * (boatFactor + (1 - boatFactor) * Math.pow(Math.min(1, d / 120), 1.15));
+  };
+
+  // 2. MERA VE DİP TÜRÜ KONTROLÜ
   const STRICT_HABITAT = {
     istavrit: { spots:[0,1,2,5], beds:['o','w','s'] },
     ispari:   { spots:[0,1],     beds:['r','w'] },
     zargana:  { spots:[0,1,2],   beds:['o'] },
     sarpa:    { spots:[0,1,2],   beds:['w','r'] },
     melanur:  { spots:[0,1,2],   beds:['r','w','o'] },
-    mirmir:   { spots:[0,1,2],   beds:['s'] },           // Sadece kumluk dip
+    mirmir:   { spots:[0,1,2],   beds:['s'] },
     uskumru:  { spots:[0,1,2,5], beds:['o'] },
-    karagoz:  { spots:[0,1,2],   beds:['r'] },           // Sadece kayalık dip
+    karagoz:  { spots:[0,1,2],   beds:['r'] },
     levrek:   { spots:[0,1,2],   beds:['r','w','o'] },
-    cipura:   { spots:[1,2,5],   beds:['s','w'] },       // Kum ve erişte yatakları
+    cipura:   { spots:[1,2,5],   beds:['s','w'] },
     lufer:    { spots:[1,2,3,5], beds:['o'] },
     barakuda: { spots:[1,2,3],   beds:['o'] },
     palamut:  { spots:[1,2,3,5], beds:['o'] },
-    iskorpit: { spots:[1,2,3,4], beds:['r'] },           // Sadece kayalık dip
-    mercan:   { spots:[2,3,6],   beds:['r','s'] },       // Kırma taş ve kum
-    eskina:   { spots:[2,3,6],   beds:['r'] },           // Sadece kayalık dip
+    iskorpit: { spots:[1,2,3,4], beds:['r'] },
+    mercan:   { spots:[2,3,6],   beds:['r','s'] },
+    eskina:   { spots:[2,3,6],   beds:['r'] },
     kofana:   { spots:[2,3,5,6], beds:['o'] },
     torik:    { spots:[2,3,5,6], beds:['o'] },
-    sinarit:  { spots:[2,3,6],   beds:['r'] },           // Derin taşlık/kayalık
-    lagos:    { spots:[3,4,6],   beds:['r'] },           // Derin kayalık
+    sinarit:  { spots:[2,3,6],   beds:['r'] },
+    lagos:    { spots:[3,4,6],   beds:['r'] },
     tranca:   { spots:[3,4,6,7], beds:['r','m'] },
     akya:     { spots:[3,4,6,7], beds:['o'] },
     kilic:    { spots:[4,6,7],   beds:['o'] },
-    fener:    { spots:[4,7],     beds:['m'] }            // Sadece derin çamur/abyss
+    fener:    { spots:[4,7],     beds:['m'] }
   };
 
-  // Meradaki mesafe (metre) hangi dip tipine denk geliyor?
   const SPOT_ZONES = {
     0: [[28,'r'], [70,'w'], [100,'s'], [120,'r']],
     1: [[40,'r'], [80,'s'], [100,'m'], [120,'r']],
@@ -4071,17 +4075,6 @@ requestAnimationFrame(loop);
     return zs[zs.length - 1][1];
   }
 
-  function getZoneBounds(distM, spotIdx) {
-    const zs = SPOT_ZONES[spotIdx] || SPOT_ZONES[0];
-    let prev = 14;
-    for (let i = 0; i < zs.length; i++) {
-      if (distM <= zs[i][0]) return [Math.max(14, prev), Math.min(112, zs[i][0])];
-      prev = zs[i][0];
-    }
-    return [14, 112];
-  }
-
-  // Balığın o merada çıkıp çıkmayacağını kontrol et
   window.fishAt = function(sp, spotIdx) {
     const h = STRICT_HABITAT[sp.id];
     if (!h) return true;
@@ -4095,7 +4088,7 @@ requestAnimationFrame(loop);
     return fallback.length > 0 ? fallback : [FISH_SPECIES[0]];
   };
 
-  // 2. BALIK DOĞURMA: Sadece uygun dip yapısında ve zemin üstünde doğur
+  // 3. BALIK DOĞURMA & ZEMİN KORUMA
   const baseCreateFish = window.createSingleFish;
   window.createSingleFish = function(pool, maxD) {
     const validPool = (pool && pool.length) ? pool : window.spawnPool();
@@ -4103,123 +4096,90 @@ requestAnimationFrame(loop);
     const h = STRICT_HABITAT[f.sp.id] || { spots:[0,1,2,3,4], beds:['o','r','s','w','m'] };
     const spot = SPOTS[state.spotIdx];
 
-    // Balığın sevdiği dip tipine (kayalık/kum/erişte) uygun mesafe bul
     let placed = false;
-    for (let attempt = 0; attempt < 50; attempt++) {
+    for (let attempt = 0; attempt < 40; attempt++) {
       const testDist = 16 + Math.random() * 94;
       const bed = getBedTypeAt(testDist, state.spotIdx);
-      const sb = window.seabedAt ? window.seabedAt(testDist, spot) : spot.maxDepth;
-
+      const sb = window.seabedAt(testDist, spot);
       if ((h.beds.includes(bed) || h.beds.includes('o')) && sb > 3.0) {
         f.distM = testDist;
-        if (!h.beds.includes('o')) {
-          const bounds = getZoneBounds(testDist, state.spotIdx);
-          f.zf = bounds[0];
-          f.zt = bounds[1];
-        } else {
-          f.zf = 15;
-          f.zt = 112;
-        }
         placed = true;
         break;
       }
     }
-    if (!placed) { f.distM = 55 + Math.random() * 45; f.zf = 15; f.zt = 112; }
+    if (!placed) f.distM = 55 + Math.random() * 45;
 
-    const sb = window.seabedAt ? window.seabedAt(f.distM, spot) : spot.maxDepth;
-    const safeFloor = Math.max(1.2, sb - 1.8); // Zeminden en az 1.8m yukarıda!
+    const sb = window.seabedAt(f.distM, spot);
+    const safeFloor = Math.max(0.8, sb - 1.4);
 
     if (f.sp.zoneType === 'surface') {
-      f.baseDepth = Math.min(safeFloor, 0.8 + Math.random() * 3.2);
-      f.hug = null;
+      f.baseDepth = Math.min(safeFloor, 0.8 + Math.random() * 2.8);
     } else if (f.sp.zoneType === 'bottom') {
-      f.hug = 1.6 + Math.random() * 1.0; // Dip balığı zeminin 1.6m - 2.6m üstünde gezer
-      f.baseDepth = Math.max(1.2, sb - f.hug);
+      f.baseDepth = Math.max(0.8, sb - 1.6);
     } else {
-      f.baseDepth = Math.min(safeFloor, Math.max(1.5, sb * (0.35 + Math.random() * 0.35)));
-      f.hug = null;
+      f.baseDepth = Math.max(1.0, Math.min(safeFloor - 0.5, sb * 0.5));
     }
     f.depth = f.baseDepth;
     return f;
   };
 
-  // Balık yakalandığında da yeni kurallara göre balık doğsun
-  const origLandFish = window.landFish;
-  window.landFish = function(fish) {
-    origLandFish(fish);
-    const maxD = SPOTS[state.spotIdx].maxDepth;
-    const pool = window.spawnPool();
-    state.fishes = state.fishes.map(f => {
-      if (!window.fishAt(f.sp, state.spotIdx)) return window.createSingleFish(pool, maxD);
-      return f;
-    });
-  };
+  // 4. OYUN DÖNGÜSÜ: BALIKLAR VE YEM TOPRAĞA GİRMESİN + SPACE TUŞU
+  let spaceHeld = false;
+  let spaceReelLoop = null;
 
-  // 3. HER KAREDE ZEMİN VE SU YÜZEYİ KORUMASI + SPACE İLE SARIM
+  function stopSpaceReeling() {
+    spaceHeld = false;
+    state.keys.space = false;
+    state.keys.w = false;
+    if (spaceReelLoop) {
+      clearInterval(spaceReelLoop);
+      spaceReelLoop = null;
+    }
+  }
+
   const prevUpdateGame = window.updateGame;
   window.updateGame = function(dt) {
-    // Space tuşu basılıyken yem sudaysa (water) makineyi sarsın
-    if (!state.inTown && state.phase === 'water' && state.keys.space) {
-      reelStep(dt);
-      state.lure.actionText = 'Sabit Sarim [SPACE]';
-    }
-
-    prevUpdateGame(dt);
-
+    if (prevUpdateGame) prevUpdateGame(dt);
     if (state.inTown) return;
+
     const spot = SPOTS[state.spotIdx];
 
-    // Sahte yemin toprağın altına girmesini önle
+    // Yemin toprak altına girmesini engelle
     if (state.phase === 'water' || state.phase === 'bite' || state.phase === 'fighting') {
-      const lureSb = window.seabedAt ? window.seabedAt(state.lure.dist, spot) : spot.maxDepth;
-      state.lure.depth = Math.max(0.2, Math.min(state.lure.depth, Math.max(0.5, lureSb - 1.0)));
+      const lureSb = window.seabedAt(state.lure.dist, spot);
+      state.lure.depth = Math.max(0.2, Math.min(state.lure.depth, Math.max(0.5, lureSb - 0.8)));
     }
 
-    // Balıkların toprağın altına girmesini ve su üstüne taşmasını kesin olarak engelle
+    // Balıkların konumlarını zemin üstünde sabitle
     state.fishes.forEach(f => {
       if (f.state === 'hooked') return;
-
-      // Kendi dip bölgesinin (kayalık/kum) dışına çıkmasın
-      if (f.zf != null && f.zt != null && f.state === 'patrol') {
-        if (f.distM < f.zf) { f.distM = f.zf; f.vx = Math.abs(f.vx); f.facing = 1; }
-        else if (f.distM > f.zt) { f.distM = f.zt; f.vx = -Math.abs(f.vx); f.facing = -1; }
-      }
-
-      const sb = window.seabedAt ? window.seabedAt(f.distM, spot) : spot.maxDepth;
-      const safeMaxDepth = Math.max(1.0, sb - 1.6); // Zemin tümseklerinden 1.6 metre yukarıda tutar
+      const sb = window.seabedAt(f.distM, spot);
+      const safeMax = Math.max(0.8, sb - 1.3);
 
       if (f.sp.zoneType === 'surface') {
-        f.baseDepth = Math.min(f.baseDepth, 4.5, safeMaxDepth);
-        f.depth = Math.max(0.6, Math.min(f.depth, 5.0, safeMaxDepth));
+        f.depth = Math.max(0.4, Math.min(f.depth, 4.5, safeMax));
       } else if (f.sp.zoneType === 'bottom') {
-        const hugOffset = f.hug || 1.8;
-        f.baseDepth = Math.max(1.0, sb - hugOffset);
-        if (f.state === 'patrol') {
-          f.depth = f.baseDepth + Math.sin(f.tailPhase * 0.25) * 0.25;
-        }
-        f.depth = Math.max(0.8, Math.min(f.depth, safeMaxDepth));
+        f.baseDepth = Math.max(0.7, sb - 1.5);
+        if (f.state === 'patrol') f.depth = f.baseDepth + Math.sin(f.tailPhase * 0.25) * 0.2;
+        f.depth = Math.max(0.6, Math.min(f.depth, safeMax));
       } else {
-        // Orta su (mid) balıkları
-        f.baseDepth = Math.max(1.2, Math.min(f.baseDepth, safeMaxDepth - 0.8));
-        f.depth = Math.max(0.8, Math.min(f.depth, safeMaxDepth));
+        f.baseDepth = Math.max(1.0, Math.min(f.baseDepth, safeMax - 0.5));
+        f.depth = Math.max(0.6, Math.min(f.depth, safeMax));
       }
     });
   };
 
-  // 4. SPACE TUŞU KONTROLÜ (Atış Gücü Doldur -> Savur -> Sar -> Tasma At)
+  // 5. MÜKEMMEL KESİNTİSİZ SPACE TUŞU KÖPRÜSÜ
   window.addEventListener('keydown', function(e) {
-    if (e.code !== 'Space' && e.key !== ' ') return;
+    if (e.code !== 'Space' && e.key !== ' ' && e.keyCode !== 32) return;
     if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    if (document.activeElement && document.activeElement.blur) {
-      document.activeElement.blur();
-    }
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
 
-    // Şehirdeysek NPC ile konuş
     if (state.inTown) {
-      if (!e.repeat) {
+      if (!e.repeat && window.openNpcDialog) {
         let best = null, bd = 95;
         if (typeof TOWN_NPCS !== 'undefined') {
           TOWN_NPCS.forEach(n => {
@@ -4227,99 +4187,64 @@ requestAnimationFrame(loop);
             if (d < bd) { bd = d; best = n; }
           });
         }
-        if (best && window.openNpcDialog) window.openNpcDialog(best.id);
+        if (best) window.openNpcDialog(best.id);
       }
       return;
     }
 
-    state.keys.space = true;
+    if (!spaceHeld) {
+      spaceHeld = true;
+      state.keys.space = true;
+      const mainBtn = document.getElementById('mainActionBtn');
+      if (mainBtn) mainBtn.style.transform = 'scale(0.96)';
 
-    if (!e.repeat) {
       if (state.phase === 'idle') {
-        startOrTriggerCast(); // Güç doldurmaya başla
+        startOrTriggerCast();
       } else if (state.phase === 'charging') {
-        launchLure();         // İkinci basışta savur
+        launchLure();
       } else if (state.phase === 'bite') {
-        strikeFish();         // Balık vurduğunda tasma at
+        strikeFish();
+        state.keys.w = true;
+      } else if (state.phase === 'water' || state.phase === 'fighting') {
+        state.keys.w = true;
+        startOrTriggerCast();
+      }
+
+      if (!spaceReelLoop) {
+        spaceReelLoop = setInterval(function() {
+          if (!spaceHeld || state.inTown) return;
+          if (state.phase === 'bite') {
+            strikeFish();
+          } else if (state.phase === 'water') {
+            state.keys.w = true;
+            if (typeof reelStep === 'function') reelStep(0.03);
+          } else if (state.phase === 'fighting') {
+            state.keys.w = true;
+            state.keys.space = true;
+            if (typeof reelFightStep === 'function') reelFightStep(0.03);
+          }
+        }, 30);
       }
     }
   }, true);
 
   window.addEventListener('keyup', function(e) {
-    if (e.code !== 'Space' && e.key !== ' ') return;
+    if (e.code !== 'Space' && e.key !== ' ' && e.keyCode !== 32) return;
     if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    state.keys.space = false;
-
-    // Eğer Space'e basılı tutarak güç doldurduysa, tuşu bırakınca da savursun
-    if (!state.inTown && state.phase === 'charging' && state.castPower > 16) {
+    if (!state.inTown && state.phase === 'charging' && state.castPower > 15) {
       launchLure();
     }
+    stopSpaceReeling();
+    const mainBtn = document.getElementById('mainActionBtn');
+    if (mainBtn) mainBtn.style.transform = '';
   }, true);
 
-  // Sayfa açılır açılmaz mevcut meranın balıklarını yeni kurallarla baştan diz
-  window.spawnFishes();
-  updateUI();
-})();
-</script>
-  <script>
-// ==================== MERKEZI DERINLIK VE ZEMIN ONARMA YAMASI ====================
-(function() {
-  // 1. Kademeli Derinlik ve Zemin Hesaplama Motoru (Eski fonksiyonlarla uyumlu)
-  window.seabedAt = function(d, s) {
-    s = s || SPOTS[state.spotIdx];
-    const boatFactor = s.boat ? 0.35 : 0;
-    return s.maxDepth * (boatFactor + (1 - boatFactor) * Math.pow(Math.min(1, d / 120), 1.15));
-  };
+  window.addEventListener('blur', stopSpaceReeling);
 
-  // 2. Oyun döngüsü içinde derinlik ve zemin sınırlarını kesin olarak sabitle
-  const originalUpdate = window.updateGame;
-  window.updateGame = function(dt) {
-    if (originalUpdate) originalUpdate(dt);
-    if (state.inTown) return;
-
-    const spot = SPOTS[state.spotIdx];
-
-    // Sahte yemin toprağın veya su yüzeyinin dışına çıkmasını engelle
-    if (state.phase === 'water' || state.phase === 'bite' || state.phase === 'fighting') {
-      const lureSb = window.seabedAt(state.lure.dist, spot);
-      state.lure.depth = Math.max(0.2, Math.min(state.lure.depth, Math.max(0.5, lureSb - 0.8)));
-    }
-
-    // Balıkların konumlarını zemin yapısına ve türüne göre yeniden düzenle
-    state.fishes.forEach(f => {
-      if (f.state === 'hooked') return;
-
-      const sb = window.seabedAt(f.distM, spot);
-      const safeFloor = Math.max(0.8, sb - 1.2); // Zeminden en az 1.2 metre yukarıda tutar
-
-      if (f.sp.zoneType === 'surface') {
-        f.baseDepth = Math.min(f.baseDepth, 5.0, safeFloor);
-        f.depth = Math.max(0.4, Math.min(f.depth, 5.5, safeFloor));
-      } else if (f.sp.zoneType === 'bottom') {
-        const offset = f.hug || 1.5;
-        f.baseDepth = Math.max(0.8, sb - offset);
-        if (f.state === 'patrol') {
-          f.depth = f.baseDepth + Math.sin(f.tailPhase * 0.25) * 0.2;
-        }
-        f.depth = Math.max(0.6, Math.min(f.depth, safeFloor));
-      } else {
-        // Orta su (mid) balıkları
-        f.baseDepth = Math.max(1.0, Math.min(f.baseDepth, safeFloor - 0.5));
-        f.depth = Math.max(0.6, Math.min(f.depth, safeFloor));
-      }
-    });
-  };
-
-  // 3. Su altı derinlik çizgilerini ve cetvelini ekranda güncel tut
-  const originalDraw = window.drawScene;
-  window.drawScene = function(time) {
-    if (originalDraw) originalDraw(time);
-  };
-
-  // Ekranı ve balıkları tazele
+  // Başlangıç tazelemeleri
   if (typeof spawnFishes === 'function') spawnFishes();
   if (typeof updateUI === 'function') updateUI();
 })();
