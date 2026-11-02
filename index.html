@@ -1055,6 +1055,7 @@ function createSingleFish(pool, maxD) {
 
 // ==================== OLTA VE MUCADELE KONTROLLERI ====================
 function startOrTriggerCast() {
+  if (state.inTown) return;
   if (state.phase === 'idle') {
     state.phase = 'charging';
     state.castPower = 12;
@@ -1072,6 +1073,7 @@ function startOrTriggerCast() {
 }
 
 function launchLure() {
+  if (state.inTown) return;
   state.phase = 'flying';
   const maxCast = state.rod.cast * (1 + state.rod.plus * 0.035 + state.skills.castDist * 0.06);
   const ratio = state.castPower / 100;
@@ -1085,6 +1087,7 @@ function launchLure() {
 }
 
 function performLureAction(type) {
+  if (state.inTown) return;
   if (state.phase === 'bite') { strikeFish(); return; }
   if (state.phase !== 'water') return;
   const lure = state.lures[state.activeSlot];
@@ -1116,6 +1119,7 @@ function performLureAction(type) {
 }
 
 function strikeFish() {
+  if (state.inTown) return;
   if (state.phase !== 'bite'|| !state.hookedFish) return;
   state.phase = 'fighting';
   state.hookedFish.state = 'hooked';
@@ -2544,7 +2548,7 @@ requestAnimationFrame(loop);
     { id:'xp200',  icon:'[KITAP-3] ', name:'Efsane Rehber',            desc:'Kisa ve yogun: +%200 XP (3 kat XP).',            dur:300, effects:{ xp:200 },           base:1300 },
     { id:'gold50', icon:'', name:'Pazarlik Ustasi Fermani',  desc:'Yakaladigin baliklarin degeri +%50.',            dur:600, effects:{ gold:50 },          base:700 },
     { id:'combo',  icon:'[KRAL] ', name:'Kaptan Paketi',            desc:'+%100 XP ve +%30 Av Degeri. Paket indirimli!',    dur:600, effects:{ xp:100, gold:30 },  base:1300 },
-    { id:'potion', icon:'[IKSIR] ', name:'Tecrube Sisesi',           desc:'Aninda: sonraki seviye icin gereken XP'nin %30'u.', dur:0,   instant:true, base:500 }
+    { id:'potion', icon:'[IKSIR] ', name:'Tecrube Sisesi',           desc:'Aninda: sonraki seviye icin gereken XP degerinin %30 kadari.', dur:0,   instant:true, base:500 }
   ];
   const premPrice = it =>Math.max(10, Math.round(it.base * (1 + (state.level - 1) * 0.12) / 10) * 10);
   const fmtTime = s =>{ s = Math.max(0, Math.ceil(s)); return String(Math.floor(s / 60)).padStart(2, '0') + ':'+ String(s % 60).padStart(2, '0'); };
@@ -2663,7 +2667,7 @@ requestAnimationFrame(loop);
   }
   canvas.addEventListener('contextmenu', e =>{ if (prefs.mouse) e.preventDefault(); });
   canvas.addEventListener('pointerdown', e =>{
-    if (e.pointerType !== 'mouse'|| !prefs.mouse) return;
+    if (e.pointerType !== 'mouse'|| !prefs.mouse|| state.inTown) return;
     e.preventDefault();
     try { audioCtx.resume(); } catch (_) {}
     if (e.button === 2) { performLureAction('twitch'); return; }
@@ -2687,7 +2691,7 @@ requestAnimationFrame(loop);
   window.addEventListener('blur', releaseMouse);
 
   canvas.addEventListener('wheel', e =>{
-    if (!prefs.mouse) return;
+    if (!prefs.mouse|| state.inTown) return;
     e.preventDefault();
     const now = performance.now();
     if (now - lastWheel < 110) return; lastWheel = now;
@@ -3089,7 +3093,7 @@ requestAnimationFrame(loop);
     if (!state.inTown) return;
     if (k === 'arrowleft' || k === 'a') state.keys.a = true;
     if (k === 'arrowright' || k === 'd') state.keys.d = true;
-    if (k === 'e' || k === 'w' || k === ' ') {
+    if (k === 'e' || k === ' ') {
       const near = getNearestTownNpc();
       if (near) openNpcDialog(near.id);
     }
@@ -3100,7 +3104,7 @@ requestAnimationFrame(loop);
     if (k === 'd' || k === 'arrowright') state.keys.d = false;
   });
 
-  function getNearestTownNpc() {
+  function getNearestTownNpcOld() {
     let best = null, bestD = 85;
     TOWN_NPCS.forEach(n => {
       const d = Math.abs(state.town.x - n.x);
@@ -3121,6 +3125,7 @@ requestAnimationFrame(loop);
       }
       return;
     }
+    if (window.townClick) { window.townClick(clickX, clickY); return; }
     const worldX = clickX + state.town.camX;
     state.town.targetX = Math.max(90, Math.min(1660, worldX));
     const clickedNpc = TOWN_NPCS.find(n => Math.abs(worldX - n.x) < 48);
@@ -3137,7 +3142,7 @@ requestAnimationFrame(loop);
   const _origUpdateGame = window.updateGame;
   window.updateGame = function(dt) {
     if (state.town.freeGiftCooldown > 0) state.town.freeGiftCooldown = Math.max(0, state.town.freeGiftCooldown - dt);
-    if (state.inTown) {
+    if (false) {
       let vx = 0;
       if (state.keys.a) { vx = -210; state.town.targetX = null; state.town.pendingNpc = null; }
       if (state.keys.d) { vx = 210; state.town.targetX = null; state.town.pendingNpc = null; }
@@ -3162,6 +3167,274 @@ requestAnimationFrame(loop);
     }
     _origUpdateGame(dt);
   };
+
+
+  // ======= V2: USTTEN SEHIR, 3 KARAKTER, TEKNE, YEM OMRU, KADEMELI DERINLIK =======
+  const ASSETS = { npc:{}, tiles:{ ground:'assets/town_ground.png', water:'assets/town_water.png' }, spots:{} };
+  TOWN_NPCS.forEach(n => ASSETS.npc[n.id] = 'assets/npc_' + n.id + '.png');
+  window.AEGEAN_ASSETS = ASSETS;
+  const IMG = {};
+  function img(p) { if (!p) return null; let i = IMG[p]; if (!i) { i = IMG[p] = new Image(); i.onload = () => { i._ok = 1; }; i.src = p; } return i._ok ? i : null; }
+
+  // ---- Ustten gorunumlu sehir ----
+  const POS = { alchemist:[360,430], guild:[700,330], merchant:[1040,450], bazaar:[1380,330], tourney:[1560,580], tower:[900,740] };
+  TOWN_NPCS.forEach(n => { n.x = POS[n.id][0]; n.y = POS[n.id][1]; });
+  Object.assign(state.town, { x:900, y:640, tx:null, ty:null, camY:0, pending:null });
+  function getNearestTownNpc() {
+    let b = null, bd = 95;
+    TOWN_NPCS.forEach(n => { const d = Math.hypot(state.town.x - n.x, state.town.y - n.y); if (d < bd) { bd = d; b = n; } });
+    return b;
+  }
+  const TK = { u:0, d:0, l:0, r:0 };
+  const KM = { w:'u', arrowup:'u', s:'d', arrowdown:'d', a:'l', arrowleft:'l', d:'r', arrowright:'r' };
+  window.addEventListener('keydown', e => { const k = KM[e.key.toLowerCase()]; if (k && state.inTown) { TK[k] = 1; state.town.tx = null; } });
+  window.addEventListener('keyup', e => { const k = KM[e.key.toLowerCase()]; if (k) TK[k] = 0; });
+  window.townClick = (cx, cy) => {
+    const t = state.town, wx = cx + t.camX, wy = cy + t.camY;
+    t.tx = Math.max(60, Math.min(1740, wx)); t.ty = Math.max(190, Math.min(950, wy));
+    const n = TOWN_NPCS.find(n => Math.hypot(wx - n.x, wy - n.y) < 55);
+    t.pending = n ? n.id : null;
+  };
+
+  // ---- Kademeli derinlik: kiyida 0m, uzaklastikca derinlesir ----
+  const seabed = (d, s) => { s = s || SPOTS[state.spotIdx]; const b = s.boat ? 0.35 : 0; return s.maxDepth * (b + (1 - b) * Math.pow(1 - Math.exp(-d / 55), 1.3)); };
+  window.seabedAt = seabed;
+  const _csf = window.createSingleFish;
+  window.createSingleFish = function (p, m) {
+    const f = _csf(p, m), s = SPOTS[state.spotIdx], b = s.boat ? 0.35 : 0;
+    const need = ((Math.min(1, (f.depth + 0.6) / s.maxDepth)) - b) / (1 - b);
+    if (need > 0) f.distM = Math.min(112, Math.max(f.distM, -55 * Math.log(1 - Math.pow(Math.min(need, 0.97), 1 / 1.3))));
+    f.depth = Math.min(f.depth, Math.max(0.5, seabed(f.distM) - 0.4)); f.baseDepth = f.depth;
+    return f;
+  };
+
+  // ---- 3 karakter (GTA tarzi gecis): Spin / LRF / Surf ----
+  const CH = [
+    { id:'spin', name:'Spin Avcisi', cast:1, pull:1, app:1, col:'#38bdf8', rod:'rod1', reel:'reel1' },
+    { id:'lrf', name:'LRF Ustasi', cast:0.62, pull:0.6, app:1.3, col:'#22c55e', rod:'rodL1', reel:'reelL1' },
+    { id:'surf', name:'Surf Atici', cast:1.45, pull:1.3, app:0.92, col:'#f59e0b', rod:'rodS1', reel:'reelS1' }
+  ];
+  const CHN = { spin:'Spin Avcisi', lrf:'LRF Ustasi', surf:'Surf Atici' };
+  let ci = 0, inited = false;
+  SHOP_ITEMS.rods.concat(SHOP_ITEMS.reels).forEach(x => x.cat = x.cat || 'spin');
+  // [id, ad, kategori, seviye, fiyat, guc/drag, cast/hiz]
+  [['rodL1','PicoStick LRF 195cm (0.5-5g)','lrf',1,0,0.55,40],['rodL2','AjiTech Ajing 220cm (1-8g)','lrf',3,1400,0.8,48],
+   ['rodL3','Nano Trout Carbon 240cm (2-12g)','lrf',8,5200,1.1,56],['rodL4','Zenith LRF Tournament 7\'2"','lrf',14,15500,1.5,64],
+   ['rodS1','Surf Caster 390cm (40-100g)','surf',1,0,1.1,95],['rodS2','BeachMaster Surf 420cm (60-140g)','surf',5,3600,1.6,110],
+   ['rodS3','TitanSurf Telescopic 450cm (80-180g)','surf',11,11800,2.2,128],['rodS4','Leviathan Surf Pro 460cm (100-220g)','surf',17,29000,3.0,145],
+   ['rod6','NeoSpin Jig Master 305cm (25-75g)','spin',12,11500,2.1,95]
+  ].forEach(a => SHOP_ITEMS.rods.push({ id:a[0], name:a[1], cat:a[2], reqLv:a[3], price:a[4], power:a[5], cast:a[6], owned:a[4] === 0, nw:1 }));
+  [['reelL1','Pico 1000 Ultralight','lrf',1,0,0.7,0.9],['reelL2','AjiTech 2000S','lrf',3,1300,0.95,1.05],
+   ['reelL3','Nano Trout 2500XH','lrf',8,4800,1.2,1.25],['reelL4','Zenith LRF 1500 Tournament','lrf',14,14200,1.6,1.45],
+   ['reelS1','Surf SK 6000','surf',1,0,1.3,0.85],['reelS2','BeachMaster 8000 Long Cast','surf',5,3300,1.8,0.95],
+   ['reelS3','TitanSurf 10000 PE','surf',11,10900,2.5,1.1],['reelS4','Leviathan SW 14000','surf',17,27500,3.4,1.25],
+   ['reel6','NeoSpin Stella 5000XG','spin',12,10400,2.1,1.55]
+  ].forEach(a => SHOP_ITEMS.reels.push({ id:a[0], name:a[1], cat:a[2], reqLv:a[3], price:a[4], drag:a[5], speed:a[6], owned:a[4] === 0, nw:1 }));
+
+  const KEY = 'aegeanV2';
+  let sav = {}; try { sav = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (_) {}
+  (sav.own || []).forEach(o => { const it = SHOP_ITEMS.rods.concat(SHOP_ITEMS.reels).find(x => x.id === o[0]); if (it) it.owned = o[1]; });
+  state.bait = sav.bait || { on:false, kind:'karides', stock:{ karides:0, solucan:0 } };
+  state.boat = sav.boat || '';
+  function mkGear(c) {
+    const f = id => ({ ...SHOP_ITEMS.rods.concat(SHOP_ITEMS.reels).find(x => x.id === id), plus:0, blue:{ str:0, int:0, luck:0 } });
+    return { rod:f(c.rod), reel:f(c.reel) };
+  }
+  function sv() {
+    try {
+      if (inited) CH[ci].gear = { rod:state.rod, reel:state.reel };
+      localStorage.setItem(KEY, JSON.stringify({ ci, g:CH.map(c => c.gear), bait:state.bait, boat:state.boat,
+        own:SHOP_ITEMS.rods.concat(SHOP_ITEMS.reels).filter(x => x.nw).map(x => [x.id, x.owned]) }));
+    } catch (_) {}
+  }
+  const _sp = window.saveProgress; window.saveProgress = function () { sv(); return _sp.apply(this, arguments); };
+  window.addEventListener('beforeunload', sv);
+  function initChars() {
+    inited = true; ci = sav.ci || 0;
+    CH.forEach((c, i) => { c.gear = i === ci ? { rod:state.rod, reel:state.reel } : (sav.g && sav.g[i]) || mkGear(c); });
+    if (!CH[0].gear) CH[0].gear = mkGear(CH[0]);
+    drawChHud();
+  }
+  window.switchChar = function (i) {
+    if (!inited || i === ci) return;
+    if (state.phase !== 'idle' && !state.inTown) { showToast('Karakter degistirmek icin once oltani topla.', '#ef4444'); return; }
+    CH[ci].gear = { rod:state.rod, reel:state.reel };
+    ci = i; state.rod = CH[i].gear.rod; state.reel = CH[i].gear.reel;
+    playTone(620, 0.12, 'triangle'); showToast(CH[i].name + ' aktif: ' + state.rod.name.split(' (')[0], CH[i].col);
+    drawChHud(); try { updateUI(); renderHotbar(); } catch (_) {} sv();
+  };
+  const _bg = window.buyGear;
+  window.buyGear = function (kind, id) {
+    const it = SHOP_ITEMS.rods.concat(SHOP_ITEMS.reels).find(x => x.id === id);
+    if (it && it.cat !== CH[ci].id) { showToast('Bu ekipman "' + CHN[it.cat] + '" icin. [Q] ile karakter degistir.', '#ef4444'); return; }
+    const r = _bg.apply(this, arguments); sv(); return r;
+  };
+  const _pp = window.getTotalPullPower; window.getTotalPullPower = function () { return _pp() * CH[ci].pull; };
+  const DUR = { topwater:90, minnow:70, silicone:16, jig:130 };
+  const _am = window.getTotalAppealMult;
+  window.getTotalAppealMult = function () { const l = state.lures[state.activeSlot]; return _am() * CH[ci].app * (state._live || 1) * (l && l.dur <= 0 ? 0.35 : 1); };
+  const _ll = window.launchLure;
+  window.launchLure = function () {
+    if (state.inTown) return;
+    const B = state.bait; state._live = 1;
+    if (B.on && B.stock[B.kind] > 0) { B.stock[B.kind]--; state._live = B.kind === 'karides' ? 1.4 : 1.22; }
+    else if (B.on) { B.on = false; showToast('Canli yemin bitti! [B] ile yenile.', '#ef4444'); }
+    const r = state.rod, c = r.cast; r.cast = c * CH[ci].cast;
+    try { _ll(); } finally { r.cast = c; }
+  };
+  const _sf = window.strikeFish;
+  window.strikeFish = function () {
+    const l = state.lures[state.activeSlot]; _sf();
+    if (l && state.phase === 'fighting' && l.dur > 0) {
+      l.dur = Math.max(0, l.dur - (l.type === 'silicone' ? 1 : 0.5));
+      if (l.dur === 0) showToast('Yem yipranip bitti! Yenile: [B] Yem & Tekne', '#ef4444');
+    }
+  };
+
+  // ---- Tekne ve acik deniz meralari ----
+  const BOATS = [
+    { id:'kayik', name:'Fiber Kayik', price:4500, lv:6, spots:[5] },
+    { id:'bot', name:'Motorlu Acik Deniz Botu', price:16000, lv:12, spots:[5, 6] },
+    { id:'tekne', name:'Kabinli Balikci Teknesi', price:42000, lv:18, spots:[5, 6, 7] }
+  ];
+  SPOTS.push({ id:5, name:'Acik Deniz: Kirma Samandirasi', maxDepth:150, reqLv:6, boat:1, desc:'Tekne gerekir. Kiyidan uzak, orta derin sular.' },
+             { id:6, name:'Acik Deniz: Mavi Yamac', maxDepth:230, reqLv:12, boat:2, desc:'Motorlu bot gerekir. Sert akinti, buyuk surusu baliklar.' },
+             { id:7, name:'Acik Deniz: Derin Cukur', maxDepth:340, reqLv:18, boat:3, desc:'Kabinli tekne gerekir. Karanlik ve cok derin.' });
+  MAP_NODES.push({ id:5, name:'Acik Deniz: Kirma Samandirasi', reqLv:6, depth:'150m', x:78, y:30, col:'#60a5fa', theme:'Tekne ile gidilir. Kiyidan uzak, orta derin sular.' },
+                 { id:6, name:'Acik Deniz: Mavi Yamac', reqLv:12, depth:'230m', x:86, y:48, col:'#818cf8', theme:'Motorlu bot gerekir. Akintili yamac.' },
+                 { id:7, name:'Acik Deniz: Derin Cukur', reqLv:18, depth:'340m', x:90, y:68, col:'#c084fc', theme:'Kabinli tekne gerekir. Dev derin deniz baliklari.' });
+  setTimeout(() => { try { SPOT_THEMES.push(SPOT_THEMES[1], SPOT_THEMES[2], SPOT_THEMES[4]); } catch (_) {} }, 0);
+  const _ss = window.selectSpot;
+  window.selectSpot = function (id) {
+    const s = SPOTS[id], b = BOATS.find(x => x.id === state.boat);
+    if (s && s.boat && !(b && b.spots.includes(id))) { showToast('Bu mera icin tekne gerekir: [B] Yem & Tekne', '#ef4444'); return; }
+    _ss(id);
+  };
+
+  // ---- Yem & Tekne paneli [B] ----
+  const LIVE = [{ id:'karides', name:'Canli Karides (+%40 cazibe)', price:180, pack:10 }, { id:'solucan', name:'Deniz Solucani (+%22 cazibe)', price:90, pack:10 }];
+  const REFILL = { topwater:140, minnow:120, silicone:60, jig:200 };
+  const P = document.createElement('div');
+  P.style.cssText = 'position:fixed;inset:0;display:none;z-index:99;background:rgba(2,6,23,.82);align-items:center;justify-content:center';
+  P.innerHTML = '<div style="width:min(580px,94vw);max-height:86vh;overflow:auto;background:#08111f;border:2px solid #38bdf8;border-radius:12px;padding:14px"><div id="xBody"></div><button class="sub-btn" style="margin-top:10px;width:100%" onclick="xClose()">Kapat</button></div>';
+  document.body.appendChild(P);
+  const row = (a, b) => `<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #1e293b;font-size:12px"><span>${a}</span><span style="display:flex;gap:5px">${b}</span></div>`;
+  const btn = (t, fn, dis) => `<button class="sub-btn" ${dis ? 'disabled' : ''} onclick="${fn}">${t}</button>`;
+  function pay(p) { if (state.money < p) { showToast('Yetersiz bakiye', '#ef4444'); return false; } state.money -= p; try { updateUI(); } catch (_) {} return true; }
+  window.xOpen = () => { xRender(); P.style.display = 'flex'; };
+  window.xClose = () => { P.style.display = 'none'; };
+  window.xLive = (id, buy) => {
+    const k = LIVE.find(x => x.id === id), B = state.bait;
+    if (buy) { if (pay(k.price)) B.stock[id] += k.pack; } else { B.on = !(B.on && B.kind === id); B.kind = id; }
+    sv(); xRender();
+  };
+  window.xRefill = i => { const l = state.lures[i]; if (pay(REFILL[l.type] || 100)) { l.dur = l.maxDur; sv(); xRender(); } };
+  window.xBoat = id => { const b = BOATS.find(x => x.id === id); if (state.level < b.lv) { showToast('Sv.' + b.lv + ' gerekli', '#ef4444'); return; } if (pay(b.price)) { state.boat = id; showToast(b.name + ' satin alindi! Haritadan acik deniz meralarina git.', '#22c55e'); sv(); xRender(); } };
+  function xRender() {
+    const B = state.bait;
+    let h = `<h3 style="color:#38bdf8;margin-bottom:6px">Yem & Tekne <span style="color:#fbbf24;font-size:13px">${Math.floor(state.money)} TL</span></h3><b style="color:#fbbf24">Canli yem (her atista 1 adet biter)</b>`;
+    LIVE.forEach(k => h += row(k.name + ' - stok: ' + B.stock[k.id], btn(k.pack + ' adet ' + k.price + ' TL', `xLive('${k.id}',1)`) + btn(B.on && B.kind === k.id ? 'Kullaniliyor' : 'Kullan', `xLive('${k.id}',0)`)));
+    h += '<b style="color:#fbbf24;display:block;margin-top:10px">Sahte yem omru (balik tutuldukca asinir)</b>';
+    state.lures.forEach((l, i) => h += row(l.name.split(' (')[0] + ' - omur: ' + Math.ceil(l.dur) + '/' + l.maxDur, btn('Yenile ' + (REFILL[l.type] || 100) + ' TL', `xRefill(${i})`, l.dur >= l.maxDur)));
+    h += '<b style="color:#fbbf24;display:block;margin-top:10px">Tekneler</b>';
+    BOATS.forEach(b => h += row(b.name + ' (Sv.' + b.lv + ')', btn(state.boat === b.id ? 'Sahipsin' : b.price + ' TL', `xBoat('${b.id}')`, state.boat === b.id)));
+    document.getElementById('xBody').innerHTML = h;
+  }
+  const chHud = document.createElement('div');
+  chHud.style.cssText = 'position:fixed;left:10px;top:10px;z-index:30;display:flex;gap:5px;flex-wrap:wrap;max-width:60vw';
+  document.body.appendChild(chHud);
+  function drawChHud() {
+    chHud.innerHTML = CH.map((c, i) => `<button class="sub-btn" style="${i === ci ? 'border-color:' + c.col + ';box-shadow:0 0 10px ' + c.col : ''}" onclick="switchChar(${i})">F${i + 1} ${c.name}</button>`).join('') + '<button class="sub-btn" onclick="xOpen()">[B] Yem & Tekne</button>';
+  }
+  window.addEventListener('keydown', e => {
+    const k = e.key.toLowerCase(), m = { f1:0, f2:1, f3:2 };
+    if (k in m) { e.preventDefault(); switchChar(m[k]); }
+    else if (k === 'q') switchChar((ci + 1) % 3);
+    else if (k === 'b') { P.style.display === 'flex' ? xClose() : xOpen(); }
+  });
+
+  // ---- Oyun dongusu: sehirde 2B yuruyus, mera derinlik siniri, yem omru ----
+  const _u2 = window.updateGame;
+  window.updateGame = function (dt) {
+    if (!inited) initChars();
+    state.lures.forEach(l => { if (l.maxDur == null) { l.maxDur = DUR[l.type] || 60; l.dur = l.maxDur; } });
+    if (state.phase === 'idle') state._live = 1;
+    if (state.inTown) {
+      const t = state.town; let vx = TK.r - TK.l, vy = TK.d - TK.u;
+      if (!vx && !vy && t.tx != null) {
+        const dx = t.tx - t.x, dy = t.ty - t.y, d = Math.hypot(dx, dy);
+        if (d < 8) { t.tx = null; if (t.pending) { const p = t.pending; t.pending = null; openNpcDialog(p); } } else { vx = dx / d; vy = dy / d; }
+      } else if (vx || vy) t.pending = null;
+      const m = Math.hypot(vx, vy);
+      if (m) { vx /= m; vy /= m; t.x = Math.max(60, Math.min(1740, t.x + vx * 230 * dt)); t.y = Math.max(190, Math.min(950, t.y + vy * 230 * dt)); t.walkCycle += dt * 11; if (vx) t.facing = vx > 0 ? 1 : -1; }
+    }
+    _u2(dt);
+    if (!state.inTown && (state.phase === 'water' || state.phase === 'bite' || state.phase === 'fighting')) {
+      state.lure.depth = Math.min(state.lure.depth, Math.max(0.1, seabed(state.lure.dist) - 0.2));
+    }
+  };
+
+  function drawTownTop(time) {
+    const ts = state.resolutionScale * (state.viewScale || 1);
+    ctx.save(); ctx.scale(ts, ts);
+    const w = canvas.width / ts, h = canvas.height / ts, t = state.town, W = 1800, H = 1000;
+    t.camX += (Math.max(0, Math.min(W - w, t.x - w / 2)) - t.camX) * 0.12;
+    t.camY += (Math.max(0, Math.min(H - h, t.y - h / 2)) - t.camY) * 0.12;
+    ctx.fillStyle = '#0b1c2e'; ctx.fillRect(0, 0, w, h);
+    ctx.save(); ctx.translate(-t.camX, -t.camY);
+    const wt = img(ASSETS.tiles.water), gt = img(ASSETS.tiles.ground);
+    ctx.fillStyle = wt ? ctx.createPattern(wt, 'repeat') : '#0369a1'; ctx.fillRect(0, 0, W, 150);
+    if (!wt) { ctx.strokeStyle = 'rgba(255,255,255,.2)'; for (let i = 0; i < 28; i++) { const x = (i * 73 + time * 18) % W, y = 18 + (i * 37) % 115; ctx.beginPath(); ctx.arc(x, y, 12, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke(); } }
+    ctx.fillStyle = '#78350f'; [300, 900, 1500].forEach(x => ctx.fillRect(x, 70, 70, 125));
+    ctx.fillStyle = '#64748b'; ctx.fillRect(0, 150, W, 40); ctx.fillStyle = '#334155'; ctx.fillRect(0, 186, W, 5);
+    ctx.fillStyle = gt ? ctx.createPattern(gt, 'repeat') : '#475569'; ctx.fillRect(0, 190, W, H - 190);
+    if (!gt) { ctx.strokeStyle = 'rgba(15,23,42,.35)'; for (let y = 190; y < H; y += 48) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); for (let x = ((y / 48) % 2) * 36; x < W; x += 72) { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + 48); ctx.stroke(); } } }
+    const near = getNearestTownNpc();
+    const drawNpc = n => {
+      ctx.save(); ctx.translate(n.x, n.y);
+      if (n.isTower) {
+        ctx.shadowColor = '#38bdf8'; ctx.shadowBlur = 24; ctx.fillStyle = '#1e293b'; ctx.beginPath(); ctx.arc(0, 0, 46, 0, 7); ctx.fill();
+        ctx.fillStyle = 'rgba(56,189,248,' + (0.6 + Math.sin(time * 4) * 0.3) + ')'; ctx.beginPath(); ctx.arc(0, 0, 26, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+      } else {
+        ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.fillRect(-58, -30, 124, 84);
+        ctx.fillStyle = '#7c5a3a'; ctx.fillRect(-58, -34, 116, 70);
+        for (let i = 0; i < 6; i++) { ctx.fillStyle = i % 2 ? '#e2e8f0' : n.col; ctx.fillRect(-58 + i * 19.34, -34, 19.34, 24); }
+        const im = img(ASSETS.npc[n.id]);
+        if (im) ctx.drawImage(im, -32, -14, 64, 64);
+        else {
+          ctx.fillStyle = n.col; ctx.beginPath(); ctx.ellipse(0, 24, 15, 9, 0, 0, 7); ctx.fill();
+          ctx.fillStyle = '#fcd34d'; ctx.beginPath(); ctx.arc(0, 15, 8, 0, 7); ctx.fill();
+          ctx.fillStyle = n.hat; ctx.beginPath(); ctx.arc(0, 13, 8.5, Math.PI, 0); ctx.fill();
+        }
+      }
+      const on = near && near.id === n.id;
+      ctx.fillStyle = 'rgba(2,6,23,.88)'; ctx.strokeStyle = on ? '#fde047' : n.col; ctx.lineWidth = on ? 2.2 : 1.2;
+      ctx.beginPath(); ctx.roundRect(-78, -92, 156, 32, 7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fde047'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(n.tag + ' ' + n.name, 0, -78);
+      ctx.fillStyle = '#cbd5e1'; ctx.font = '10px sans-serif'; ctx.fillText(n.role, 0, -65);
+      if (on) { ctx.fillStyle = '#22c55e'; ctx.beginPath(); ctx.roundRect(-62, -122, 124, 22, 99); ctx.fill(); ctx.fillStyle = '#000'; ctx.font = 'bold 10.5px sans-serif'; ctx.fillText('[E / Tikla] Konus', 0, -107); }
+      ctx.restore();
+    };
+    const drawPlayer = () => {
+      const c = CH[ci], mv = TK.u || TK.d || TK.l || TK.r || t.tx != null, b = mv ? Math.sin(t.walkCycle) * 2.5 : 0;
+      ctx.save(); ctx.translate(t.x, t.y);
+      ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.beginPath(); ctx.ellipse(0, 4, 15, 7, 0, 0, 7); ctx.fill();
+      ctx.scale(t.facing, 1);
+      ctx.fillStyle = c.col; ctx.beginPath(); ctx.ellipse(0, -10 + b, 14, 9, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#fcd34d'; ctx.beginPath(); ctx.arc(0, -18 + b, 9, 0, 7); ctx.fill();
+      ctx.fillStyle = '#0f172a'; ctx.beginPath(); ctx.arc(0, -20 + b, 9.5, Math.PI, 0); ctx.fill(); ctx.fillRect(2, -22 + b, 12, 4);
+      ctx.restore();
+      ctx.fillStyle = c.col; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(c.name + ' (Sv.' + state.level + ')', t.x, t.y - 36);
+    };
+    const ents = TOWN_NPCS.map(n => ({ y:n.y, f:() => drawNpc(n) })); ents.push({ y:t.y, f:drawPlayer });
+    ents.sort((a, b) => a.y - b.y).forEach(e => e.f());
+    ctx.restore();
+    ctx.fillStyle = 'rgba(8,17,31,.9)'; ctx.fillRect(14, h - 42, Math.min(w - 28, 700), 28);
+    ctx.fillStyle = '#fde047'; ctx.font = 'bold 11.5px sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText('SEHIR: [WASD/Oklar] yuru  -  [E] konus  -  Tikla: git  -  [Q] karakter  -  [B] yem & tekne  -  Olta sadece meralarda', 24, h - 24);
+    ctx.restore();
+  }
+  window.drawTownTop = drawTownTop;
 
   function drawTownScene(time) {
     ctx.save();
@@ -3275,7 +3548,7 @@ requestAnimationFrame(loop);
   ];
 
   window.drawScene = function(time) {
-    if (state.inTown) { drawTownScene(time); return; }
+    if (state.inTown) { drawTownTop(time); return; }
 
     ctx.save();
     const vs = state.viewScale || 1;
