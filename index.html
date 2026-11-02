@@ -262,6 +262,20 @@
   html.mobile #castMeter { top: calc(64px + env(safe-area-inset-top)); width: 220px; }
   .ui-scale-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
   .buy-btn.on { background: #22c55e; }
+
+/* ===== UI v3: sade, oynanis oncelikli ===== */
+#rightDock { width: 300px; gap: 6px; padding: 8px; }
+#rightDock .dock-card { padding: 7px 9px; }
+#rightDock .dock-card.legacy { display: none; }
+#rightDock.collapsed { display: none; }
+#jerkBtn { grid-column: 1 / -1; }
+#quickTooltip { display: none; }
+#boostChips { left: auto; right: 12px; bottom: 12px; align-items: flex-end; }
+#topWorldHud { top: 10px !important; left: 10px !important; }
+#chHud .sub-btn { padding: 6px 8px; }
+#hubCard .menu-btn { padding: 11px 6px; font-size: 12.5px; }
+html.mobile #chHud { bottom: auto; top: calc(96px + env(safe-area-inset-top)); }
+html.mobile #btnDockToggle { display: none; }
 </style>
 </head>
 <body>
@@ -3342,10 +3356,10 @@ requestAnimationFrame(loop);
     document.getElementById('xBody').innerHTML = h;
   }
   const chHud = document.createElement('div');
-  chHud.style.cssText = 'position:fixed;left:10px;top:10px;z-index:30;display:flex;gap:5px;flex-wrap:wrap;max-width:60vw';
+  chHud.id = 'chHud'; chHud.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:30;display:flex;flex-direction:column;gap:4px';
   document.body.appendChild(chHud);
   function drawChHud() {
-    chHud.innerHTML = CH.map((c, i) => `<button class="sub-btn" style="${i === ci ? 'border-color:' + c.col + ';box-shadow:0 0 10px ' + c.col : ''}" onclick="switchChar(${i})">F${i + 1} ${c.name}</button>`).join('') + '<button class="sub-btn" onclick="xOpen()">[B] Yem & Tekne</button>';
+    chHud.innerHTML = CH.map((c, i) => `<button class="sub-btn" title="${c.name} [F${i + 1}]" style="min-width:92px;text-align:left;${i === ci ? 'border-color:' + c.col + ';box-shadow:0 0 10px ' + c.col + ';background:rgba(30,58,95,.9)' : 'opacity:.8'}" onclick="switchChar(${i})"><b style="color:${c.col}">F${i + 1}</b> ${c.name.split(' ')[0]}</button>`).join('');
   }
   window.addEventListener('keydown', e => {
     const k = e.key.toLowerCase(), m = { f1:0, f2:1, f3:2 };
@@ -3467,9 +3481,6 @@ requestAnimationFrame(loop);
     const ents = TOWN_NPCS.map(n => ({ y:n.y, f:() => drawNpc(n) })); ents.push({ y:t.y, f:drawPlayer });
     ents.sort((a, b) => a.y - b.y).forEach(e => e.f());
     ctx.restore();
-    ctx.fillStyle = 'rgba(8,17,31,.9)'; ctx.fillRect(14, h - 42, Math.min(w - 28, 700), 28);
-    ctx.fillStyle = '#fde047'; ctx.font = 'bold 11.5px sans-serif'; ctx.textAlign = 'left';
-    ctx.fillText('SEHIR: [WASD/Oklar] yuru  -  [E] konus  -  Tikla: git  -  [Q] karakter  -  [B] yem & tekne  -  Olta sadece meralarda', 24, h - 24);
     ctx.restore();
   }
   window.drawTownTop = drawTownTop;
@@ -3789,6 +3800,86 @@ requestAnimationFrame(loop);
   updateUI();
   syncModeUI();
   saveProgress();
+})();
+</script>
+
+<script>
+// ==================== UI v3: MENU KATEGORILERI, AYARLAR/KONTROLLER, PANEL GIZLEME ====================
+(function () {
+  const $ = id => document.getElementById(id), dock = $('rightDock');
+  // Eski karmasik menu ve kontrat kartlari gizlenir (id'ler korunur, mevcut kod bozulmaz)
+  const cards = [].slice.call(dock.children).filter(c => c.classList.contains('dock-card'));
+  cards[cards.length - 1].classList.add('legacy');
+  $('miniContractBox').closest('.dock-card').classList.add('legacy');
+
+  // Yeni sade menu: 4 buton
+  const hubCard = document.createElement('div');
+  hubCard.className = 'dock-card'; hubCard.id = 'hubCard'; hubCard.style.marginTop = 'auto';
+  hubCard.innerHTML = '<div class="menu-grid">' +
+    '<button class="menu-btn" onclick="hubOpen(\'market\')">Market</button>' +
+    '<button class="menu-btn" onclick="hubOpen(\'quest\')">Gorevler <span id="hubBadge" class="badge-dot" style="display:none"></span></button>' +
+    '<button class="menu-btn" onclick="openModal(\'mapModal\')">Harita [M]</button>' +
+    '<button class="menu-btn" onclick="openModal(\'settingsModal\')">Ayarlar</button></div>';
+  dock.appendChild(hubCard);
+  setInterval(() => { const b = $('spBadge'), h = $('hubBadge'); if (b && h) { h.style.display = b.style.display; h.textContent = b.textContent; } }, 700);
+
+  // Kategori pencereleri
+  const HUBS = {
+    market: { t:'Market', items:[
+      ['Ekipman Market', 'Olta, makine, misina ve sahte yemler', "openModal('marketModal')"],
+      ['Simya (+12)', 'Ekipmanlarini guclendir', "openModal('alchemyModal')"],
+      ['Premium Market', 'XP ve gelir boostlari', "openModal('premiumModal')"],
+      ['Yem & Tekne [B]', 'Canli yem, yem omru ve tekneler', 'xOpen()'],
+      ['Balik Hali', 'Yakaladigin baliklari sat', "openModal('bazaarModal')"] ] },
+    quest: { t:'Gorevler & Rekabet', items:[
+      ['Yetenek & Gorev', 'Yetenek puanlari ve hikaye gorevleri', "openModal('skillModal')"],
+      ['Turnuva & Lig', 'Canli turnuva ve klasman', "openModal('leagueModal')"],
+      ['Koleksiyon (24 Tur)', 'Yakaladigin baliklarin katalogu', "openModal('dexModal')"] ] }
+  };
+  const H = document.createElement('div');
+  H.style.cssText = 'position:fixed;inset:0;display:none;z-index:98;background:rgba(2,6,23,.78);align-items:center;justify-content:center';
+  H.onclick = e => { if (e.target === H) hubClose(); };
+  document.body.appendChild(H);
+  window.hubClose = () => { H.style.display = 'none'; };
+  window.hubOpen = k => {
+    const d = HUBS[k];
+    let h = '<div style="width:min(420px,92vw);background:#08111f;border:2px solid #38bdf8;border-radius:12px;padding:14px"><h3 style="color:#38bdf8;margin-bottom:8px">' + d.t + '</h3><div style="display:flex;flex-direction:column;gap:6px">' +
+      d.items.map(it => '<button class="menu-btn" style="justify-content:space-between;text-align:left;padding:10px 12px" onclick="hubClose();' + it[2] + '"><span><b>' + it[0] + '</b><br><small style="color:#94a3b8;font-weight:600">' + it[1] + '</small></span><span>&rsaquo;</span></button>').join('') + '</div>';
+    if (k === 'quest') h += '<div style="margin-top:10px;font-size:12px;color:#e2e8f0"><b style="color:#fbbf24">Aktif Kontratlar</b> <span style="color:#38bdf8;float:right">' + $('uiCoolerCount').textContent + '</span><div style="margin-top:4px;line-height:1.4">' + $('miniContractBox').innerHTML + '</div></div>';
+    h += '<button class="sub-btn" style="margin-top:10px;width:100%" onclick="hubClose()">Kapat</button></div>';
+    H.innerHTML = h; H.style.display = 'flex';
+  };
+
+  // Ayarlar: kontroller + gun saati
+  const sb = document.querySelector('#settingsModal .modal-body');
+  document.querySelector('#settingsModal h2').textContent = 'Ayarlar: Ekran, Kontroller & Kayit';
+  const kc = document.createElement('div');
+  kc.style.cssText = 'background:rgba(15,31,54,0.9);padding:12px;border-radius:10px;margin-bottom:14px;border:1px solid rgba(56,189,248,0.3)';
+  const rows = [
+    ['Atis / sarim', 'Bosluk  |  Sol tik (basili tut)'], ['Twitch / Jerk', 'A-D / S  |  Sag tik / Orta tik'],
+    ['Sahte yemler', '1-4  |  Shift + tekerlek'], ['Sandik, amfora, inci', '5, 6, 7'], ['Yemleme / onarim', '8, 9'],
+    ['Karakter degistir', 'Q veya F1-F2-F3'], ['Yem & Tekne', 'B'], ['Harita', 'M'],
+    ['Yakinlastir / uzaklastir', 'Tekerlek  |  + / -  (0: sifirla)'], ['Panel gizle / goster', 'Tab'],
+    ['Sehirde yuru / konus', 'WASD veya oklar, tikla  |  E']
+  ];
+  kc.innerHTML = '<h4 style="color:#fbbf24;margin-bottom:6px">Kontroller (klavye ve fare birlikte calisir)</h4>' +
+    rows.map(r => '<div style="display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:3px 0;border-bottom:1px solid rgba(148,163,184,.12)"><span style="color:#94a3b8">' + r[0] + '</span><b>' + r[1] + '</b></div>').join('');
+  const tc = document.createElement('div');
+  tc.style.cssText = 'background:rgba(15,31,54,0.9);padding:12px;border-radius:10px;margin-bottom:14px;border:1px solid rgba(56,189,248,0.3)';
+  tc.innerHTML = '<h4 style="color:#fbbf24;margin-bottom:6px">Gunun Saati</h4>'; tc.appendChild($('timeBtn'));
+  sb.insertBefore(tc, sb.firstChild); sb.insertBefore(kc, sb.firstChild);
+
+  // Paneli gizle/goster (oynanis alani genisler)
+  window.toggleDock = () => { dock.classList.toggle('collapsed'); window.dispatchEvent(new Event('resize')); };
+  const tb = document.createElement('button');
+  tb.id = 'btnDockToggle'; tb.textContent = 'Panel [Tab]'; tb.onclick = toggleDock;
+  tb.style.cssText = 'background:rgba(8,17,31,0.92);border:1px solid #475569;color:#fff;border-radius:99px;padding:6px 13px;font-size:12px;font-weight:800;cursor:pointer';
+  const wh = $('topWorldHud'); if (wh) wh.appendChild(tb);
+  window.addEventListener('keydown', e => {
+    if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    if (e.key === 'Tab') { e.preventDefault(); toggleDock(); }
+    else if (e.key === 'Escape') { hubClose(); if (window.xClose) xClose(); }
+  });
 })();
 </script>
 </body>
