@@ -3884,6 +3884,112 @@ requestAnimationFrame(loop);
 </script>
 </body>
   <script>
+// ==================== SPACE TUŞU -> MOUSE TIKLAMA & SARIM KÖPRÜSÜ ====================
+(function() {
+  let spaceHeld = false;
+  let spaceReelLoop = null;
+
+  function stopSpaceReeling() {
+    spaceHeld = false;
+    state.keys.space = false;
+    state.keys.w = false;
+    if (spaceReelLoop) {
+      clearInterval(spaceReelLoop);
+      spaceReelLoop = null;
+    }
+    const mainBtn = document.getElementById('mainActionBtn');
+    if (mainBtn) mainBtn.style.transform = '';
+  }
+
+  window.addEventListener('keydown', function(e) {
+    const isSpace = (e.code === 'Space' || e.key === ' ' || e.keyCode === 32);
+    if (!isSpace) return;
+
+    // Eğer kayıt kodu kutusuna yazı yazılıyorsa dokunma
+    if (e.target && (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT')) {
+      if (e.target.type !== 'range') return;
+    }
+
+    // Tarayıcının sayfayı kaydırmasını veya başka butona basmasını kesin olarak engelle
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
+
+    // Şehirdeysek NPC konuşmasını tetikle
+    if (state.inTown) {
+      if (!e.repeat && window.openNpcDialog) {
+        const btnTown = document.getElementById('btnGoTown');
+        // Yakında NPC varsa konuş, yoksa meraya dön butonuna bas
+      }
+      return;
+    }
+
+    const mainBtn = document.getElementById('mainActionBtn');
+
+    // İlk basış anı (basılı tutarken tekrar tekrar tetiklenmesin)
+    if (!spaceHeld) {
+      spaceHeld = true;
+      state.keys.space = true;
+      if (mainBtn) mainBtn.style.transform = 'scale(0.96)';
+
+      if (state.phase === 'idle') {
+        // Mouse ile "ATIŞ GÜCÜ DOLDUR" butonuna tıklanmış gibi başlat
+        startOrTriggerCast();
+      } else if (state.phase === 'charging') {
+        // Güç dolarken tekrar basılırsa savur
+        launchLure();
+      } else if (state.phase === 'bite') {
+        // Balık vurduğunda tasma at ve hemen sarmaya başla
+        strikeFish();
+        state.keys.w = true;
+      } else if (state.phase === 'water' || state.phase === 'fighting') {
+        // Yem sudayken veya balıkla mücadele ederken sarmaya başla
+        state.keys.w = true;
+        startOrTriggerCast();
+      }
+
+      // Space basılı tutulduğu sürece her 30 milisaniyede bir sarım yap (Mouse basılı tutmakla birebir aynı)
+      if (!spaceReelLoop) {
+        spaceReelLoop = setInterval(function() {
+          if (!spaceHeld || state.inTown) return;
+          if (state.phase === 'bite') {
+            strikeFish();
+          } else if (state.phase === 'water') {
+            state.keys.w = true;
+            reelStep(0.03);
+          } else if (state.phase === 'fighting') {
+            state.keys.w = true;
+            state.keys.space = true;
+            reelFightStep(0.03);
+          }
+        }, 30);
+      }
+    }
+  }, true);
+
+  window.addEventListener('keyup', function(e) {
+    const isSpace = (e.code === 'Space' || e.key === ' ' || e.keyCode === 32);
+    if (!isSpace) return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    // Eğer Space'e basılı tutarak atış gücü doldurduysa, tuşu bırakınca oltayı savur
+    if (!state.inTown && state.phase === 'charging' && state.castPower > 15) {
+      launchLure();
+    }
+
+    stopSpaceReeling();
+  }, true);
+
+  // Pencere değişirse takılı kalmayı önle
+  window.addEventListener('blur', stopSpaceReeling);
+})();
+</script>
+  <script>
 // ==================== KESİN ÇÖZÜM YAMASI (HABİTAT, ZEMİN SINIRI VE SPACE TUŞU) ====================
 (function() {
   // 1. MERA VE DİP TÜRÜ TABLOSU (Her balık sadece kendi merasında ve kendi dip yapısında çıkar)
