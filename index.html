@@ -2648,16 +2648,16 @@ requestAnimationFrame(loop);
 
   // ---------- FARE MODU ----------
   const KEY_HINT = '[1-4] Sahte Yem  |  [5-7] Ganimet Sandigi/Inci  |  [8-9] Yemleme & Onarim';
-  const MOUSE_HINT = 'Sol tik basili: guc doldur & savur / sar  -  Sag tik: Twitch  -  Orta tik: Jerk  -  Tekerlek: yem sec / drag  -  [1-9] kisayollar';
+  const MOUSE_HINT = 'Fare: sol tik atis/sar - sag tik Twitch - orta tik Jerk - tekerlek zoom (Shift+tekerlek: yem/drag) - [+/-] zoom';
   function refreshMouseUi() {
-    $('mouseModeBtn').textContent = 'Fare Modu: '+ (prefs.mouse ? 'ACIK': 'KAPALI');
+    prefs.mouse = true; $('mouseModeBtn').textContent = 'Klavye + Fare: ACIK';
     $('mouseModeBtn').style.borderColor = prefs.mouse ? '#22c55e': '';
-    $('quickTooltip').textContent = prefs.mouse ? MOUSE_HINT : KEY_HINT;
+    $('quickTooltip').textContent = KEY_HINT + '  ||  ' + MOUSE_HINT;
     if (!prefs.mouse) canvas.style.cursor = 'crosshair';
   }
   window.toggleMouseMode = function () {
-    prefs.mouse = !prefs.mouse; window.__savePrefs(); releaseMouse(); refreshMouseUi();
-    showToast(prefs.mouse ? 'Fare modu acildi: oyun alanina tiklayarak oyna!': 'Fare modu kapandi (klavye kontrolu).', '#38bdf8');
+    prefs.mouse = true; refreshMouseUi();
+    showToast('Klavye ve fare birlikte aktif: istedigin gibi oyna.', '#38bdf8');
   };
 
   let mouseHeld = false, mouseReel = false, downAt = 0, lastWheel = 0;
@@ -2691,8 +2691,9 @@ requestAnimationFrame(loop);
   window.addEventListener('blur', releaseMouse);
 
   canvas.addEventListener('wheel', e =>{
-    if (!prefs.mouse|| state.inTown) return;
     e.preventDefault();
+    if (!e.shiftKey) { if (window.zoomBy) window.zoomBy(e.deltaY < 0 ? 1.1 : 1 / 1.1); return; }
+    if (state.inTown) return;
     const now = performance.now();
     if (now - lastWheel < 110) return; lastWheel = now;
     const up = e.deltaY < 0;
@@ -3115,7 +3116,7 @@ requestAnimationFrame(loop);
 
   canvas.addEventListener('pointerdown', e => {
     const rect = canvas.getBoundingClientRect();
-    const vs = state.viewScale || 1;
+    const vs = (state.viewScale || 1) * (window.curZoom ? window.curZoom() : 1);
     const clickX = (e.clientX - rect.left) / vs;
     const clickY = (e.clientY - rect.top) / vs;
 
@@ -3197,13 +3198,13 @@ requestAnimationFrame(loop);
   };
 
   // ---- Kademeli derinlik: kiyida 0m, uzaklastikca derinlesir ----
-  const seabed = (d, s) => { s = s || SPOTS[state.spotIdx]; const b = s.boat ? 0.35 : 0; return s.maxDepth * (b + (1 - b) * Math.pow(1 - Math.exp(-d / 55), 1.3)); };
+  const seabed = (d, s) => { s = s || SPOTS[state.spotIdx]; const b = s.boat ? 0.35 : 0; return s.maxDepth * (b + (1 - b) * Math.pow(Math.min(1, d / 120), 1.15)); };
   window.seabedAt = seabed;
   const _csf = window.createSingleFish;
   window.createSingleFish = function (p, m) {
     const f = _csf(p, m), s = SPOTS[state.spotIdx], b = s.boat ? 0.35 : 0;
     const need = ((Math.min(1, (f.depth + 0.6) / s.maxDepth)) - b) / (1 - b);
-    if (need > 0) f.distM = Math.min(112, Math.max(f.distM, -55 * Math.log(1 - Math.pow(Math.min(need, 0.97), 1 / 1.3))));
+    if (need > 0) f.distM = Math.min(112, Math.max(f.distM, 120 * Math.pow(Math.min(need, 0.97), 1 / 1.15)));
     f.depth = Math.min(f.depth, Math.max(0.5, seabed(f.distM) - 0.4)); f.baseDepth = f.depth;
     return f;
   };
@@ -3374,12 +3375,49 @@ requestAnimationFrame(loop);
     }
   };
 
+
+  // ---- Zoom: sehir, mera ve dunya haritasi ----
+  state.zoomSea = 1; state.zoomTown = 1;
+  window.curZoom = () => state.inTown ? state.zoomTown : state.zoomSea;
+  window.zoomBy = f => { const k = state.inTown ? 'zoomTown' : 'zoomSea'; state[k] = Math.max(state.inTown ? 0.6 : 0.5, Math.min(1.8, state[k] * f)); };
+  window.addEventListener('keydown', e => {
+    if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    if (e.key === '+' || e.key === '=') zoomBy(1.15); else if (e.key === '-' || e.key === '_') zoomBy(1 / 1.15);
+    else if (e.key === '0') state[state.inTown ? 'zoomTown' : 'zoomSea'] = 1;
+  });
+  const mz = { z:1, tx:0, ty:0, box:null, inner:null, drag:null, moved:0 };
+  function mzApply() {
+    const b = mz.box; if (!b || !b.isConnected) return;
+    const W = b.clientWidth, H = b.clientHeight;
+    mz.tx = mz.z >= 1 ? Math.min(0, Math.max(W * (1 - mz.z), mz.tx)) : W * (1 - mz.z) / 2;
+    mz.ty = mz.z >= 1 ? Math.min(0, Math.max(H * (1 - mz.z), mz.ty)) : H * (1 - mz.z) / 2;
+    mz.inner.style.transform = `translate(${mz.tx}px,${mz.ty}px) scale(${mz.z})`;
+  }
+  window.addEventListener('pointermove', e => { if (!mz.drag) return; if (Math.abs(e.clientX - mz.drag.sx) + Math.abs(e.clientY - mz.drag.sy) > 4) mz.moved = 1; mz.tx = e.clientX - mz.drag.x; mz.ty = e.clientY - mz.drag.y; mzApply(); });
+  window.addEventListener('pointerup', () => { mz.drag = null; });
+  const _rm = window.renderMap;
+  window.renderMap = function () {
+    _rm.apply(this, arguments);
+    const box = document.getElementById('mapGrid').firstElementChild; if (!box) return;
+    const inner = document.createElement('div'); inner.style.cssText = 'position:absolute;inset:0;transform-origin:0 0';
+    while (box.firstChild) inner.appendChild(box.firstChild);
+    box.appendChild(inner); mz.box = box; mz.inner = inner; box.style.touchAction = 'none';
+    box.addEventListener('wheel', e => {
+      e.preventDefault();
+      const r = box.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top, z2 = Math.max(0.6, Math.min(3.5, mz.z * (e.deltaY < 0 ? 1.15 : 1 / 1.15)));
+      mz.tx = mx - (mx - mz.tx) * z2 / mz.z; mz.ty = my - (my - mz.ty) * z2 / mz.z; mz.z = z2; mzApply();
+    }, { passive: false });
+    box.addEventListener('pointerdown', e => { mz.drag = { sx:e.clientX, sy:e.clientY, x:e.clientX - mz.tx, y:e.clientY - mz.ty }; mz.moved = 0; });
+    box.addEventListener('click', e => { if (mz.moved) { e.stopPropagation(); e.preventDefault(); mz.moved = 0; } }, true);
+    mzApply();
+  };
+
   function drawTownTop(time) {
-    const ts = state.resolutionScale * (state.viewScale || 1);
+    const ts = state.resolutionScale * (state.viewScale || 1) * (state.zoomTown || 1);
     ctx.save(); ctx.scale(ts, ts);
     const w = canvas.width / ts, h = canvas.height / ts, t = state.town, W = 1800, H = 1000;
-    t.camX += (Math.max(0, Math.min(W - w, t.x - w / 2)) - t.camX) * 0.12;
-    t.camY += (Math.max(0, Math.min(H - h, t.y - h / 2)) - t.camY) * 0.12;
+    t.camX += ((w >= W ? (W - w) / 2 : Math.max(0, Math.min(W - w, t.x - w / 2))) - t.camX) * 0.12;
+    t.camY += ((h >= H ? (H - h) / 2 : Math.max(0, Math.min(H - h, t.y - h / 2))) - t.camY) * 0.12;
     ctx.fillStyle = '#0b1c2e'; ctx.fillRect(0, 0, w, h);
     ctx.save(); ctx.translate(-t.camX, -t.camY);
     const wt = img(ASSETS.tiles.water), gt = img(ASSETS.tiles.ground);
@@ -3552,7 +3590,7 @@ requestAnimationFrame(loop);
 
     ctx.save();
     const vs = state.viewScale || 1;
-    const totalScale = state.resolutionScale * vs;
+    const totalScale = state.resolutionScale * vs * (state.zoomSea || 1);
     ctx.scale(totalScale, totalScale);
 
     const w = canvas.width / totalScale;
@@ -3613,17 +3651,17 @@ requestAnimationFrame(loop);
     ctx.fillStyle = seaGrad; ctx.fillRect(0, seaTop, w, h - seaTop);
 
     const bottomY = waterSurfaceY + maxSpotDepth * pxPerMeter;
-    if (bottomY < h + 220) {
+    if (true) {
       ctx.fillStyle = theme.floor;
       ctx.beginPath(); ctx.moveTo(0, h); ctx.lineTo(0, waterSurfaceY + 20); ctx.lineTo(185, waterSurfaceY + 55);
-      for (let x = 185; x <= w; x += 45) {
-        const bump = state.spotIdx >= 3 ? Math.sin(x * 0.06) * 28 : Math.sin(x * 0.04) * 14;
-        ctx.lineTo(x, bottomY + bump);
+      for (let x = 185; x <= w + 20; x += 20) {
+        const bump = state.spotIdx >= 3 ? Math.sin(x * 0.06) * 9 : Math.sin(x * 0.04) * 5;
+        ctx.lineTo(x, waterSurfaceY + Math.max(1.8, seabed(Math.max(0, (x - 205) / (w - 255) * 120))) * pxPerMeter + bump);
       }
       ctx.lineTo(w, h); ctx.closePath(); ctx.fill();
 
       for (let x = 220; x < w - 40; x += 65) {
-        const baseB = bottomY + (state.spotIdx >= 3 ? Math.sin(x * 0.06) * 24 : Math.sin(x * 0.04) * 12);
+        const baseB = waterSurfaceY + Math.max(1.8, seabed(Math.max(0, (x - 205) / (w - 255) * 120))) * pxPerMeter + (state.spotIdx >= 3 ? Math.sin(x * 0.06) * 9 : Math.sin(x * 0.04) * 5);
         if (baseB > 0 && baseB < h + 50) {
           if (state.spotIdx === 2 && x % 130 === 25) {
             ctx.fillStyle = '#d97706'; ctx.beginPath(); ctx.ellipse(x, baseB - 10, 8, 13, 0.3, 0, Math.PI * 2); ctx.fill();
