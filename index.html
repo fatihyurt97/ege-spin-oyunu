@@ -3911,124 +3911,17 @@ requestAnimationFrame(loop);
     }
   });
 })();
-</script> 
-</body>
-  <script>
-// ==================== SPACE TUŞU -> MOUSE TIKLAMA & SARIM KÖPRÜSÜ ====================
-(function() {
-  let spaceHeld = false;
-  let spaceReelLoop = null;
-
-  function stopSpaceReeling() {
-    spaceHeld = false;
-    state.keys.space = false;
-    state.keys.w = false;
-    if (spaceReelLoop) {
-      clearInterval(spaceReelLoop);
-      spaceReelLoop = null;
-    }
-    const mainBtn = document.getElementById('mainActionBtn');
-    if (mainBtn) mainBtn.style.transform = '';
-  }
-
-  window.addEventListener('keydown', function(e) {
-    const isSpace = (e.code === 'Space' || e.key === ' ' || e.keyCode === 32);
-    if (!isSpace) return;
-
-    // Eğer kayıt kodu kutusuna yazı yazılıyorsa dokunma
-    if (e.target && (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT')) {
-      if (e.target.type !== 'range') return;
-    }
-
-    // Tarayıcının sayfayı kaydırmasını veya başka butona basmasını kesin olarak engelle
-    e.preventDefault();
-    e.stopImmediatePropagation();
-
-    if (document.activeElement && document.activeElement.blur) {
-      document.activeElement.blur();
-    }
-
-    // Şehirdeysek NPC konuşmasını tetikle
-    if (state.inTown) {
-      if (!e.repeat && window.openNpcDialog) {
-        const btnTown = document.getElementById('btnGoTown');
-        // Yakında NPC varsa konuş, yoksa meraya dön butonuna bas
-      }
-      return;
-    }
-
-    const mainBtn = document.getElementById('mainActionBtn');
-
-    // İlk basış anı (basılı tutarken tekrar tekrar tetiklenmesin)
-    if (!spaceHeld) {
-      spaceHeld = true;
-      state.keys.space = true;
-      if (mainBtn) mainBtn.style.transform = 'scale(0.96)';
-
-      if (state.phase === 'idle') {
-        // Mouse ile "ATIŞ GÜCÜ DOLDUR" butonuna tıklanmış gibi başlat
-        startOrTriggerCast();
-      } else if (state.phase === 'charging') {
-        // Güç dolarken tekrar basılırsa savur
-        launchLure();
-      } else if (state.phase === 'bite') {
-        // Balık vurduğunda tasma at ve hemen sarmaya başla
-        strikeFish();
-        state.keys.w = true;
-      } else if (state.phase === 'water' || state.phase === 'fighting') {
-        // Yem sudayken veya balıkla mücadele ederken sarmaya başla
-        state.keys.w = true;
-        startOrTriggerCast();
-      }
-
-      // Space basılı tutulduğu sürece her 30 milisaniyede bir sarım yap (Mouse basılı tutmakla birebir aynı)
-      if (!spaceReelLoop) {
-        spaceReelLoop = setInterval(function() {
-          if (!spaceHeld || state.inTown) return;
-          if (state.phase === 'bite') {
-            strikeFish();
-          } else if (state.phase === 'water') {
-            state.keys.w = true;
-            reelStep(0.03);
-          } else if (state.phase === 'fighting') {
-            state.keys.w = true;
-            state.keys.space = true;
-            reelFightStep(0.03);
-          }
-        }, 30);
-      }
-    }
-  }, true);
-
-  window.addEventListener('keyup', function(e) {
-    const isSpace = (e.code === 'Space' || e.key === ' ' || e.keyCode === 32);
-    if (!isSpace) return;
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-
-    // Eğer Space'e basılı tutarak atış gücü doldurduysa, tuşu bırakınca oltayı savur
-    if (!state.inTown && state.phase === 'charging' && state.castPower > 15) {
-      launchLure();
-    }
-
-    stopSpaceReeling();
-  }, true);
-
-  // Pencere değişirse takılı kalmayı önle
-  window.addEventListener('blur', stopSpaceReeling);
-})();
 <script>
-// ==================== MASTER EGE SPIN ONARIM YAMASI (DERİNLİK, HABİTAT VE SPACE) ====================
+// ==================== KESİN ÇÖZÜM: KADEMELİ DERİNLİK, HABİTAT VE SPACE KÖPRÜSÜ ====================
 (function() {
-  // 1. ZEMİN VE DERİNLİK MOTORU
+  // 1. KADEMELİ VE EĞİMLİ ZEMİN HESAPLAMA MOTORU
   window.seabedAt = function(d, s) {
     s = s || SPOTS[state.spotIdx];
     const boatFactor = s.boat ? 0.35 : 0;
     return s.maxDepth * (boatFactor + (1 - boatFactor) * Math.pow(Math.min(1, d / 120), 1.15));
   };
 
-  // 2. MERA VE DİP TÜRÜ KONTROLÜ
+  // 2. MERA VE DİP TÜRÜ (HABITAT) KONTROLÜ
   const STRICT_HABITAT = {
     istavrit: { spots:[0,1,2,5], beds:['o','w','s'] },
     ispari:   { spots:[0,1],     beds:['r','w'] },
@@ -4088,7 +3981,7 @@ requestAnimationFrame(loop);
     return fallback.length > 0 ? fallback : [FISH_SPECIES[0]];
   };
 
-  // 3. BALIK DOĞURMA & ZEMİN KORUMA
+  // 3. BALIK DOĞURMA & ZEMİN KORUMA (Toprak altına girmeyi engeller)
   const baseCreateFish = window.createSingleFish;
   window.createSingleFish = function(pool, maxD) {
     const validPool = (pool && pool.length) ? pool : window.spawnPool();
@@ -4123,20 +4016,7 @@ requestAnimationFrame(loop);
     return f;
   };
 
-  // 4. OYUN DÖNGÜSÜ: BALIKLAR VE YEM TOPRAĞA GİRMESİN + SPACE TUŞU
-  let spaceHeld = false;
-  let spaceReelLoop = null;
-
-  function stopSpaceReeling() {
-    spaceHeld = false;
-    state.keys.space = false;
-    state.keys.w = false;
-    if (spaceReelLoop) {
-      clearInterval(spaceReelLoop);
-      spaceReelLoop = null;
-    }
-  }
-
+  // 4. OYUN DÖNGÜSÜ KONTROLLERİ
   const prevUpdateGame = window.updateGame;
   window.updateGame = function(dt) {
     if (prevUpdateGame) prevUpdateGame(dt);
@@ -4169,7 +4049,20 @@ requestAnimationFrame(loop);
     });
   };
 
-  // 5. MÜKEMMEL KESİNTİSİZ SPACE TUŞU KÖPRÜSÜ
+  // 5. KESİNTİSİZ SPACE TUŞU KÖPRÜSÜ
+  let spaceHeld = false;
+  let spaceReelLoop = null;
+
+  function stopSpaceReeling() {
+    spaceHeld = false;
+    state.keys.space = false;
+    state.keys.w = false;
+    if (spaceReelLoop) {
+      clearInterval(spaceReelLoop);
+      spaceReelLoop = null;
+    }
+  }
+
   window.addEventListener('keydown', function(e) {
     if (e.code !== 'Space' && e.key !== ' ' && e.keyCode !== 32) return;
     if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
@@ -4249,4 +4142,239 @@ requestAnimationFrame(loop);
   if (typeof updateUI === 'function') updateUI();
 })();
 </script>
+</body>
+</html>
+<script>
+// ==================== KESİN ÇÖZÜM: KADEMELİ DERİNLİK, HABİTAT VE SPACE KÖPRÜSÜ ====================
+(function() {
+  // 1. KADEMELİ VE EĞİMLİ ZEMİN HESAPLAMA MOTORU
+  window.seabedAt = function(d, s) {
+    s = s || SPOTS[state.spotIdx];
+    const boatFactor = s.boat ? 0.35 : 0;
+    return s.maxDepth * (boatFactor + (1 - boatFactor) * Math.pow(Math.min(1, d / 120), 1.15));
+  };
+
+  // 2. MERA VE DİP TÜRÜ (HABITAT) KONTROLÜ
+  const STRICT_HABITAT = {
+    istavrit: { spots:[0,1,2,5], beds:['o','w','s'] },
+    ispari:   { spots:[0,1],     beds:['r','w'] },
+    zargana:  { spots:[0,1,2],   beds:['o'] },
+    sarpa:    { spots:[0,1,2],   beds:['w','r'] },
+    melanur:  { spots:[0,1,2],   beds:['r','w','o'] },
+    mirmir:   { spots:[0,1,2],   beds:['s'] },
+    uskumru:  { spots:[0,1,2,5], beds:['o'] },
+    karagoz:  { spots:[0,1,2],   beds:['r'] },
+    levrek:   { spots:[0,1,2],   beds:['r','w','o'] },
+    cipura:   { spots:[1,2,5],   beds:['s','w'] },
+    lufer:    { spots:[1,2,3,5], beds:['o'] },
+    barakuda: { spots:[1,2,3],   beds:['o'] },
+    palamut:  { spots:[1,2,3,5], beds:['o'] },
+    iskorpit: { spots:[1,2,3,4], beds:['r'] },
+    mercan:   { spots:[2,3,6],   beds:['r','s'] },
+    eskina:   { spots:[2,3,6],   beds:['r'] },
+    kofana:   { spots:[2,3,5,6], beds:['o'] },
+    torik:    { spots:[2,3,5,6], beds:['o'] },
+    sinarit:  { spots:[2,3,6],   beds:['r'] },
+    lagos:    { spots:[3,4,6],   beds:['r'] },
+    tranca:   { spots:[3,4,6,7], beds:['r','m'] },
+    akya:     { spots:[3,4,6,7], beds:['o'] },
+    kilic:    { spots:[4,6,7],   beds:['o'] },
+    fener:    { spots:[4,7],     beds:['m'] }
+  };
+
+  const SPOT_ZONES = {
+    0: [[28,'r'], [70,'w'], [100,'s'], [120,'r']],
+    1: [[40,'r'], [80,'s'], [100,'m'], [120,'r']],
+    2: [[25,'r'], [60,'s'], [95,'r'],  [120,'s']],
+    3: [[45,'r'], [85,'s'], [120,'r']],
+    4: [[40,'r'], [70,'m'], [100,'r'], [120,'m']],
+    5: [[40,'s'], [80,'m'], [120,'s']],
+    6: [[40,'r'], [80,'s'], [120,'r']],
+    7: [[50,'m'], [90,'r'], [120,'m']]
+  };
+
+  function getBedTypeAt(distM, spotIdx) {
+    const zs = SPOT_ZONES[spotIdx] || SPOT_ZONES[0];
+    for (let i = 0; i < zs.length; i++) {
+      if (distM <= zs[i][0]) return zs[i][1];
+    }
+    return zs[zs.length - 1][1];
+  }
+
+  window.fishAt = function(sp, spotIdx) {
+    const h = STRICT_HABITAT[sp.id];
+    if (!h) return true;
+    return h.spots.includes(spotIdx);
+  };
+
+  window.spawnPool = function() {
+    const pool = FISH_SPECIES.filter(sp => window.fishAt(sp, state.spotIdx) && sp.minLv <= state.level + 2);
+    if (pool.length > 0) return pool;
+    const fallback = FISH_SPECIES.filter(sp => window.fishAt(sp, state.spotIdx));
+    return fallback.length > 0 ? fallback : [FISH_SPECIES[0]];
+  };
+
+  // 3. BALIK DOĞURMA & ZEMİN KORUMA (Toprak altına girmeyi engeller)
+  const baseCreateFish = window.createSingleFish;
+  window.createSingleFish = function(pool, maxD) {
+    const validPool = (pool && pool.length) ? pool : window.spawnPool();
+    const f = baseCreateFish(validPool, maxD);
+    const h = STRICT_HABITAT[f.sp.id] || { spots:[0,1,2,3,4], beds:['o','r','s','w','m'] };
+    const spot = SPOTS[state.spotIdx];
+
+    let placed = false;
+    for (let attempt = 0; attempt < 40; attempt++) {
+      const testDist = 16 + Math.random() * 94;
+      const bed = getBedTypeAt(testDist, state.spotIdx);
+      const sb = window.seabedAt(testDist, spot);
+      if ((h.beds.includes(bed) || h.beds.includes('o')) && sb > 3.0) {
+        f.distM = testDist;
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) f.distM = 55 + Math.random() * 45;
+
+    const sb = window.seabedAt(f.distM, spot);
+    const safeFloor = Math.max(0.8, sb - 1.4);
+
+    if (f.sp.zoneType === 'surface') {
+      f.baseDepth = Math.min(safeFloor, 0.8 + Math.random() * 2.8);
+    } else if (f.sp.zoneType === 'bottom') {
+      f.baseDepth = Math.max(0.8, sb - 1.6);
+    } else {
+      f.baseDepth = Math.max(1.0, Math.min(safeFloor - 0.5, sb * 0.5));
+    }
+    f.depth = f.baseDepth;
+    return f;
+  };
+
+  // 4. OYUN DÖNGÜSÜ KONTROLLERİ
+  const prevUpdateGame = window.updateGame;
+  window.updateGame = function(dt) {
+    if (prevUpdateGame) prevUpdateGame(dt);
+    if (state.inTown) return;
+
+    const spot = SPOTS[state.spotIdx];
+
+    // Yemin toprak altına girmesini engelle
+    if (state.phase === 'water' || state.phase === 'bite' || state.phase === 'fighting') {
+      const lureSb = window.seabedAt(state.lure.dist, spot);
+      state.lure.depth = Math.max(0.2, Math.min(state.lure.depth, Math.max(0.5, lureSb - 0.8)));
+    }
+
+    // Balıkların konumlarını zemin üstünde sabitle
+    state.fishes.forEach(f => {
+      if (f.state === 'hooked') return;
+      const sb = window.seabedAt(f.distM, spot);
+      const safeMax = Math.max(0.8, sb - 1.3);
+
+      if (f.sp.zoneType === 'surface') {
+        f.depth = Math.max(0.4, Math.min(f.depth, 4.5, safeMax));
+      } else if (f.sp.zoneType === 'bottom') {
+        f.baseDepth = Math.max(0.7, sb - 1.5);
+        if (f.state === 'patrol') f.depth = f.baseDepth + Math.sin(f.tailPhase * 0.25) * 0.2;
+        f.depth = Math.max(0.6, Math.min(f.depth, safeMax));
+      } else {
+        f.baseDepth = Math.max(1.0, Math.min(f.baseDepth, safeMax - 0.5));
+        f.depth = Math.max(0.6, Math.min(f.depth, safeMax));
+      }
+    });
+  };
+
+  // 5. KESİNTİSİZ SPACE TUŞU KÖPRÜSÜ
+  let spaceHeld = false;
+  let spaceReelLoop = null;
+
+  function stopSpaceReeling() {
+    spaceHeld = false;
+    state.keys.space = false;
+    state.keys.w = false;
+    if (spaceReelLoop) {
+      clearInterval(spaceReelLoop);
+      spaceReelLoop = null;
+    }
+  }
+
+  window.addEventListener('keydown', function(e) {
+    if (e.code !== 'Space' && e.key !== ' ' && e.keyCode !== 32) return;
+    if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+
+    if (state.inTown) {
+      if (!e.repeat && window.openNpcDialog) {
+        let best = null, bd = 95;
+        if (typeof TOWN_NPCS !== 'undefined') {
+          TOWN_NPCS.forEach(n => {
+            const d = Math.hypot(state.town.x - n.x, state.town.y - n.y);
+            if (d < bd) { bd = d; best = n; }
+          });
+        }
+        if (best) window.openNpcDialog(best.id);
+      }
+      return;
+    }
+
+    if (!spaceHeld) {
+      spaceHeld = true;
+      state.keys.space = true;
+      const mainBtn = document.getElementById('mainActionBtn');
+      if (mainBtn) mainBtn.style.transform = 'scale(0.96)';
+
+      if (state.phase === 'idle') {
+        startOrTriggerCast();
+      } else if (state.phase === 'charging') {
+        launchLure();
+      } else if (state.phase === 'bite') {
+        strikeFish();
+        state.keys.w = true;
+      } else if (state.phase === 'water' || state.phase === 'fighting') {
+        state.keys.w = true;
+        startOrTriggerCast();
+      }
+
+      if (!spaceReelLoop) {
+        spaceReelLoop = setInterval(function() {
+          if (!spaceHeld || state.inTown) return;
+          if (state.phase === 'bite') {
+            strikeFish();
+          } else if (state.phase === 'water') {
+            state.keys.w = true;
+            if (typeof reelStep === 'function') reelStep(0.03);
+          } else if (state.phase === 'fighting') {
+            state.keys.w = true;
+            state.keys.space = true;
+            if (typeof reelFightStep === 'function') reelFightStep(0.03);
+          }
+        }, 30);
+      }
+    }
+  }, true);
+
+  window.addEventListener('keyup', function(e) {
+    if (e.code !== 'Space' && e.key !== ' ' && e.keyCode !== 32) return;
+    if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (!state.inTown && state.phase === 'charging' && state.castPower > 15) {
+      launchLure();
+    }
+    stopSpaceReeling();
+    const mainBtn = document.getElementById('mainActionBtn');
+    if (mainBtn) mainBtn.style.transform = '';
+  }, true);
+
+  window.addEventListener('blur', stopSpaceReeling);
+
+  // Başlangıç tazelemeleri
+  if (typeof spawnFishes === 'function') spawnFishes();
+  if (typeof updateUI === 'function') updateUI();
+})();
+</script>
+</body>
+</html>
 </html>
