@@ -4264,4 +4264,64 @@ requestAnimationFrame(loop);
   updateUI();
 })();
 </script>
+  <script>
+// ==================== MERKEZI DERINLIK VE ZEMIN ONARMA YAMASI ====================
+(function() {
+  // 1. Kademeli Derinlik ve Zemin Hesaplama Motoru (Eski fonksiyonlarla uyumlu)
+  window.seabedAt = function(d, s) {
+    s = s || SPOTS[state.spotIdx];
+    const boatFactor = s.boat ? 0.35 : 0;
+    return s.maxDepth * (boatFactor + (1 - boatFactor) * Math.pow(Math.min(1, d / 120), 1.15));
+  };
+
+  // 2. Oyun döngüsü içinde derinlik ve zemin sınırlarını kesin olarak sabitle
+  const originalUpdate = window.updateGame;
+  window.updateGame = function(dt) {
+    if (originalUpdate) originalUpdate(dt);
+    if (state.inTown) return;
+
+    const spot = SPOTS[state.spotIdx];
+
+    // Sahte yemin toprağın veya su yüzeyinin dışına çıkmasını engelle
+    if (state.phase === 'water' || state.phase === 'bite' || state.phase === 'fighting') {
+      const lureSb = window.seabedAt(state.lure.dist, spot);
+      state.lure.depth = Math.max(0.2, Math.min(state.lure.depth, Math.max(0.5, lureSb - 0.8)));
+    }
+
+    // Balıkların konumlarını zemin yapısına ve türüne göre yeniden düzenle
+    state.fishes.forEach(f => {
+      if (f.state === 'hooked') return;
+
+      const sb = window.seabedAt(f.distM, spot);
+      const safeFloor = Math.max(0.8, sb - 1.2); // Zeminden en az 1.2 metre yukarıda tutar
+
+      if (f.sp.zoneType === 'surface') {
+        f.baseDepth = Math.min(f.baseDepth, 5.0, safeFloor);
+        f.depth = Math.max(0.4, Math.min(f.depth, 5.5, safeFloor));
+      } else if (f.sp.zoneType === 'bottom') {
+        const offset = f.hug || 1.5;
+        f.baseDepth = Math.max(0.8, sb - offset);
+        if (f.state === 'patrol') {
+          f.depth = f.baseDepth + Math.sin(f.tailPhase * 0.25) * 0.2;
+        }
+        f.depth = Math.max(0.6, Math.min(f.depth, safeFloor));
+      } else {
+        // Orta su (mid) balıkları
+        f.baseDepth = Math.max(1.0, Math.min(f.baseDepth, safeFloor - 0.5));
+        f.depth = Math.max(0.6, Math.min(f.depth, safeFloor));
+      }
+    });
+  };
+
+  // 3. Su altı derinlik çizgilerini ve cetvelini ekranda güncel tut
+  const originalDraw = window.drawScene;
+  window.drawScene = function(time) {
+    if (originalDraw) originalDraw(time);
+  };
+
+  // Ekranı ve balıkları tazele
+  if (typeof spawnFishes === 'function') spawnFishes();
+  if (typeof updateUI === 'function') updateUI();
+})();
+</script>
 </html>
