@@ -3752,48 +3752,62 @@ requestAnimationFrame(loop);
       if (f.state === 'chase' || f.state === 'hooked') visibilityAlpha = 1.0;
 
       const size = getProportionalFishSize(f);
+      const ry = f.sp.body === 'needle' ? size * 0.17 : (f.sp.body === 'sword' ? size * 0.24 : (f.sp.body === 'oval' ? size * 0.46 : size * 0.32));
       ctx.save();
       ctx.globalAlpha = visibilityAlpha;
       ctx.translate(fx, fy);
       ctx.scale(f.facing, 1);
       ctx.rotate(Math.sin(f.tailPhase) * 0.055);
 
-      const wag = Math.sin(f.tailPhase) * (size * 0.16);
-      ctx.fillStyle = f.sp.col1;
-      ctx.beginPath();
-      ctx.moveTo(-size * 0.82, 0);
-      ctx.lineTo(-size * 1.38, -size * 0.44 + wag);
-      ctx.lineTo(-size * 1.15, wag * 0.4);
-      ctx.lineTo(-size * 1.38, size * 0.44 + wag);
-      ctx.closePath(); ctx.fill();
+      const sprite = fishSprites[f.sp.id];
+      const isReadySprite = sprite && ((sprite instanceof HTMLImageElement && sprite.complete && sprite.naturalWidth > 0) || sprite instanceof HTMLCanvasElement);
 
-      const grad = ctx.createLinearGradient(0, -size * 0.45, 0, size * 0.45);
-      grad.addColorStop(0, f.sp.col1); grad.addColorStop(1, f.sp.col2);
-      ctx.fillStyle = grad;
-      const ry = f.sp.body === 'needle' ? size * 0.17 : (f.sp.body === 'sword' ? size * 0.24 : (f.sp.body === 'oval' ? size * 0.46 : size * 0.32));
-      ctx.beginPath(); ctx.ellipse(0, 0, size, ry, 0, 0, Math.PI * 2); ctx.fill();
+      if (isReadySprite) {
+        // Yüklediğin PNG Balık Görselini Canlı Kuyruk Çırpma Efektiyle Çizer!
+        const sw = sprite.naturalWidth || sprite.width;
+        const sh = sprite.naturalHeight || sprite.height;
+        const aspect = sw / Math.max(1, sh);
+        const drawW = size * 2.35;
+        const drawH = Math.max(size * 0.75, Math.min(size * 1.75, drawW / aspect));
+        const slices = 4;
+        for (let s = 0; s < slices; s++) {
+          const ratio = s / slices;
+          const tailOffset = (1 - ratio) * Math.sin(f.tailPhase - ratio * 2.2) * (f.state === 'hooked' ? 4.2 : 2.2);
+          ctx.drawImage(
+            sprite,
+            ratio * sw, 0, sw / slices, sh,
+            -drawW / 2 + ratio * drawW, -drawH / 2 + tailOffset, drawW / slices + 0.9, drawH
+          );
+        }
+      } else {
+        // PNG'si olmayan balıklar için yedek vektörel çizim
+        const wag = Math.sin(f.tailPhase) * (size * 0.16);
+        ctx.fillStyle = f.sp.col1;
+        ctx.beginPath();
+        ctx.moveTo(-size * 0.82, 0);
+        ctx.lineTo(-size * 1.38, -size * 0.44 + wag);
+        ctx.lineTo(-size * 1.15, wag * 0.4);
+        ctx.lineTo(-size * 1.38, size * 0.44 + wag);
+        ctx.closePath(); ctx.fill();
 
-      if (f.sp.body === 'sword') {
-        ctx.strokeStyle = f.sp.col1; ctx.lineWidth = Math.max(2, size * 0.06);
-        ctx.beginPath(); ctx.moveTo(size * 0.9, 0); ctx.lineTo(size * 1.55, 0); ctx.stroke();
-      } else if (f.sp.body === 'angler') {
-        ctx.strokeStyle = '#fde047'; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(size * 0.4, -ry * 0.8); ctx.quadraticCurveTo(size * 0.9, -ry * 1.5, size * 1.1, -ry * 0.5); ctx.stroke();
-        ctx.fillStyle = '#fde047'; ctx.beginPath(); ctx.arc(size * 1.1, -ry * 0.5, 4, 0, Math.PI * 2); ctx.fill();
+        const grad = ctx.createLinearGradient(0, -size * 0.45, 0, size * 0.45);
+        grad.addColorStop(0, f.sp.col1); grad.addColorStop(1, f.sp.col2);
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.ellipse(0, 0, size, ry, 0, 0, Math.PI * 2); ctx.fill();
+
+        if (f.sp.body === 'sword') {
+          ctx.strokeStyle = f.sp.col1; ctx.lineWidth = Math.max(2, size * 0.06);
+          ctx.beginPath(); ctx.moveTo(size * 0.9, 0); ctx.lineTo(size * 1.55, 0); ctx.stroke();
+        } else if (f.sp.body === 'angler') {
+          ctx.strokeStyle = '#fde047'; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(size * 0.4, -ry * 0.8); ctx.quadraticCurveTo(size * 0.9, -ry * 1.5, size * 1.1, -ry * 0.5); ctx.stroke();
+          ctx.fillStyle = '#fde047'; ctx.beginPath(); ctx.arc(size * 1.1, -ry * 0.5, 4, 0, Math.PI * 2); ctx.fill();
+        }
+
+        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(size * 0.58, -ry * 0.22, Math.max(2, size * 0.09), 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(size * 0.61, -ry * 0.22, Math.max(1.1, size * 0.045), 0, Math.PI * 2); ctx.fill();
       }
-
-      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(size * 0.58, -ry * 0.22, Math.max(2, size * 0.09), 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(size * 0.61, -ry * 0.22, Math.max(1.1, size * 0.045), 0, Math.PI * 2); ctx.fill();
       ctx.restore();
-
-      if (f.state === 'chase' || f.state === 'hooked') {
-        ctx.fillStyle = f.state === 'hooked' ? '#fbbf24' : '#38bdf8';
-        ctx.font = 'bold 11px sans-serif';
-        ctx.fillText(f.sp.name + ' (' + f.kg + ' kg - ' + f.cm + ' cm)', fx - 45, fy - ry - 8);
-      }
-    });
-
-    ctx.restore();
   };
 
   renderHotbar();
@@ -3882,6 +3896,22 @@ requestAnimationFrame(loop);
   });
 })();
 </script>
+ <script>
+// Lokal çalışırken bulunamayan PNG'leri doğrudan GitHub depondan çeker ve Katalog'da da gösterir
+(function() {
+  const GITHUB_RAW = 'https://raw.githubusercontent.com/fatihyurt97/ege-spin-oyunu/main/assets/fishes/';
+  
+  FISH_SPECIES.forEach(sp => {
+    const checkImg = fishSprites[sp.id];
+    if (!checkImg || (checkImg instanceof HTMLImageElement && (!checkImg.complete || checkImg.naturalWidth === 0))) {
+      const gImg = new Image();
+      gImg.crossOrigin = 'anonymous';
+      gImg.onload = () => { fishSprites[sp.id] = gImg; };
+      gImg.src = GITHUB_RAW + sp.id + '.png';
+    }
+  });
+})();
+</script> 
 </body>
   <script>
 // ==================== SPACE TUŞU -> MOUSE TIKLAMA & SARIM KÖPRÜSÜ ====================
